@@ -21,7 +21,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && git branch | grep \"*\" | egrep -v \"^* master$\""
+      "pre-push": "npm run lint && git branch | grep \"*\" | egrep -v \"^* main$\""
     }
   }
 }
