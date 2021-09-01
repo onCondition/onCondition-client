@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/onCondition/onCondition-client#readme",
   "devDependencies": {
-    "husky": "^7.0.2"
+    "husky": "^4.3.8"
   },
   "husky": {
     "hooks": {
