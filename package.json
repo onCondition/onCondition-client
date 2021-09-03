@@ -1,11 +1,7 @@
 {
-  "name": "oncondition",
-  "version": "1.0.0",
+  "name": "oncondition-client",
+  "version": "0.1.0",
   "description": "take a subjective view of your condition",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/onCondition/onCondition-client.git"
@@ -15,17 +11,51 @@
   "bugs": {
     "url": "https://github.com/onCondition/onCondition-client/issues"
   },
-  "homepage": "https://github.com/onCondition/onCondition-client#readme",
+  "private": true,
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.6.1",
+    "firebase": "^9.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "react-redux-firebase": "^3.10.0",
+    "react-router-dom": "^5.2.1",
+    "react-scripts": "4.0.3",
+    "redux-logger": "^3.0.6",
+    "styled-components": "^5.3.1"
+  },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
     "eslint": "^7.30.0",
+    "eslint-plugin-react": "^7.25.1",
     "husky": "^4.3.8",
     "stylelint": "^13.13.1",
     "stylelint-config-recommended": "^5.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "husky": {
     "hooks": {
       "pre-push": "git branch | grep \"*\" | egrep -v \"^\\* main$\""
     }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "engines": {
     "node": "14.17.6",
