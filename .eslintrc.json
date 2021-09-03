@@ -1,7 +1,8 @@
 {
   "env": {
     "es2021": true,
-    "browser": true
+    "browser": true,
+    "node": true
   },
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "parserOptions": {
@@ -9,11 +10,38 @@
     "sourceType": "module"
   },
   "rules": {
-    "semi": "error",
-    "quotes": ["error", "single"],
+    "block-spacing": "error",
+    "brace-style": "error",
+    "comma-style": ["error", "last"],
+    "dot-notation": "error",
     "eol-last": "error",
-    "no-trailing-spaces": "error",
+    "eqeqeq": "error",
+    "function-paren-newline": [
+      "error",
+      {
+        "minItems": 4
+      }
+    ],
     "indent": ["error", 2],
+    "key-spacing": [
+      "error",
+      {
+        "afterColon": true
+      }
+    ],
+    "keyword-spacing": "error",
+    "max-len": [
+      "error",
+      {
+        "code": 80
+      }
+    ],
+    "no-console": "error",
+    "no-duplicate-imports": "error",
+    "no-empty-function": "error",
+    "no-lonely-if": "error",
+    "no-magic-numbers": "error",
+    "no-multi-spaces": "error",
     "no-multiple-empty-lines": [
       "error",
       {
@@ -22,12 +50,64 @@
         "maxBOF": 0
       }
     ],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
+    "no-template-curly-in-string": "error",
+    "no-trailing-spaces": "error",
+    "no-undef": [
+      "error",
+      {
+        "typeof": true
+      }
+    ],
+    "no-unneeded-ternary": "error",
+    "no-use-before-define": "error",
+    "no-useless-return": "error",
+    "no-var": "error",
+    "object-curly-newline": [
+      "error",
+      {
+        "consistent": true,
+        "minProperties": 3
+      }
+    ],
+    "object-curly-spacing": ["error", "always"],
+    "object-property-newline": [
+      "error",
+      {
+        "allowAllPropertiesOnSameLine": true
+      }
+    ],
+    "object-shorthand": ["error"],
+    "operator-linebreak": ["error", "before"],
+    "padding-line-between-statements": "error",
     "prefer-const": [
       "error",
       {
         "destructuring": "any",
         "ignoreReadBeforeAssign": false
       }
-    ]
+    ],
+    "quote-props": ["error", "as-needed"],
+    "quotes": ["error", "double"],
+    "require-await": "error",
+    "semi": "error",
+    "semi-spacing": "error",
+    "semi-style": ["error", "last"],
+    "space-before-blocks": "error",
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "asyncArrow": "always",
+        "named": "never"
+      }
+    ],
+    "space-infix-ops": "error",
+    "valid-typeof": "error"
   }
 }

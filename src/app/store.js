@@ -1,6 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { firebaseReducer } from 'react-redux-firebase';
-import logger from 'redux-logger';
+import { configureStore } from "@reduxjs/toolkit";
+import { firebaseReducer } from "react-redux-firebase";
+import logger from "redux-logger";
 
 export const store = configureStore({
   reducer: {
