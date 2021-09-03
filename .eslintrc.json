@@ -36,7 +36,6 @@
         "code": 80
       }
     ],
-    "no-console": "error",
     "no-duplicate-imports": "error",
     "no-empty-function": "error",
     "no-lonely-if": "error",
