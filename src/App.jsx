@@ -1,5 +1,8 @@
 import React from "react";
+import { Route } from "react-router-dom";
 import styled from "styled-components";
+
+import Meal from "./pages/Meal";
 
 const AppWrapper = styled.div`
   text-align: center;
@@ -8,8 +11,9 @@ const AppWrapper = styled.div`
 function App() {
   return (
     <AppWrapper>
-      <header />
-      <div>Render</div>
+      <Route path="/meal">
+        <Meal />
+      </Route>
     </AppWrapper>
   );
 }
