@@ -1,0 +1,105 @@
+import React from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+
+const ModalWrapper = styled.div`
+  position: fixed;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
+
+const OuterModal = styled.div`
+  position: absolute;
+  box-sizing: border-box;
+  box-shadow: 5px 5px 10px black;
+  background-color: rgba(138, 214, 204, 0.9);
+  border-radius: 10px;
+  top: calc(20vh);
+  left: calc(30vw);
+  width: 520px;
+  height: 480px;
+  padding: 40px 20px;
+  margin: -50px;
+  z-index:100;
+`;
+
+const InnerModal = styled.div`
+  position: relative;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  width: 460px;
+  height: 360px;
+  margin: auto;
+  padding: 40px 20px;
+  z-index:10;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  z-index: 10;
+  justify-content: space-center;
+`;
+
+const Button = styled.button`
+  display: relative;
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(138, 214, 204, 0.9);
+  box-shadow: 5px 5px 10px black;
+  color: white;
+  cursor: pointer;
+  font-size: large;
+  width: 100px;
+  height: 50px;
+  margin: 0 auto;
+  margin-top: 15px;
+`;
+
+function ModalComponent({
+  modal,
+  innerText,
+  confirmText,
+  cancelText,
+  onConfirm,
+  onCancel,
+}) {
+
+  if (!modal) return null;
+  return (
+    <form>
+      <ModalWrapper>
+        <OuterModal>
+          <InnerModal>
+            {innerText}
+          </InnerModal>
+          <ButtonWrapper>
+            <Button onClick={onConfirm}>{confirmText}</Button>
+            <Button onClick={onCancel}>{cancelText}</Button>
+          </ButtonWrapper>
+        </OuterModal>
+      </ModalWrapper>
+    </form>
+  );
+}
+
+ModalComponent.propTypes = {
+  modal: PropTypes.bool,
+  innerText: PropTypes.string,
+  confirmText: PropTypes.string,
+  cancelText: PropTypes.string,
+  onConfirm: PropTypes.func,
+  onCancel: PropTypes.func,
+};
+
+ModalComponent.defaultProps = {
+  innerText: "Text",
+  confirmText: "Confirm",
+  cancelText: "Cancel",
+};
+
+export default ModalComponent;
