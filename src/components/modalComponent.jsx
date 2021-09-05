@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import MintButton from "./MintButton";
 
 const ModalWrapper = styled.div`
   position: fixed;
-  z-index: 1000;
   background-color: rgba(0, 0, 0, 0.8);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 1000;
 `;
 
 const OuterModal = styled.div`
@@ -24,7 +25,7 @@ const OuterModal = styled.div`
   height: 480px;
   padding: 40px 20px;
   margin: -50px;
-  z-index:100;
+  z-index: 100;
 `;
 
 const InnerModal = styled.div`
@@ -36,28 +37,13 @@ const InnerModal = styled.div`
   height: 360px;
   margin: auto;
   padding: 40px 20px;
-  z-index:10;
+  z-index: 10;
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
   z-index: 10;
   justify-content: space-center;
-`;
-
-const Button = styled.button`
-  display: relative;
-  border-radius: 10px;
-  border: none;
-  background-color: rgba(138, 214, 204, 0.9);
-  box-shadow: 5px 5px 10px black;
-  color: white;
-  cursor: pointer;
-  font-size: large;
-  width: 100px;
-  height: 50px;
-  margin: 0 auto;
-  margin-top: 15px;
 `;
 
 function ModalComponent({
@@ -78,8 +64,8 @@ function ModalComponent({
             {innerText}
           </InnerModal>
           <ButtonWrapper>
-            <Button onClick={onConfirm}>{confirmText}</Button>
-            <Button onClick={onCancel}>{cancelText}</Button>
+            <MintButton onClickFunction={onConfirm} buttonText={confirmText} />
+            <MintButton onClickFunction={onCancel} buttonText={cancelText} />
           </ButtonWrapper>
         </OuterModal>
       </ModalWrapper>
