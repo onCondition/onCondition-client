@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "./Button";
 import styled from "styled-components";
 import PropTypes from "prop-types";
@@ -21,30 +21,9 @@ const TextArea = styled.textarea`
   resize: none;
   outline: none;
   font-family: "Nanum Gothic", sans-serif;
-
-  ::-webkit-scrollbar {
-    width: 5px;
-    border: 3px solid transparent;
-    background: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    background-color: #B0B0B0;
-  }
-
-  ::-webkit-scrollbar-track-piece:end {
-    background: transparent;
-    margin-bottom: 10px;
-  }
-
-  ::-webkit-scrollbar-track-piece:start {
-    background: transparent;
-    margin-top: 10px;
-  }
 `;
 
-function CommentForm({ content, onSubmit }) {
+function CommentForm({ content, buttonText, onSubmit }) {
   const [comment, setComment] = useState(content);
 
   function handleSubmit() {
@@ -55,16 +34,21 @@ function CommentForm({ content, onSubmit }) {
     onSubmit(comment);
   }
 
+  useEffect(() => {
+    setComment(content);
+  }, [content]);
+
   return (
     <div>
       <Form>
         <TextArea
           value={comment}
           onChange={({ target }) => setComment(target.value)}
+          className="transparent-scrollbar"
         />
         <div className="align-right">
           <Button
-            text="COMMENT"
+            text={buttonText}
             onClick={handleSubmit}
           />
         </div>
@@ -75,6 +59,7 @@ function CommentForm({ content, onSubmit }) {
 
 CommentForm.propTypes = {
   content: PropTypes.string,
+  buttonText: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 

@@ -7,7 +7,27 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.transparent-scrollbar::-webkit-scrollbar {
+  width: 0.4em;
+  border: 0.5em solid transparent;
+  background: transparent;
+}
+
+.transparent-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 0.5em;
+  background-color: #B0B0B0;
+}
+
+.transparent-scrollbar::-webkit-scrollbar-track-piece:end {
+  background: transparent;
+  margin-bottom: 0.5em;
+}
+
+.transparent-scrollbar::-webkit-scrollbar-track-piece:start {
+  background: transparent;
+  margin-top: 0.5em;
+}
+
+.transparent-scrollbar::-webkit-scrollbar-corner {
+  display: none;
 }
