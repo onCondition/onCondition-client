@@ -1,29 +1,34 @@
 import React, { useState, useEffect } from "react";
 import Button from "./Button";
+import COLORS from "../constants/colors";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const Form = styled.div`
-  margin: 20px;
+  display: flex;
+  margin: 15px 30px;
+  flex-direction: column;
 
-  .align-right {
+  .button {
+    display: block;
+    margin-top: 5px;
     text-align: right;
-    margin-right: 20px;
   }
 `;
 
 const TextArea = styled.textarea`
-  width: 380px;
-  height: 60px;
+  flex-grow: 1;
+  min-height: 80px;
   padding: 10px;
-  border: solid 2px #F97171;
+  border: solid 2px ${COLORS.MAIN_PINK};
   border-radius: 16px;
   resize: none;
   outline: none;
-  font-family: "Nanum Gothic", sans-serif;
 `;
 
-function CommentForm({ content, buttonText, onSubmit }) {
+function CommentForm({
+  content, buttonText, onSubmit, onReset
+}) {
   const [comment, setComment] = useState(content);
 
   function handleSubmit() {
@@ -32,6 +37,11 @@ function CommentForm({ content, buttonText, onSubmit }) {
     }
 
     onSubmit(comment);
+  }
+
+  function handleReset() {
+    setComment("");
+    onReset();
   }
 
   useEffect(() => {
@@ -46,7 +56,11 @@ function CommentForm({ content, buttonText, onSubmit }) {
           onChange={({ target }) => setComment(target.value)}
           className="transparent-scrollbar"
         />
-        <div className="align-right">
+        <div className="button">
+          <Button
+            text="RESET"
+            onClick={handleReset}
+          />
           <Button
             text={buttonText}
             onClick={handleSubmit}
@@ -61,6 +75,7 @@ CommentForm.propTypes = {
   content: PropTypes.string,
   buttonText: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  onReset: PropTypes.func.isRequired,
 };
 
 CommentForm.defaultProps = {
