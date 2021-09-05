@@ -1,12 +1,12 @@
 import React from "react";
-import Button from "./Button";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import COLORS from "../constants/colors";
 
 const GridColumn = styled.div`
   display: grid;
   margin: 10px;
-  grid-template-columns: 62px 5fr 3fr;
+  grid-template-columns: 62px auto 150px;
   align-items: start;
   justify-items: start;
 `;
@@ -15,7 +15,7 @@ const Comment = styled.span`
   align-self: center;
   margin-tpp: 10xp;
   padding: 10px 10px;
-  color: #FB9C9C;
+  color: ${COLORS.LIGHT_PINK};
   text-align: left;
   font-family: "Nanum Gothic", sans-serif;
 
@@ -40,8 +40,7 @@ function CommentEntry({
   profileUrl,
   creator,
   content,
-  onEdit,
-  onDelete,
+  children,
 }) {
   return (
     <GridColumn>
@@ -51,8 +50,7 @@ function CommentEntry({
       />
       <Comment>{content}</Comment>
       <ButtonWrapper>
-        <Button text="EDIT" onClick={onEdit} />
-        <Button text="DELETE" onClick={onDelete} />
+        {children}
       </ButtonWrapper>
     </GridColumn>
   );
@@ -62,8 +60,7 @@ CommentEntry.propTypes = {
   profileUrl: PropTypes.string.isRequired,
   creator: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  children: PropTypes.element,
 };
 
 export default CommentEntry;
