@@ -1,4 +1,5 @@
 import React from "react";
+import Auth from "./components/Auth";
 import styled from "styled-components";
 
 const AppWrapper = styled.div`
@@ -9,7 +10,7 @@ function App() {
   return (
     <AppWrapper>
       <header />
-      <div>Render</div>
+      <Auth />
     </AppWrapper>
   );
 }

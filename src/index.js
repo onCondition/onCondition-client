@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import Modal from "./componentLogic/Modal";
 import { store } from "./app/store";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -11,14 +11,14 @@ const reactReduxFirebaseConfig = {};
 const reactReduxFirebaseProps = {
   firebase,
   config: reactReduxFirebaseConfig,
-  dispatch: store.dispatch
+  dispatch: store.dispatch,
 };
 
 ReactDOM.render(<React.StrictMode>
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...reactReduxFirebaseProps}>
       <Router>
-        <App />
+        <Modal />
       </Router>
     </ReactReduxFirebaseProvider>
   </Provider>
