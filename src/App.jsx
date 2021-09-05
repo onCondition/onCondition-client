@@ -17,6 +17,10 @@ function App() {
     history.push("/login");
   }
 
+  function handleLogin() {
+    history.push("/myCondition");
+  }
+
   function handleLogout() {
     history.push("/login");
   }
@@ -25,7 +29,7 @@ function App() {
     <AppWrapper>
       <header />
       {!hasLoggedIn ? (
-        <Login />
+        <Login onLogin={handleLogin} />
       ) : (
         <div>
           <p>welcome</p>

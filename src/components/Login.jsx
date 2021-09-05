@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import firebase from "../config/firebase";
@@ -30,7 +31,7 @@ const GoogleLogin = styled.img`
   cursor: pointer;
 `;
 
-function Login() {
+function Login({ onLogin }) {
   const dispatch = useDispatch();
   const hasLoggedIn = useSelector(state => state.user.hasLoggedIn);
   const history = useHistory();
@@ -51,6 +52,7 @@ function Login() {
         const token = await user.getIdToken();
 
         dispatch(login(token));
+        onLogin();
       } else {
         dispatch(logout());
       }
@@ -64,5 +66,9 @@ function Login() {
     </Wrapper>
   );
 }
+
+Login.propTypes = {
+  onLogin: PropTypes.func.isRequired,
+};
 
 export default Login;
