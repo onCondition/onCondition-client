@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import ModalComponent from "../components/modalComponent";
+import ModalComponent from "../components/ModalComponent";
 
 function Modal() {
   const [modal, setModal] = useState(true);
 
-  const onConfirm = () => {
+  function onConfirm() {
     setModal(false);
-  };
+  }
 
-  const onCancel = () => {
+  function onCancel() {
     setModal(false);
-  };
+  }
 
   return (
     <div>
