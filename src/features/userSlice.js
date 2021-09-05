@@ -3,7 +3,7 @@ import api from "../utils/api";
 import { storeTokens, removeTokens } from "../utils/tokens";
 
 const initialState = {
-  hasLoggedIn: false
+  hasLoggedIn: false,
 };
 
 const login = createAsyncThunk("user/login",
@@ -38,7 +38,7 @@ const userSlice = createSlice({
     [logout.rejected]: (state) => {
       state.hasLoggedIn = true;
     },
-  }
+  },
 });
 
 export { login, logout };

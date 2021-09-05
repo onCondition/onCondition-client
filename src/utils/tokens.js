@@ -22,5 +22,5 @@ function removeTokens() {
 }
 
 export {
-  updateAccessToken, storeTokens, removeTokens
+  updateAccessToken, storeTokens, removeTokens,
 };
