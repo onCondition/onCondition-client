@@ -1,9 +1,11 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import styled from "styled-components";
+
+import Meal from "./pages/Meal";
 
 const AppWrapper = styled.div`
   text-align: center;
@@ -18,7 +20,7 @@ function App() {
   }
 
   function handleLogin() {
-    history.push("/myCondition");
+    history.push("/meal");
   }
 
   function handleLogout() {
@@ -27,15 +29,19 @@ function App() {
 
   return (
     <AppWrapper>
-      <header />
-      {!hasLoggedIn ? (
-        <Login onLogin={handleLogin} />
-      ) : (
-        <div>
-          <p>welcome</p>
-          <Logout onLogout={handleLogout} />
-        </div>
-      )}
+      <Route exact path="/">
+        {!hasLoggedIn ? (
+          <Login onLogin={handleLogin} />
+        ) : (
+          <div>
+            <p>welcome</p>
+            <Logout onLogout={handleLogout} />
+          </div>
+        )}
+      </Route>
+      <Route exact path="/meal">
+        <Meal />
+      </Route>
     </AppWrapper>
   );
 }
