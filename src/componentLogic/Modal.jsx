@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ModalComponent from "../components/ModalComponent";
+import theme from "../theme/theme";
 
 function Modal() {
   const [modal, setModal] = useState(true);
@@ -13,16 +14,15 @@ function Modal() {
   }
 
   return (
-    <div>
-      <header />
-      <ModalComponent
-        modal={modal}
-        confirmText="Event"
-        cancelText="Cancel"
-        innerText="아이고어아고"
-        onConfirm={onConfirm}
-        onCancel={onCancel} />
-    </div>
+    <ModalComponent
+      modal={modal}
+      confirmText="Event"
+      cancelText="Cancel"
+      innerText="textText"
+      onConfirm={onConfirm}
+      onCancel={onCancel}
+      backgroundColor={theme.mintColors.mainMint}
+    />
   );
 }
 
