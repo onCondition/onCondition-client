@@ -17,7 +17,7 @@ function List({
   color,
   children,
   key,
-  onClick
+  onClick,
 }) {
   const COLORS = {
     mint: "#8AD6CC",

@@ -20,7 +20,7 @@ function App() {
   }
 
   function handleLogin() {
-    history.push("/myCondition");
+    history.push("/meal");
   }
 
   function handleLogout() {
@@ -29,18 +29,19 @@ function App() {
 
   return (
     <AppWrapper>
-      <Route path="/meal">
+      <Route exact path="/">
+        {!hasLoggedIn ? (
+          <Login onLogin={handleLogin} />
+        ) : (
+          <div>
+            <p>welcome</p>
+            <Logout onLogout={handleLogout} />
+          </div>
+        )}
+      </Route>
+      <Route exact path="/meal">
         <Meal />
       </Route>
-      <header />
-      {!hasLoggedIn ? (
-        <Login onLogin={handleLogin} />
-      ) : (
-        <div>
-          <p>welcome</p>
-          <Logout onLogout={handleLogout} />
-        </div>
-      )}
     </AppWrapper>
   );
 }

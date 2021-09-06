@@ -3,10 +3,11 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import Wrapper from "./Wrapper";
-import ImgWrapper from "./ImgWrapper";
+import ImageWrapper from "./ImageWrapper";
 import HeartCounter from "./HeartCounter";
 import Button from "./SButton";
 import COLORS from "../constants/colors";
+import getImageUrl from "../utils/getImageUrl";
 
 const Input = styled.input`
   width: 205px;
@@ -96,12 +97,12 @@ const HiddenInput = styled.input`
 
 function ContentForm({ color, hasPicture, onSubmit }) {
   const defaultCount = 0;
-  const imgInput = useRef(null);
+  const imageInput = useRef(null);
   const [date, setDate] = useState("");
   const [heartCount, setHeartCounts] = useState(defaultCount);
   const [text, setText] = useState("");
   const [image, setImage] = useState(null);
-  const [uploadedImgUrl, setUploadedImgUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const handleCountChange = function (value) {
     setHeartCounts(value);
@@ -112,43 +113,46 @@ function ContentForm({ color, hasPicture, onSubmit }) {
   };
 
   const addImage = function () {
-    if (uploadedImgUrl) {
+    if (image) {
       setImage(null);
-      setUploadedImgUrl("");
-      return;
     }
 
-    imgInput.current.click();
+    imageInput.current.click();
   };
 
   const handleTextChange = function ({ target }) {
     setText(target.value);
   };
 
-  const handleSubmitbutton = function () {
+  const handleSubmitbutton = async function () {
     setDate("");
     setHeartCounts(defaultCount);
     setText("");
     setImage(null);
-    setUploadedImgUrl("");
+
+    const url = await getImageUrl(image);
 
     onSubmit({
-      date, heartCount, text, image
+      date, heartCount, text, url,
     });
   };
 
-  const onImgChange = function (ev) {
-    const reader = new FileReader();
-    const uploadedImg = [...ev.target.files].pop();
+  const onImageChange = function ({ target }) {
+    if (!target.files.length) {
+      return;
+    }
 
-    if (uploadedImg) {
-      setImage(uploadedImg);
+    const urlReader = new FileReader();
+    const uploadedImage = [...target.files].pop();
 
-      reader.onload = function ({ target }) {
-        setUploadedImgUrl(target.result);
+    if (uploadedImage) {
+      setImage(uploadedImage);
+
+      urlReader.onload = function ({ target }) {
+        setImageUrl(target.result);
       };
 
-      reader.readAsDataURL(uploadedImg);
+      urlReader.readAsDataURL(uploadedImage);
     }
   };
 
@@ -163,17 +167,17 @@ function ContentForm({ color, hasPicture, onSubmit }) {
           />
           <HeartInput count={heartCount} onChange={handleCountChange}/>
         </div>
-        <HiddenInput ref={imgInput} type="file"
-          className="imgInput" accept="image/*"
-          name="file" onChange={onImgChange}
+        <HiddenInput ref={imageInput} type="file"
+          className="imageInput" accept="image/*"
+          name="file" onChange={onImageChange}
         />
         {hasPicture
-          && <ImgWrapper onClick={addImage}>
-            {uploadedImgUrl
-              ? <img src={uploadedImgUrl} />
+          && <ImageWrapper onClick={addImage}>
+            {image
+              ? <img src={imageUrl} />
               : <img src="img/add-picture.png" />
             }
-          </ImgWrapper>
+          </ImageWrapper>
         }
         <Textarea
           placeholder="내용을 입력해주세요"

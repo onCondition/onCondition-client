@@ -4,8 +4,7 @@ import styled from "styled-components";
 import List from "../components/List";
 import ContentContainer from "../components/ContentContainer";
 import ContentForm from "../components/ContentForm";
-import getImgUrl from "../api/getImgUrl";
-import { postMeal } from "../api/onCondition";
+import { postMeal } from "../utils/meal";
 
 const Title = styled.p`
   margin: 10px 0px 10px 30px;
@@ -33,17 +32,11 @@ const Container = styled.div`
 
 function Meal() {
   const [clickedSession, setClickedSession] = useState(null);
-  const handleSubmitForm = async function ({
-    date, heartCount, image, text
+  const handleSubmitForm = function ({
+    date, heartCount, url, text,
   }) {
-    let url = "";
-
-    if (image) {
-      url = await getImgUrl(image);
-    }
-
     postMeal({
-      date, url, heartCount, text
+      date, url, heartCount, text,
     });
   };
 
@@ -56,7 +49,7 @@ function Meal() {
           <List color="mint">wow</List>
         </div>
         <div className="viewer">
-          { clickedSession
+          {clickedSession
             ? <ContentContainer heartCount={5} hasPicture />
             : <ContentForm
               hasPicture

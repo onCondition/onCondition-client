@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import Wrapper from "./Wrapper";
-import ImgWrapper from "./ImgWrapper";
+import ImgWrapper from "./ImageWrapper";
 import TextContainer from "./TextContainer";
 import HeartCounter from "./HeartCounter";
 import COLORS from "../constants/colors";

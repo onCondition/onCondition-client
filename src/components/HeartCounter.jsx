@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import {
-  BsHeartFill, BsHeartHalf, BsHeart
+  BsHeartFill, BsHeartHalf, BsHeart,
 } from "react-icons/bs";
 
 const HeartWrapper = styled.span`
