@@ -1,7 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
-import MintButton from "./MintButton";
+import PropTypes from "prop-types";
+import Button from "./Button";
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -17,7 +17,8 @@ const OuterModal = styled.div`
   position: absolute;
   box-sizing: border-box;
   box-shadow: 5px 5px 10px black;
-  background-color: rgba(138, 214, 204, 0.9);
+  background-color: ${(props) => props.backgroundColor
+    ? props.backgroundColor : "#FFFFFF"};
   border-radius: 10px;
   top: calc(20vh);
   left: calc(30vw);
@@ -53,19 +54,28 @@ function ModalComponent({
   cancelText,
   onConfirm,
   onCancel,
+  backgroundColor,
 }) {
-
   if (!modal) return null;
+
   return (
     <form>
       <ModalWrapper>
-        <OuterModal>
+        <OuterModal backgroundColor={backgroundColor}>
           <InnerModal>
             {innerText}
           </InnerModal>
           <ButtonWrapper>
-            <MintButton onClickFunction={onConfirm} buttonText={confirmText} />
-            <MintButton onClickFunction={onCancel} buttonText={cancelText} />
+            <Button
+              onClickFunction={onConfirm}
+              buttonText={confirmText}
+              backgroundColor={backgroundColor}
+            />
+            <Button
+              onClickFunction={onCancel}
+              buttonText={cancelText}
+              backgroundColor={backgroundColor}
+            />
           </ButtonWrapper>
         </OuterModal>
       </ModalWrapper>
@@ -78,6 +88,7 @@ ModalComponent.propTypes = {
   innerText: PropTypes.string,
   confirmText: PropTypes.string,
   cancelText: PropTypes.string,
+  backgroundColor: PropTypes.string,
   onConfirm: PropTypes.func,
   onCancel: PropTypes.func,
 };
