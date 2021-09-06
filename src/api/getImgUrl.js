@@ -1,7 +1,6 @@
 import s3 from "../config/AWS";
 
 async function getImgUrl(file) {
-
   const fileName = file.name;
   const photoKey = "album1/" + fileName;
 

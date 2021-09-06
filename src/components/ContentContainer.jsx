@@ -5,6 +5,7 @@ import Wrapper from "./Wrapper";
 import ImgWrapper from "./ImgWrapper";
 import TextContainer from "./TextContainer";
 import HeartCounter from "./HeartCounter";
+import COLORS from "../constants/colors";
 
 function ContentContainer({
   color,
@@ -14,19 +15,14 @@ function ContentContainer({
   text,
   hasPicture,
 }) {
-  const COLORS = {
-    mint: "#8AD6CC",
-    coral: "#FB9C9C",
-  };
-
   return (
-    <Wrapper color={COLORS[color]}>
+    <Wrapper color={color}>
       <div className="background">
         <div>
           {date}
           <HeartCounter count={heartCount} />
         </div>
-        { hasPicture && <ImgWrapper>
+        {hasPicture && <ImgWrapper>
           <img src={url} />
         </ImgWrapper>}
         <TextContainer>{text}</TextContainer>
@@ -36,8 +32,8 @@ function ContentContainer({
 }
 
 ContentContainer.propTypes = {
-  color: PropTypes.oneOf(["coral", "mint"]),
-  date: PropTypes.string,
+  color: PropTypes.oneOf([COLORS.MAIN_CORAL, COLORS.MAIN_MINT]),
+  date: PropTypes.string.isRequired,
   heartCount: PropTypes.number,
   url: PropTypes.string,
   text: PropTypes.string,
@@ -45,8 +41,7 @@ ContentContainer.propTypes = {
 };
 
 ContentContainer.defaultProps = {
-  color: "coral",
-  date: "2021 / 8 / 31  12 : 45 PM",
+  color: COLORS.MAIN_MINT,
   heartCount: 0,
   url: "img/add-picture.png",
   text: "",

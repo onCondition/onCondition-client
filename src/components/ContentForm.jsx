@@ -6,6 +6,7 @@ import Wrapper from "./Wrapper";
 import ImgWrapper from "./ImgWrapper";
 import HeartCounter from "./HeartCounter";
 import Button from "./SButton";
+import COLORS from "../constants/colors";
 
 const Input = styled.input`
   width: 205px;
@@ -22,6 +23,7 @@ const HeartInputWrapper = styled.div`
   width: 90px;
   flex-direction: column;
   align-items: center;
+
   input {
     width: 80px;
     -webkit-appearance: none;
@@ -93,13 +95,7 @@ const HiddenInput = styled.input`
 `;
 
 function ContentForm({ color, hasPicture, onSubmit }) {
-  const COLORS = {
-    mint: "#8AD6CC",
-    coral: "#FB9C9C",
-  };
-
   const defaultCount = 0;
-
   const imgInput = useRef(null);
   const [date, setDate] = useState("");
   const [heartCount, setHeartCounts] = useState(defaultCount);
@@ -158,7 +154,7 @@ function ContentForm({ color, hasPicture, onSubmit }) {
 
   return (
     <form>
-      <Wrapper color={COLORS[color]}>
+      <Wrapper color={color}>
         <div>
           <Input
             type="datetime-local"
@@ -171,7 +167,7 @@ function ContentForm({ color, hasPicture, onSubmit }) {
           className="imgInput" accept="image/*"
           name="file" onChange={onImgChange}
         />
-        { hasPicture
+        {hasPicture
           && <ImgWrapper onClick={addImage}>
             {uploadedImgUrl
               ? <img src={uploadedImgUrl} />
@@ -190,14 +186,13 @@ function ContentForm({ color, hasPicture, onSubmit }) {
 }
 
 ContentForm.propTypes = {
-  color: PropTypes.oneOf(["coral", "mint"]),
+  color: PropTypes.oneOf([COLORS.MAIN_CORAL, COLORS.MAIN_MINT]),
   onSubmit: PropTypes.func,
   hasPicture: PropTypes.bool,
 };
 
 ContentForm.defaultProps = {
-  color: "coral",
-  onSubmit: (value) => console.log(value),
+  color: COLORS.MAIN_CORAL,
   hasPicture: false,
 };
 
