@@ -1,12 +1,12 @@
 import Cookie from "js-cookie";
-import api from "./api";
+import { postRefresh } from "./auth";
 
 const REFRESH_TOKEN = "refreshToken";
 const ACCESS_TOKEN = "accessToken";
 
 async function updateAccessToken() {
   const refreshToken = Cookie.get(REFRESH_TOKEN);
-  const accessToken = await api.refresh(refreshToken);
+  const accessToken = await postRefresh(refreshToken);
 
   localStorage.setItem(ACCESS_TOKEN, accessToken);
 }
@@ -21,6 +21,13 @@ function removeTokens() {
   Cookie.remove(REFRESH_TOKEN);
 }
 
+function checkTokenExist() {
+  return !!(Cookie.get(REFRESH_TOKEN) && localStorage.getItem(ACCESS_TOKEN));
+}
+
 export {
-  updateAccessToken, storeTokens, removeTokens,
+  updateAccessToken,
+  storeTokens,
+  removeTokens,
+  checkTokenExist,
 };

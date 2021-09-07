@@ -1,47 +1,63 @@
-import React from "react";
-import { Route, useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Login from "./components/Login";
-import Logout from "./components/Logout";
+import React, { useState, useEffect } from "react";
+import { Route, Switch, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
+import firebase from "./config/firebase";
 import Meal from "./pages/Meal";
+import Login from "./components/Login";
+import Logout from "./components/Logout";
+import PrivateRoute from "./components/PrivateRoute";
+import { setLogin, logout } from "./features/userSlice";
+import { checkTokenExist } from "./utils/tokens";
 
 const AppWrapper = styled.div`
   text-align: center;
 `;
 
 function App() {
-  const hasLoggedIn = useSelector((state) => state.user.hasLoggedIn);
+  const [isLoaded, setIsLoaded] = useState(false);
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  if (!hasLoggedIn) {
+  const handleLogout = function () {
     history.push("/login");
-  }
+  };
 
-  function handleLogin() {
-    history.push("/meal");
-  }
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        dispatch(logout());
+      } else if (checkTokenExist()) {
+        dispatch(setLogin());
+      }
 
-  function handleLogout() {
-    history.push("/login");
-  }
+      setIsLoaded(true);
+    });
+  }, []);
 
   return (
     <AppWrapper>
-      <Route exact path="/login">
-        {!hasLoggedIn ? (
-          <Login onLogin={handleLogin} />
-        ) : (
-          <div>
-            <p>welcome</p>
+      {isLoaded ? (
+        <>
+          <header>
             <Logout onLogout={handleLogout} />
-          </div>
-        )}
-      </Route>
-      <Route exact path="/meal">
-        <Meal />
-      </Route>
+          </header>
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <PrivateRoute exact path="/myCondition">
+              <p>my condition</p>
+            </PrivateRoute>
+            <PrivateRoute exact path="/meal">
+              <Meal />
+            </PrivateRoute>
+          </Switch>
+        </>
+      ) : (
+        <p>waiting...</p>
+      )}
     </AppWrapper>
   );
 }

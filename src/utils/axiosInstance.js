@@ -29,7 +29,7 @@ function handleResponseError(err) {
     return err.response;
   }
 
-  new Error(ERROR.INTERNAL_SERVER_ERROR);
+  return new Error(ERROR.INTERNAL_SERVER_ERROR);
 }
 
 const instance = axios.create();
