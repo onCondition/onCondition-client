@@ -7,7 +7,7 @@ import TextContainer from "./TextContainer";
 import HeartCounter from "./HeartCounter";
 import COLORS from "../constants/colors";
 
-function ContentContainer({
+function ContentViewer({
   color,
   date,
   heartCount,
@@ -17,21 +17,19 @@ function ContentContainer({
 }) {
   return (
     <Wrapper color={color}>
-      <div className="background">
-        <div>
-          {date}
-          <HeartCounter count={heartCount} />
-        </div>
-        {hasPicture && <ImgWrapper>
-          <img src={url} />
-        </ImgWrapper>}
-        <TextContainer>{text}</TextContainer>
+      <div>
+        {date + " "}
+        <HeartCounter count={heartCount} />
       </div>
+      {hasPicture && <ImgWrapper>
+        <img src={url} />
+      </ImgWrapper>}
+      <TextContainer>{text}</TextContainer>
     </Wrapper>
   );
 }
 
-ContentContainer.propTypes = {
+ContentViewer.propTypes = {
   color: PropTypes.oneOf([COLORS.MAIN_CORAL, COLORS.MAIN_MINT]),
   date: PropTypes.string.isRequired,
   heartCount: PropTypes.number,
@@ -40,12 +38,12 @@ ContentContainer.propTypes = {
   hasPicture: PropTypes.bool,
 };
 
-ContentContainer.defaultProps = {
-  color: COLORS.MAIN_MINT,
+ContentViewer.defaultProps = {
+  color: COLORS.MAIN_CORAL,
   heartCount: 0,
-  url: "img/add-picture.png",
+  url: "../img/add-picture.png",
   text: "",
   hasPicture: false,
 };
 
-export default ContentContainer;
+export default ContentViewer;

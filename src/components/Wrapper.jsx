@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import COLORS from "../constants/colors";
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,7 +11,7 @@ const Wrapper = styled.div`
   border-radius: 4%;
   box-shadow: 0 3px 5px gray;
   background: ${props => props.color};
-  color: white;
+  color: ${COLORS.WHITE};
   font-size: 0.9rem;
   list-style: none;
 `;
