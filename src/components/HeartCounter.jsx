@@ -6,8 +6,7 @@ import {
 } from "react-icons/bs";
 
 const HeartWrapper = styled.span`
-  margin: 10px 0 0 10px;
-  padding-top: 5px;
+  margin: 0 auto;
 
   div {
     display: inline-block;
@@ -15,14 +14,10 @@ const HeartWrapper = styled.span`
   }
 `;
 
-function HeartCounter({ count, color }) {
+function HeartCounter({ count }) {
   const numberOfHearts = 5;
   const countPerHeart = 2;
   const half = 0.5;
-  const COLORS = {
-    white: "#ffffff",
-    deepMint: "#539A92",
-  };
 
   const hearts = [...new Array(numberOfHearts)].map((_, i) => {
     if (i + half > count / countPerHeart) {
@@ -35,7 +30,7 @@ function HeartCounter({ count, color }) {
   });
 
   return (
-    <HeartWrapper color={COLORS[color]} >
+    <HeartWrapper>
       <div>{hearts}</div>
     </HeartWrapper>
   );
@@ -43,11 +38,10 @@ function HeartCounter({ count, color }) {
 
 HeartCounter.propTypes = {
   count: PropTypes.number.isRequired,
-  color: PropTypes.oneOf(["white", "deepMint"]),
 };
 
 HeartCounter.defaultProps = {
-  color: "white",
+  count: 0,
 };
 
 export default HeartCounter;

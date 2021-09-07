@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import COLORS from "../constants/colors";
 
 const SButton = styled.button`
   background-color: ${props => props.color};
@@ -8,8 +9,8 @@ const SButton = styled.button`
   line-height: 2rem;
   border: none;
   border-radius: 30px;
-  box-shadow: 0 3px 5px gray;
-  color: white;
+  box-shadow: 0 3px 5px ${COLORS.DARK_GREY};
+  color: ${COLORS.WHITE};
   padding: 0.4rem 0.7rem;
   margin: 4px;
   font-family: "Carrois Gothic SC", sans-serif;
@@ -21,16 +22,11 @@ const SButton = styled.button`
 `;
 
 function Button({ onClick, text, color }) {
-  const COLORS = {
-    mint: "#8AD6CC",
-    coral: "#FB9C9C",
-  };
-
   return (
     <SButton
       type="button"
       onClick={onClick}
-      color={COLORS[color]}
+      color={color}
     >
       {text}
     </SButton>
@@ -40,11 +36,11 @@ function Button({ onClick, text, color }) {
 Button.propTypes = {
   onClick: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
-  color: PropTypes.oneOf(["mint", "coral"]),
+  color: PropTypes.oneOf([COLORS.MAIN_CORAL, COLORS.MAIN_MINT]),
 };
 
 Button.defaultProps = {
-  color: "coral",
+  color: COLORS.MAIN_CORAL,
 };
 
 export default Button;
