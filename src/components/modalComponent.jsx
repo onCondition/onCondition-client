@@ -10,7 +10,7 @@ const ModalWrapper = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1000;
+  z-index: 1;
 `;
 
 const OuterModal = styled.div`
@@ -20,13 +20,12 @@ const OuterModal = styled.div`
   background-color: ${( props ) => props.backgroundColor
     ? props.backgroundColor : props.theme.pinkColors.lightPink};
   border-radius: 10px;
-  top: calc(20vh);
-  left: calc(30vw);
+  top: 20vh;
+  left: 30vw;
   width: 520px;
   height: 480px;
   padding: 40px 20px;
   margin: -50px;
-  z-index: 100;
 `;
 
 const InnerModal = styled.div`
@@ -38,17 +37,15 @@ const InnerModal = styled.div`
   height: 360px;
   margin: auto;
   padding: 40px 20px;
-  z-index: 10;
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
-  z-index: 10;
   justify-content: space-center;
 `;
 
 function ModalComponent({
-  modal,
+  modalStatus,
   confirmText,
   innerText,
   cancelText,
@@ -56,7 +53,7 @@ function ModalComponent({
   onCancel,
   backgroundColor,
 }) {
-  if (!modal) return null;
+  if (!modalStatus) return null;
 
   return (
     <form>
@@ -84,8 +81,8 @@ function ModalComponent({
 }
 
 ModalComponent.propTypes = {
-  modal: PropTypes.bool,
-  innerText: PropTypes.string,
+  modalStatus: PropTypes.bool,
+  innerText: PropTypes.string.isRequired,
   confirmText: PropTypes.string,
   cancelText: PropTypes.string,
   backgroundColor: PropTypes.string,
@@ -94,7 +91,6 @@ ModalComponent.propTypes = {
 };
 
 ModalComponent.defaultProps = {
-  innerText: "Text",
   confirmText: "Confirm",
   cancelText: "Cancel",
 };
