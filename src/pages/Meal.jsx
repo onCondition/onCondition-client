@@ -1,27 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import List from "../components/List";
-import ContentContainer from "../components/ContentContainer";
 import ContentForm from "../components/ContentForm";
-import { postMeal } from "../utils/meal";
+import HeartCounter from "../components/HeartCounter";
+import { getMeals, postMeal } from "../utils/meal";
+import COLORS from "../constants/colors";
 
 const Title = styled.p`
   margin: 10px 0px 10px 30px;
-  color: #66BEB2;
+  color: ${COLORS.MAIN_MINT};
   text-align: left;
   font-size: 50px;
 `;
 
 const Container = styled.div`
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row-reverse wrap;
   justify-content: center;
 
   .list {
     flex-grow: 1;
-    padding-left: 20px;
-    max-width: 790px;
+    max-width: 680px;
   }
 
   .viewer {
@@ -31,7 +32,18 @@ const Container = styled.div`
 `;
 
 function Meal() {
-  const [clickedSession, setClickedSession] = useState(null);
+  const [meals, setMeals] = useState([]);
+
+  useEffect(() => {
+    async function loadMeals() {
+      const loadedMeals = await getMeals();
+
+      setMeals(loadedMeals);
+    }
+
+    loadMeals();
+  }, []);
+
   const handleSubmitForm = function ({
     date, heartCount, url, text,
   }) {
@@ -40,22 +52,33 @@ function Meal() {
     });
   };
 
+  const mealBars = meals.map((meal) => {
+    return (
+      <Link to={`/meal/${meal._id}`} key={meal._id}>
+        <List color={COLORS.MAIN_CORAL}>
+          {meal.url
+            ? <img src={meal.url} />
+            : <img src="/img/add-picture.png" />}
+          <div>{meal.date}</div>
+          <HeartCounter count={meal.rating.heartCount} />
+        </List>
+      </Link>
+    );
+  });
+
   return (
     <div>
       <Title>식사</Title>
       <Container>
-        <div className="list">
-          <List color="coral" onClick={setClickedSession}>sfs</List>
-          <List color="mint">wow</List>
-        </div>
         <div className="viewer">
-          {clickedSession
-            ? <ContentContainer heartCount={5} hasPicture />
-            : <ContentForm
-              hasPicture
-              onSubmit={handleSubmitForm}
-            />
-          }
+          <ContentForm
+            hasPicture
+            onSubmit={handleSubmitForm}
+            submitButtonText="add meal"
+          />
+        </div>
+        <div className="list">
+          {mealBars}
         </div>
       </Container>
     </div>
