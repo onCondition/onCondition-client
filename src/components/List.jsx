@@ -14,9 +14,9 @@ const Li = styled.li`
   min-width: 435px;
   max-width: 630px;
   border-radius: 30px;
-  box-shadow: 0 3px 5px gray;
+  box-shadow: 0 3px 5px ${COLORS.DARK_GREY};
   background: ${props => props.color};
-  color: white;
+  color: ${COLORS.WHITE};
   list-style: none;
 
   img {

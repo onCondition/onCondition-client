@@ -35,7 +35,7 @@ const HeartInputWrapper = styled.div`
     -webkit-appearance: none;
     height: 10px;
     cursor: pointer;
-    background: #434343;
+    background: ${COLORS.DARK_GREY};
   }
 
   input::-webkit-slider-runnable-track {
@@ -80,9 +80,8 @@ const Textarea = styled.textarea`
   line-height: 2rem;
   border-radius: 7px;
   border-style: hidden;
-  background: white;
-  opacity: 0.9;
-  color: black;
+  background: ${COLORS.WHITE};
+  color: ${COLORS.BLACK};
   text-align: left;
   resize: none;
 

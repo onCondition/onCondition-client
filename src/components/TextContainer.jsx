@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import COLORS from "../constants/colors";
 
 const TextContainer = styled.div`
   flex-grow: 1;
@@ -7,9 +8,9 @@ const TextContainer = styled.div`
   padding: 5px 15px;
   line-height: 2rem;
   border-radius: 7px;
-  background: white;
+  background: ${COLORS.WHITE};
   opacity: 0.9;
-  color: black;
+  color: ${COLORS.BLACK};
   text-align: left;
   overflow: auto;
 `;
