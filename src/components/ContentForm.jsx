@@ -95,7 +95,23 @@ const HiddenInput = styled.input`
   display: none;
 `;
 
-function ContentForm({ color, hasPicture, onSubmit }) {
+const ButtonWrapper = styled.div`
+  display: flex;
+  width: 630px;
+  margin: 0 auto;
+
+  button {
+    flex: 1;
+  }
+`;
+
+function ContentForm({
+  color,
+  hasPicture,
+  onSubmit,
+  submitButtonText,
+  additionalButton,
+}) {
   const defaultCount = 0;
   const imageInput = useRef(null);
   const [date, setDate] = useState("");
@@ -130,7 +146,11 @@ function ContentForm({ color, hasPicture, onSubmit }) {
     setText("");
     setImage(null);
 
-    const url = await getImageUrl(image);
+    let url;
+
+    if (image) {
+      url = await getImageUrl(image);
+    }
 
     onSubmit({
       date, heartCount, text, url,
@@ -184,15 +204,20 @@ function ContentForm({ color, hasPicture, onSubmit }) {
           value={text}
           onChange={handleTextChange} />
       </Wrapper>
-      <Button text="add" onClick={handleSubmitbutton} />
+      <ButtonWrapper>
+        <Button text={submitButtonText} onClick={handleSubmitbutton} />
+        {additionalButton}
+      </ButtonWrapper>
     </form>
   );
 }
 
 ContentForm.propTypes = {
   color: PropTypes.oneOf([COLORS.MAIN_CORAL, COLORS.MAIN_MINT]),
-  onSubmit: PropTypes.func,
   hasPicture: PropTypes.bool,
+  onSubmit: PropTypes.func,
+  submitButtonText: PropTypes.string,
+  additionalButton: PropTypes.element,
 };
 
 ContentForm.defaultProps = {

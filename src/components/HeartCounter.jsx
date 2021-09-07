@@ -6,8 +6,7 @@ import {
 } from "react-icons/bs";
 
 const HeartWrapper = styled.span`
-  margin: 10px 0 0 10px;
-  padding-top: 5px;
+  margin: 0 auto;
 
   div {
     display: inline-block;
