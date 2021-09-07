@@ -19,14 +19,14 @@ const ButtonSt = styled.button`
 `;
 
 function Button({
-  onChange,
+  onClick,
   buttonText,
   backgroundColor,
 }) {
 
   return (
     <ButtonSt
-      onClick={onChange}
+      onClick={onClick}
       backgroundColor={backgroundColor}
     >
       {buttonText}
@@ -36,7 +36,7 @@ function Button({
 
 Button.propTypes = {
   buttonText: PropTypes.string,
-  onChange: PropTypes.func,
+  onClick: PropTypes.func,
   backgroundColor: PropTypes.string,
 };
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import CheckBoxComponent from "../components/CheckBoxComponent";
 
-function CheckBox({ className }) {
+function CheckBox({ className, color }) {
   const [checkboxVisibility, setcheckboxVisibility] = useState(false);
 
   function handleCheckboxChange(ev) {
@@ -12,7 +12,8 @@ function CheckBox({ className }) {
   return (
     <CheckBoxComponent
       className={className}
-      onChange={handleCheckboxChange}
+      color={color}
+      onClick={handleCheckboxChange}
       checked={checkboxVisibility}
     />
   );
@@ -20,6 +21,7 @@ function CheckBox({ className }) {
 
 CheckBox.propTypes = {
   className: PropTypes.string,
+  color: PropTypes.string,
 };
 
 export default CheckBox;

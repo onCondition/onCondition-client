@@ -4,7 +4,7 @@ import logger from "redux-logger";
 
 export const store = configureStore({
   reducer: {
-    firebase: firebaseReducer
+    firebase: firebaseReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

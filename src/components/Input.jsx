@@ -6,7 +6,7 @@ const InputSt = styled.input`
   display: relative;
   border-radius: 10px;
   border: 3px solid ${(props) => props.lineColor
-    ? props.lineColor : "#FFFFFF"};
+    ? props.lineColor : props.theme.pinkColors.mainPink};
   width: 100px;
   height: 50px;
   margin: 0 auto;
@@ -27,10 +27,6 @@ function Input({ name, lineColor }) {
 Input.propTypes = {
   name: PropTypes.string,
   lineColor: PropTypes.string,
-};
-
-Input.defaultProps = {
-  lineColor: "#8AD6CC",
 };
 
 export default Input;

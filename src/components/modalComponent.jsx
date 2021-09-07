@@ -17,8 +17,8 @@ const OuterModal = styled.div`
   position: absolute;
   box-sizing: border-box;
   box-shadow: 5px 5px 10px black;
-  background-color: ${(props) => props.backgroundColor
-    ? props.backgroundColor : "#FFFFFF"};
+  background-color: ${( props ) => props.backgroundColor
+    ? props.backgroundColor : props.theme.pinkColors.lightPink};
   border-radius: 10px;
   top: calc(20vh);
   left: calc(30vw);
@@ -49,8 +49,8 @@ const ButtonWrapper = styled.div`
 
 function ModalComponent({
   modal,
-  innerText,
   confirmText,
+  innerText,
   cancelText,
   onConfirm,
   onCancel,
@@ -67,12 +67,12 @@ function ModalComponent({
           </InnerModal>
           <ButtonWrapper>
             <Button
-              onClickFunction={onConfirm}
+              onClick={onConfirm}
               buttonText={confirmText}
               backgroundColor={backgroundColor}
             />
             <Button
-              onClickFunction={onCancel}
+              onClick={onCancel}
               buttonText={cancelText}
               backgroundColor={backgroundColor}
             />

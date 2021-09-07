@@ -1,29 +1,44 @@
 import React, { useState } from "react";
-import ModalComponent from "../components/ModalComponent";
-import theme from "../theme/theme";
+import PropTypes from "prop-types";
+import ModalComponent from "../components/modalComponent";
 
-function Modal() {
+function Modal({
+  confirmText,
+  innerText,
+  backgroundColor,
+}) {
   const [modal, setModal] = useState(true);
 
-  function onConfirm() {
-    setModal(false);
+  function handleConfirm() {
+    console.log("OK I'm working");
   }
 
-  function onCancel() {
+  function handleCancel() {
     setModal(false);
   }
 
   return (
     <ModalComponent
       modal={modal}
-      confirmText="Event"
+      confirmText={confirmText}
       cancelText="Cancel"
-      innerText="textText"
-      onConfirm={onConfirm}
-      onCancel={onCancel}
-      backgroundColor={theme.mintColors.mainMint}
+      innerText={innerText}
+      onConfirm={handleConfirm}
+      onCancel={handleCancel}
+      backgroundColor={backgroundColor}
     />
   );
 }
+
+Modal.propTypes = {
+  innerText: PropTypes.string,
+  confirmText: PropTypes.string,
+  backgroundColor: PropTypes.string,
+};
+
+Modal.defaultProps = {
+  innerText: "Text",
+  confirmText: "Confirm",
+};
 
 export default Modal;
