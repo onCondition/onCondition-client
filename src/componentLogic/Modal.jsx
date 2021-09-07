@@ -7,19 +7,19 @@ function Modal({
   innerText,
   backgroundColor,
 }) {
-  const [modal, setModal] = useState(true);
+  const [isModalOn, setIsModalOn] = useState(true);
 
   function handleConfirm() {
     console.log("OK I'm working");
   }
 
   function handleCancel() {
-    setModal(false);
+    setIsModalOn(false);
   }
 
   return (
     <ModalComponent
-      modal={modal}
+      modalStatus={isModalOn}
       confirmText={confirmText}
       cancelText="Cancel"
       innerText={innerText}
