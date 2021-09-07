@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import firebase from "../config/firebase";
 import { login, logout } from "../features/userSlice";
 import styled from "styled-components";
@@ -34,10 +33,9 @@ const GoogleLogin = styled.img`
 function Login({ onLogin }) {
   const dispatch = useDispatch();
   const hasLoggedIn = useSelector(state => state.user.hasLoggedIn);
-  const history = useHistory();
 
   if (hasLoggedIn) {
-    history.push("/");
+    onLogin();
   }
 
   function loginWithGoogle() {
