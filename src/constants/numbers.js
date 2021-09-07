@@ -8,10 +8,10 @@ const TEXT_SIZE = {
 };
 
 const GAP_SIZE = {
-  FIVE: 5,
-  TEN: 10,
-  TWENTY: 20,
-  FORTY: 40,
+  SMALL: 5,
+  MEDIUM: 10,
+  LARGE: 20,
+  X_LARGE: 40,
 };
 
 const SIZE = {
