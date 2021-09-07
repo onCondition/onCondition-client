@@ -6,6 +6,7 @@ import Logout from "./components/Logout";
 import styled from "styled-components";
 
 import Meal from "./pages/Meal";
+import MealDetail from "./pages/MealDetail";
 
 const AppWrapper = styled.div`
   text-align: center;
@@ -41,6 +42,9 @@ function App() {
       </Route>
       <Route exact path="/meal">
         <Meal />
+      </Route>
+      <Route exact path="/meal/:id">
+        <MealDetail />
       </Route>
     </AppWrapper>
   );
