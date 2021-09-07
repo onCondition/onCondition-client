@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../utils/api";
+import { postLogin } from "../utils/auth";
 import { storeTokens, removeTokens } from "../utils/tokens";
 
 const initialState = {
@@ -9,7 +9,7 @@ const initialState = {
 const login = createAsyncThunk("user/login",
   async function (idToken) {
     try {
-      const { accessToken, refreshToken } = await api.login(idToken);
+      const { accessToken, refreshToken } = await postLogin(idToken);
 
       storeTokens({ accessToken, refreshToken });
     } catch (err) {
