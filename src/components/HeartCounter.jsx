@@ -21,11 +21,11 @@ function HeartCounter({ count }) {
 
   const hearts = [...new Array(numberOfHearts)].map((_, i) => {
     if (i + half > count / countPerHeart) {
-      return <BsHeart />;
+      return <BsHeart key={`${i}blank`} />;
     } else if (i + half === count / countPerHeart) {
-      return <BsHeartHalf />;
+      return <BsHeartHalf key={`${i}half`} />;
     } else {
-      return <BsHeartFill />;
+      return <BsHeartFill key={`${i}fill`} />;
     }
   });
 

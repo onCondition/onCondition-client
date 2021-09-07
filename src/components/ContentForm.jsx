@@ -205,7 +205,12 @@ ContentForm.propTypes = {
   onSubmit: PropTypes.func,
   submitButtonText: PropTypes.string,
   additionalButton: PropTypes.element,
-  defaultValues: PropTypes.object,
+  defaultValues: PropTypes.shape({
+    heartCount: PropTypes.number,
+    url: PropTypes.string,
+    text: PropTypes.string,
+    date: PropTypes.string,
+  }),
 };
 
 ContentForm.defaultProps = {
