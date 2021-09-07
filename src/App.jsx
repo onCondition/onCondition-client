@@ -29,7 +29,7 @@ function App() {
 
   return (
     <AppWrapper>
-      <Route exact path="/">
+      <Route exact path="/login">
         {!hasLoggedIn ? (
           <Login onLogin={handleLogin} />
         ) : (

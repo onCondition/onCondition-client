@@ -2,7 +2,7 @@ import axios from "./axiosInstance";
 
 async function getMeals() {
   const res = await axios.get("/api/meal");
-  console.log(res);
+
   return res.data;
 }
 
