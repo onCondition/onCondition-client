@@ -1,12 +1,19 @@
-const SIZE = import("../constants/numbers");
-const calcRem = (size) => `${size / SIZE.DIVIDE_OCTUPLE}rem`;
+const { TEXT_SIZE, GAP_SIZE } = import("../constants/numbers");
+const calcRem = (size) => `${size / TEXT_SIZE.DIVIDE_OCTUPLE}rem`;
+
+const gaps = {
+  small: calcRem(GAP_SIZE.SMALL),
+  medium: calcRem(GAP_SIZE.MEDIUM),
+  large: calcRem(GAP_SIZE.LARGE),
+  xLarge: calcRem(GAP_SIZE.X_LARGE),
+};
 
 const fontSizes = {
-  small: calcRem(SIZE.SMALL),
-  medium: calcRem(SIZE.MEDIUM),
-  large: calcRem(SIZE.LARGE),
-  xLarge: calcRem(SIZE.X_LARGE),
-  titleSize: calcRem(SIZE.TITLE),
+  small: calcRem(TEXT_SIZE.SMALL),
+  medium: calcRem(TEXT_SIZE.MEDIUM),
+  large: calcRem(TEXT_SIZE.LARGE),
+  xLarge: calcRem(TEXT_SIZE.X_LARGE),
+  titleSize: calcRem(TEXT_SIZE.TITLE),
 };
 
 const pinkColors = {
@@ -29,6 +36,7 @@ const greyScaleColors = {
 };
 
 const theme = {
+  gaps,
   fontSizes,
   pinkColors,
   mintColors,
