@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import { useSelector, useDispatch } from "react-redux";
-import firebase from "../config/firebase";
-import { login, logout } from "../features/userSlice";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+
+import firebase from "../config/firebase";
+import { login } from "../features/userSlice";
+import { ERROR } from "../constants/messages";
+import USER_INFO_SCOPE from "../constants/userInfoScope";
 import COLORS from "../constants/colors";
 
 const Wrapper = styled.div`
@@ -30,43 +33,55 @@ const GoogleLogin = styled.img`
   cursor: pointer;
 `;
 
-function Login({ onLogin }) {
+function Login() {
+  const [errorStatus, setErrorStatus] = useState("");
+  const hasLoggedIn = useSelector((state) => state.user.hasLoggedIn);
+  const history = useHistory();
   const dispatch = useDispatch();
-  const hasLoggedIn = useSelector(state => state.user.hasLoggedIn);
-
-  if (hasLoggedIn) {
-    onLogin();
-  }
 
   function loginWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    firebase.auth().signInWithPopup(provider);
+    provider.addScope(USER_INFO_SCOPE);
+    firebase.auth().signInWithRedirect(provider);
   }
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(async function (user) {
-      if (user) {
-        const token = await user.getIdToken();
+  function handleLogin() {
+    history.push("/myCondition");
+  }
 
-        dispatch(login(token));
-        onLogin();
-      } else {
-        dispatch(logout());
+  useEffect(async () => {
+    if (hasLoggedIn) {
+      handleLogin();
+
+      return;
+    }
+
+    try {
+      const { user, credential } = await firebase.auth().getRedirectResult();
+
+      if (!user) {
+        return;
       }
-    });
-  }, []);
+
+      const idToken = await user.getIdToken(true);
+      const { accessToken } = credential;
+      const refreshToken = user.refreshToken;
+      const googleToken = { accessToken, refreshToken };
+
+      dispatch(login({ idToken, googleToken }));
+    } catch {
+      setErrorStatus(ERROR.LOGIN_FAIL);
+    }
+  }, [hasLoggedIn]);
 
   return (
     <Wrapper>
+      {errorStatus && <p>{errorStatus}</p>}
       <Logo src="/logo.png" />
       <GoogleLogin src="/google_login.png" onClick={loginWithGoogle} />
     </Wrapper>
   );
 }
-
-Login.propTypes = {
-  onLogin: PropTypes.func.isRequired,
-};
 
 export default Login;

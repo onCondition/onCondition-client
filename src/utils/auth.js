@@ -28,9 +28,9 @@ async function postRefresh(refreshToken) {
   }
 }
 
-async function postGoogleToken(token) {
+async function postGoogleToken(googleToken) {
   try {
-    const res = await axiosInstance.post("api/googleFit", token);
+    const res = await axiosInstance.post("api/googleFit", googleToken);
 
     return res;
   } catch (err) {
