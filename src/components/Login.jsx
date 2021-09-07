@@ -46,9 +46,9 @@ function Login() {
     firebase.auth().signInWithRedirect(provider);
   }
 
-  function handleLogin() {
+  const handleLogin = function () {
     history.push("/myCondition");
-  }
+  };
 
   useEffect(async () => {
     if (hasLoggedIn) {
