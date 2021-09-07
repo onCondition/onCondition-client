@@ -12,8 +12,10 @@ const ButtonSt = styled.button`
   color: white;
   cursor: pointer;
   font-size: large;
-  width: 100px;
-  height: 50px;
+  width: ${(props) => props.width
+    ? props.width : "100px"};
+  height: ${(props) => props.height
+    ? props.height : "50px"};
   margin: 0 auto;
   margin-top: 15px;
 `;
@@ -22,12 +24,16 @@ function Button({
   onClick,
   buttonText,
   backgroundColor,
+  width,
+  height,
 }) {
 
   return (
     <ButtonSt
       onClick={onClick}
       backgroundColor={backgroundColor}
+      width={width}
+      height={height}
     >
       {buttonText}
     </ButtonSt>
@@ -38,6 +44,8 @@ Button.propTypes = {
   buttonText: PropTypes.string,
   onClick: PropTypes.func,
   backgroundColor: PropTypes.string,
+  height: PropTypes.number,
+  width: PropTypes.number,
 };
 
 export default Button;

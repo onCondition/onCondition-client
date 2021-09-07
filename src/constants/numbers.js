@@ -1,4 +1,11 @@
-const TEXT_SIZE = {
+const GAP = {
+  SMALL: 5,
+  MEDIUM: 10,
+  LARGE: 20,
+  X_LARGE: 40,
+};
+
+const TEXT = {
   DIVIDE_OCTUPLE: 8,
   SMALL: 28,
   MEDIUM: 36,
@@ -7,16 +14,14 @@ const TEXT_SIZE = {
   TITLE: 100,
 };
 
-const GAP_SIZE = {
-  SMALL: 5,
-  MEDIUM: 10,
-  LARGE: 20,
-  X_LARGE: 40,
+const RATIO = {
+  MODAL: 0.92,
 };
 
 const SIZE = {
-  TEXT_SIZE,
-  GAP_SIZE,
+  TEXT,
+  GAP,
+  RATIO,
 };
 
 export default SIZE;

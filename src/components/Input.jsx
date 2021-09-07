@@ -7,19 +7,28 @@ const InputSt = styled.input`
   border-radius: 10px;
   border: 3px solid ${(props) => props.lineColor
     ? props.lineColor : props.theme.pinkColors.mainPink};
-  width: 100px;
-  height: 50px;
+  width: ${(props) => props.width
+    ? props.width : "150px"};
+  height: ${(props) => props.height
+    ? props.height : "50px"};
   margin: 0 auto;
   margin-top: 15px;
   outline: none;
 `;
 
-function Input({ name, lineColor }) {
+function Input({
+  name,
+  lineColor,
+  width,
+  height,
+}) {
 
   return (
     <InputSt
       name={name}
       lineColor={lineColor}
+      width={width}
+      height={height}
     />
   );
 }
@@ -27,6 +36,8 @@ function Input({ name, lineColor }) {
 Input.propTypes = {
   name: PropTypes.string,
   lineColor: PropTypes.string,
+  height: PropTypes.number,
+  width: PropTypes.number,
 };
 
 export default Input;

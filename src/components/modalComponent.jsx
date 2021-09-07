@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Button from "./Button";
+import SIZE from "../constants/numbers";
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -22,7 +23,8 @@ const OuterModal = styled.div`
   border-radius: 10px;
   top: 20vh;
   left: 30vw;
-  width: 520px;
+  width: ${(props) => props.width
+    ? props.width : "520px"};
   height: 480px;
   padding: 40px 20px;
   margin: -50px;
@@ -31,9 +33,10 @@ const OuterModal = styled.div`
 const InnerModal = styled.div`
   position: relative;
   box-sizing: border-box;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: ${(props) => props.theme.greyScaleColors.fadeWhite};
   border-radius: 10px;
-  width: 460px;
+  width: ${(props) => props.width * SIZE.RATIO.MODAL
+    ? props.width * SIZE.RATIO.MODAL : "480px"};
   height: 360px;
   margin: auto;
   padding: 40px 20px;
@@ -45,15 +48,15 @@ const ButtonWrapper = styled.div`
 `;
 
 function ModalComponent({
-  modalStatus,
   confirmText,
   innerText,
   cancelText,
   onConfirm,
   onCancel,
   backgroundColor,
+  width,
+  height,
 }) {
-  if (!modalStatus) return null;
 
   return (
     <form>
@@ -67,11 +70,15 @@ function ModalComponent({
               onClick={onConfirm}
               buttonText={confirmText}
               backgroundColor={backgroundColor}
+              width={width}
+              height={height}
             />
             <Button
               onClick={onCancel}
               buttonText={cancelText}
               backgroundColor={backgroundColor}
+              width={width}
+              height={height}
             />
           </ButtonWrapper>
         </OuterModal>
@@ -81,13 +88,14 @@ function ModalComponent({
 }
 
 ModalComponent.propTypes = {
-  modalStatus: PropTypes.bool,
   innerText: PropTypes.string.isRequired,
   confirmText: PropTypes.string,
   cancelText: PropTypes.string,
   backgroundColor: PropTypes.string,
   onConfirm: PropTypes.func,
   onCancel: PropTypes.func,
+  height: PropTypes.number,
+  width: PropTypes.number,
 };
 
 ModalComponent.defaultProps = {
