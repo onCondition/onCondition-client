@@ -41,7 +41,7 @@ ContentViewer.propTypes = {
 ContentViewer.defaultProps = {
   color: COLORS.MAIN_CORAL,
   heartCount: 0,
-  url: "%PUBLIC_URL%/img/add-picture.png",
+  url: "/img/add-picture.png",
   text: "",
   hasPicture: false,
 };
