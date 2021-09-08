@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
+import theme from "./theme/theme";
 
 import firebase from "./config/firebase";
 import Meal from "./pages/Meal";
@@ -32,7 +33,6 @@ function App() {
       } else if (checkTokenExist()) {
         dispatch(setLogin());
       }
-
       setIsLoaded(true);
     });
   }, []);
