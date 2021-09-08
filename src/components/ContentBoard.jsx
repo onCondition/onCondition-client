@@ -60,7 +60,7 @@ function ContentBoard({
 
 ContentBoard.propTypes = {
   text: PropTypes.string.isRequired,
-  backgroundColor: PropTypes.oneOf(theme.background),
+  backgroundColor: PropTypes.oneOf(Object.values(theme.background)),
   heading: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,
