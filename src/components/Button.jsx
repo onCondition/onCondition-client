@@ -40,8 +40,8 @@ Button.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   backgroundColor: PropTypes.string,
-  height: PropTypes.number,
-  width: PropTypes.number,
+  height: PropTypes.string.isRequired,
+  width: PropTypes.string.isRequired,
 };
 
 Button.defaultProps = {
