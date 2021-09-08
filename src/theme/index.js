@@ -1,4 +1,5 @@
 import SIZE from "../constants/numbers";
+
 const calcRem = (size) => `${size / SIZE.TEXT.DIVIDE_OCTUPLE}rem`;
 
 const gaps = {
@@ -35,12 +36,17 @@ const greyScaleColors = {
   fadeLightGrey: "E6F5F6F6",
 };
 
+const innerColors = {
+  button: "#FFFFFF",
+};
+
 const theme = {
   gaps,
   fontSizes,
   pinkColors,
   mintColors,
   greyScaleColors,
+  innerColors,
 };
 
 export default theme;
