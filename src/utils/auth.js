@@ -1,9 +1,8 @@
 import axios from "axios";
+import axiosInstance from "./axiosInstance";
 import { ERROR } from "../constants/messages";
 
-const api = {};
-
-api.login = async function (idToken) {
+async function postLogin(idToken) {
   try {
     const res = await axios.post("/api/login",
       null,
@@ -15,9 +14,9 @@ api.login = async function (idToken) {
   } catch (err) {
     throw new Error(ERROR.LOGIN_FAIL);
   }
-};
+}
 
-api.refresh = async function (refreshToken) {
+async function postRefresh(refreshToken) {
   try {
     const res = await axios.post("/api/refresh",
       null,
@@ -27,6 +26,16 @@ api.refresh = async function (refreshToken) {
   } catch (err) {
     throw new Error(ERROR.TOKEN_REFRESH_FAIL);
   }
-};
+}
 
-export default api;
+async function postGoogleToken(googleToken) {
+  try {
+    const res = await axiosInstance.post("api/googleFit", googleToken);
+
+    return res;
+  } catch (err) {
+    throw new Error(ERROR.GOOGLE_TOKEN_NOT_AVAILABLE);
+  }
+}
+
+export { postLogin, postRefresh, postGoogleToken };

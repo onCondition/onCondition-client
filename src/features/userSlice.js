@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../utils/api";
+import { postLogin, postGoogleToken } from "../utils/auth";
 import { storeTokens, removeTokens } from "../utils/tokens";
 
 const initialState = {
@@ -7,11 +7,17 @@ const initialState = {
 };
 
 const login = createAsyncThunk("user/login",
-  async function (idToken) {
+  async function ({ idToken, googleToken }) {
     try {
-      const { accessToken, refreshToken } = await api.login(idToken);
+      const { accessToken, refreshToken } = await postLogin(idToken);
 
       storeTokens({ accessToken, refreshToken });
+
+      const res = await postGoogleToken(googleToken);
+
+      if (res.status) {
+        return Promise.reject(res.message);
+      }
     } catch (err) {
       return Promise.reject(err);
     }
@@ -22,6 +28,11 @@ const logout = createAsyncThunk("user/logout", removeTokens);
 const userSlice = createSlice({
   name: "user",
   initialState,
+  reducers: {
+    setLogin(state) {
+      state.hasLoggedIn = true;
+    },
+  },
   extraReducers: {
     [login.fulfilled]: (state) => {
       state.hasLoggedIn = true;
@@ -41,5 +52,6 @@ const userSlice = createSlice({
   },
 });
 
+export const { setLogin } = userSlice.actions;
 export { login, logout };
 export default userSlice.reducer;
