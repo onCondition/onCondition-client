@@ -6,7 +6,7 @@ import SIZE from "../constants/numbers";
 
 const ModalWrapper = styled.div`
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: ${({ theme }) => theme.background.modal};;
   top: 0;
   left: 0;
   right: 0;
@@ -18,7 +18,7 @@ const OuterModal = styled.div`
   position: absolute;
   box-sizing: border-box;
   box-shadow: 5px 5px 10px black;
-  background-color: ${( props ) => props.backgroundColor
+  background-color: ${(props) => props.backgroundColor
     ? props.backgroundColor : props.theme.pinkColors.lightPink};
   border-radius: 10px;
   top: 20vh;
@@ -33,7 +33,7 @@ const OuterModal = styled.div`
 const InnerModal = styled.div`
   position: relative;
   box-sizing: border-box;
-  background-color: ${(props) => props.theme.greyScaleColors.fadeWhite};
+  background-color: ${(props) => props.theme.background.innerModal};
   border-radius: 10px;
   width: ${(props) => props.width * SIZE.RATIO.MODAL
     ? props.width * SIZE.RATIO.MODAL : "480px"};

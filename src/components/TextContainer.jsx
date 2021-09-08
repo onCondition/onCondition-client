@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import COLORS from "../constants/colors";
 
 const TextContainer = styled.div`
   flex-grow: 1;
@@ -8,9 +7,9 @@ const TextContainer = styled.div`
   padding: 5px 15px;
   line-height: 2rem;
   border-radius: 7px;
-  background: ${COLORS.WHITE};
+  background: ${({ theme }) => theme.background.input};
   opacity: 0.9;
-  color: ${COLORS.BLACK};
+  color: ${({ theme }) => theme.text.input};
   text-align: left;
   overflow: auto;
 `;

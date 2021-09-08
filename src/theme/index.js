@@ -1,3 +1,8 @@
+import {
+  pinkColors,
+  mintColors,
+  greyScaleColors,
+} from "./colors";
 import SIZE from "../constants/numbers";
 
 const calcRem = (size) => `${size / SIZE.TEXT.DIVIDE_OCTUPLE}rem`;
@@ -17,36 +22,37 @@ const fontSizes = {
   titleSize: calcRem(SIZE.TEXT.TITLE),
 };
 
-const pinkColors = {
-  mainPink: "#F97171",
-  lightPink: "#FB9C9C",
+const background = {
+  main: pinkColors.lightPink,
+  sub: mintColors.mainMint,
+  modal: greyScaleColors.opaqueGrey,
+  innerModal: greyScaleColors.fadeWhite,
+  input: greyScaleColors.white,
 };
 
-const mintColors = {
-  mainMint: "#8AD6CC",
-  darkMint: "#539A92",
+const text = {
+  main: pinkColors.lightPink,
+  sub: mintColors.mainMint,
+  button: greyScaleColors.white,
+  input: greyScaleColors.black,
 };
 
-const greyScaleColors = {
-  lightGrey: "#F5F6F6",
-  mediumGrey: "#B0B0B0",
-  darkGrey: "E6B0B0B0",
-  fadeWhite: "#E6FFFFFF",
-  fadeGrey: "4DF5F6F6",
-  fadeLightGrey: "E6F5F6F6",
+const point = {
+  main: pinkColors.mainPink,
 };
 
-const innerColors = {
-  button: "#FFFFFF",
+const shadow = {
+  main: greyScaleColors.darkGrey,
+  sub: greyScaleColors.lightGrey,
 };
 
 const theme = {
   gaps,
   fontSizes,
-  pinkColors,
-  mintColors,
-  greyScaleColors,
-  innerColors,
+  background,
+  text,
+  point,
+  shadow,
 };
 
 export default theme;

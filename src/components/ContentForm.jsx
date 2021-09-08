@@ -7,8 +7,8 @@ import ImageWrapper from "./ImageWrapper";
 import ButtonsWrapper from "./ButtonsWrapper";
 import HeartCounter from "./HeartCounter";
 import Button from "./SButton";
-import COLORS from "../constants/colors";
 import getImageUrl from "../utils/getImageUrl";
+import theme from "../theme";
 
 const Input = styled.input`
   width: 205px;
@@ -36,7 +36,7 @@ const HeartInputWrapper = styled.div`
     -webkit-appearance: none;
     height: 10px;
     cursor: pointer;
-    background: ${COLORS.DARK_GREY};
+    background: ${({ theme }) => theme.shadow.darkGrey};
   }
 
   input::-webkit-slider-runnable-track {
@@ -80,8 +80,8 @@ const Textarea = styled.textarea`
   line-height: 2rem;
   border-radius: 7px;
   border-style: hidden;
-  background: ${COLORS.WHITE};
-  color: ${COLORS.BLACK};
+  background: ${({ theme }) => theme.background.input};
+  color: ${({ theme }) => theme.text.input};
   text-align: left;
   resize: none;
 
@@ -129,7 +129,7 @@ function ContentForm({
     setText(target.value);
   };
 
-  const handleSubmitbutton = async function () {
+  const handleSubmitButton = async function () {
     let url = imageUrl;
 
     if (image) {
@@ -192,7 +192,7 @@ function ContentForm({
           onChange={handleTextChange} />
       </Wrapper>
       <ButtonsWrapper>
-        <Button text={submitButtonText} onClick={handleSubmitbutton} />
+        <Button text={submitButtonText} onClick={handleSubmitButton} />
         {additionalButton}
       </ButtonsWrapper>
     </form>
@@ -200,7 +200,7 @@ function ContentForm({
 }
 
 ContentForm.propTypes = {
-  color: PropTypes.oneOf([COLORS.MAIN_CORAL, COLORS.MAIN_MINT]),
+  color: PropTypes.oneOf(Object.values(theme.background)),
   hasPicture: PropTypes.bool,
   onSubmit: PropTypes.func,
   submitButtonText: PropTypes.string,
@@ -214,7 +214,7 @@ ContentForm.propTypes = {
 };
 
 ContentForm.defaultProps = {
-  color: COLORS.MAIN_CORAL,
+  color: theme.background.main,
   hasPicture: false,
   defaultValues: {
     heartCount: 0,

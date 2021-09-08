@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import Button from "./Button";
-import CommentEntry from "./CommentEntry";
-import CommentForm from "./CommentForm";
-import apiRequest from "../utils/axiosInstance";
-import { COMMENT, EDIT, DELETE } from "../constants/buttons";
-import { ERROR, RESPONSE } from "../constants/messages";
 import styled from "styled-components";
-import FONTS from "../constants/webFontUrl";
-import COLORS from "../constants/colors";
 
-const API_ENDPOINT = "api/comments";
+import CommentViewer from "./CommentViewer";
+import CommentForm from "./CommentForm";
+import {
+  postComment,
+  editCommentById,
+  deleteCommentById,
+} from "../utils/comment";
+import { COMMENT, EDIT } from "../constants/buttons";
+import { ERROR } from "../constants/messages";
 
 const CommentContainerWrapper = styled.div`
   width: 500px;
@@ -19,131 +19,92 @@ const CommentContainerWrapper = styled.div`
   grid-template-rows: 6fr 1fr 3fr;
   padding: 10px 5px;
   border-radius: 30px;
-  background-color: ${COLORS.LIGHT_GREY};
-  box-shadow: 0 0.3rem 0.3rem ${COLORS.DARK_GREY};
-`;
-
-const CommentBlock = styled.div`
-  overflow: scroll;
-
-  @font-face {
-    font-family: "Nanum Gothic", sans-serif;
-    src: url(${FONTS.NANUM_GOTHIC});
-  }
+  background-color: ${({ theme }) => theme.shadow.sub};
+  box-shadow: 0 0.3rem 0.3rem ${({ theme }) => theme.shadow.main};
 `;
 
 const Status = styled.div`
-  color: ${COLORS.MAIN_PINK};
+  color: ${({ theme }) => theme.point.mainPink};
 `;
 
 function CommentContainer({
-  userId, category, ratingId, comments
+  comments, userId, category, ratingId,
 }) {
   const [userComment, setUserComment] = useState({
-    id: null, content: "", isUpdated: false,
+    id: "", content: "", isUpdated: false,
   });
-  const [deleteTargetComment, setDeleteTargetComment] = useState(null);
+  const [targetId, setTargetId] = useState("");
   const [status, setStatus] = useState("");
 
-  function handleAddComment(newComment) {
+  const handleSubmitComment = function (newComment) {
     setUserComment((prev) => ({
-      ...prev, content: newComment, isUpdated: true
+      ...prev, content: newComment, isUpdated: true,
     }));
-  }
+  };
 
-  function handleOpenEdit({ id, content }) {
+  const handleClickEdit = function ({ id, content }) {
     setUserComment({
-      id, content, isUpdated: false
+      id, content, isUpdated: false,
     });
-  }
+  };
 
-  function handleDeleteComment(commentId) {
-    setDeleteTargetComment(commentId);
-  }
-
-  function resetUserComment() {
+  const resetUserComment = function () {
     setUserComment({ id: null, content: "", isUpdated: false });
-  }
+  };
+
+  const handleClickDelete = function (id) {
+    setTargetId(id);
+  };
 
   useEffect(async () => {
     if (!userComment.isUpdated) {
       setStatus("");
+
       return;
     }
 
-    try {
-      const url = API_ENDPOINT
-        + (userComment.id ? `/${userComment.id}` : "");
-      const request = userComment.id ? apiRequest.patch : apiRequest.post;
-      const res = await request(url,
-        {
-          category,
-          ratingId,
-          date: new Date(),
-          content: userComment.content,
-        });
+    const body = {
+      category,
+      ratingId,
+      date: new Date(),
+      content: userComment.content,
+    };
+    const res = userComment.id
+      ? await editCommentById(userComment.id, body)
+      : await postComment(body);
 
-      if (res.status !== RESPONSE.OK) {
-        setStatus(ERROR.COMMENT_UPDATE_FAIL);
-      }
-
+    if (!res) {
+      setStatus(ERROR.COMMENT_UPDATE_FAIL);
+    } else {
       resetUserComment();
-    } catch {
-      setStatus(ERROR.INTERNAL_SERVER_ERROR);
     }
   }, [userComment]);
 
   useEffect(async () => {
-    if (!deleteTargetComment) {
+    if (!targetId) {
       return;
     }
 
-    try {
-      const url = `${API_ENDPOINT}/${deleteTargetComment}`;
-      const res = await apiRequest.delete(url);
+    const res = await deleteCommentById(targetId);
 
-      if (res.result !== RESPONSE.OK) {
-        setStatus(ERROR.COMMENT_DELETE_FAIL);
-      }
-    } catch {
-      setStatus(ERROR.INTERNAL_SERVER_ERROR);
+    if (!res) {
+      setStatus(ERROR.COMMENT_DELETE_FAIL);
     }
-  }, [deleteTargetComment]);
+  }, [targetId]);
 
   return (
     <CommentContainerWrapper>
-      <CommentBlock className="transparent-scrollbar">
-        {comments.map(({
-          _id: id, content, profileUrl, creator
-        }) => (
-          userId === creator ? (
-            <CommentEntry
-              key={id}
-              id={id}
-              profileUrl={profileUrl}
-              content={content}
-            >
-              <Button
-                text={EDIT}
-                onClick={() => handleOpenEdit({ id, content })}
-              />
-              <Button text={DELETE} onClick={() => handleDeleteComment(id)} />
-            </CommentEntry>
-          ) : (
-            <CommentEntry
-              key={id}
-              id={id}
-              profileUrl={profileUrl}
-              content={content}
-            />
-          )
-        ))}
-      </CommentBlock>
+      <CommentViewer
+        userId={userId}
+        comments={comments}
+        onClickEdit={handleClickEdit}
+        onClickDelete={handleClickDelete}
+      />
       <Status>{status}</Status>
       <CommentForm
         content={userComment.content}
         buttonText={userComment.id ? EDIT : COMMENT}
-        onSubmit={handleAddComment}
+        onSubmit={handleSubmitComment}
         onReset={resetUserComment}
       />
     </CommentContainerWrapper>
