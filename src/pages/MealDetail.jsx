@@ -60,14 +60,27 @@ function MealDetail() {
   }, [id]);
 
   const handleFormSubmit = async function (values) {
-    await editMealById(id, values);
+    const { date, heartCount, text } = values;
+
+    const result = await editMealById(id, {
+      date,
+      heartCount,
+      text,
+    });
+
     setMealData(values);
-    setIsEditing(false);
+
+    if (result) {
+      setIsEditing(false);
+    }
   };
 
   const handleDeleteButtonClick = async function () {
-    await deleteMealById(id);
-    history.push("/meal");
+    const result = await deleteMealById(id);
+
+    if (result) {
+      history.push("/meal");
+    }
   };
 
   const commentElements = comments.map(({ _id, creator, content }) => (
