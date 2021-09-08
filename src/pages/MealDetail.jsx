@@ -118,6 +118,7 @@ function MealDetail() {
           {isEditing
             ? <ContentForm
               hasPicture
+              isEditForm
               onSubmit={handleFormSubmit}
               submitButtonText="save"
               additionalButton={cancelButton}
