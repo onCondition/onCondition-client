@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import firebase from "./config/firebase";
 import Meal from "./pages/Meal";
+import MealDetail from "./pages/MealDetail";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import PrivateRoute from "./components/PrivateRoute";
@@ -41,7 +42,7 @@ function App() {
       {isLoaded ? (
         <>
           <header>
-            <Logout onLogout={handleLogout} />
+            <Logout onLogout={handleLogout} />e>
           </header>
           <Switch>
             <Route path="/login">
@@ -52,6 +53,9 @@ function App() {
             </PrivateRoute>
             <PrivateRoute exact path="/meal">
               <Meal />
+            </PrivateRoute>
+            <PrivateRoute exact path="/meal/:id">
+              <MealDetail />
             </PrivateRoute>
           </Switch>
         </>

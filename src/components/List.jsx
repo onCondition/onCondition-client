@@ -46,8 +46,12 @@ function List({
 
 List.propTypes = {
   color: PropTypes.oneOf([COLORS.MAIN_CORAL, COLORS.MAIN_MINT]),
-  children: PropTypes.element,
-  key: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element,
+    PropTypes.string,
+  ]),
+  key: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };
 

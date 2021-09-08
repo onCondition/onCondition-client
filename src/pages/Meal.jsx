@@ -44,18 +44,22 @@ function Meal() {
     loadMeals();
   }, []);
 
-  const handleSubmitForm = function ({
+  const handleSubmitForm = async function ({
     date, heartCount, url, text,
   }) {
-    postMeal({
+    const newMeal = await postMeal({
       date, url, heartCount, text,
     });
+
+    if (newMeal) {
+      setMeals((meals) => [...meals, newMeal]);
+    }
   };
 
   const mealBars = meals.map((meal) => {
     return (
       <Link to={`/meal/${meal._id}`} key={meal._id}>
-        <List color={COLORS.MAIN_CORAL}>
+        <List color={COLORS.MAIN_CORAL} key={meal.id}>
           {meal.url
             ? <img src={meal.url} />
             : <img src="/img/add-picture.png" />}
