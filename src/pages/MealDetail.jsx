@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
 import styled from "styled-components";
 
+import firebase from "../config/firebase";
 import ButtonsWrapper from "../components/ButtonsWrapper";
 import ContentViewer from "../components/ContentViewer";
 import ContentForm from "../components/ContentForm";
@@ -37,10 +38,20 @@ const DetailWrapper = styled.div`
 
 function MealDetail() {
   const { id } = useParams();
+  const [uid, setUid] = useState("");
   const [mealData, setMealData] = useState(null);
   const [comments, setComments] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const history = useHistory();
+
+  useEffect(() => {
+    async function setUserUid() {
+      const { user } = await firebase.auth().getRedirectResult();
+      setUid(user.uid);
+    }
+
+    setUserUid();
+  });
 
   useEffect(() => {
     async function loadMealById(mealId) {
@@ -118,6 +129,7 @@ function MealDetail() {
           {isEditing
             ? <ContentForm
               hasPicture
+              isEditForm
               onSubmit={handleFormSubmit}
               submitButtonText="save"
               additionalButton={cancelButton}
@@ -128,10 +140,11 @@ function MealDetail() {
                 hasPicture
                 {...mealData}
               />
-              <ButtonsWrapper>
-                {editButton}
-                {deleteButton}
-              </ButtonsWrapper>
+              {mealData.user.uid === uid
+                && <ButtonsWrapper>
+                  {editButton}
+                  {deleteButton}
+                </ButtonsWrapper>}
             </>
           }
         </div>
