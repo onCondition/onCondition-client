@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import COLORS from "../constants/colors";
 
 const GridColumn = styled.div`
   display: grid;
@@ -15,28 +14,26 @@ const Comment = styled.span`
   align-self: center;
   margin-tpp: 10xp;
   padding: 10px 10px;
-  color: ${COLORS.LIGHT_PINK};
+  color: ${({ theme }) => theme.pinkColors.mainPink};
   text-align: left;
-  font-family: "Nanum Gothic", sans-serif;
-
-  @font-face {
-    font-family: "Nanum Gothic", sans-serif;
-    src: url("https://fonts.googleapis.com/css2?family=Nanum+Gothic");
-  }
 `;
 
 const Image = styled.img`
-  width: 41px;
-  height: 41px;
+  width: 62px;
+  height: 62px;
   border-radius: 40px;
   padding: 10px;
 `;
 
 const ButtonWrapper = styled.div`
+  display: flex;
+  width: 140px;
   margin-top: 10px;
+  justify-items: space-evenly;
+  font-size: 0.8rem;
 `;
 
-function CommentEntry({
+function CommentBar({
   profileUrl,
   creator,
   content,
@@ -56,11 +53,11 @@ function CommentEntry({
   );
 }
 
-CommentEntry.propTypes = {
+CommentBar.propTypes = {
   profileUrl: PropTypes.string.isRequired,
   creator: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   children: PropTypes.element,
 };
 
-export default CommentEntry;
+export default CommentBar;
