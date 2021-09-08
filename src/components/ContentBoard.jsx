@@ -5,22 +5,24 @@ import PropTypes from "prop-types";
 import theme from "../theme";
 
 const Outer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   box-sizing: border-box;
   box-shadow: 5px 5px 10px ${({ theme }) => theme.greyScaleColors.darkGrey};
   background-color: ${(props) => props.backgroundColor};
-  width: -webkit-fit-content;
-  height: -webkit-fit-content;
+  width: ${(props) => props.widthSize};
+  height: ${(props) => props.heightSize};
   border-radius: 10px;
   padding: 25px 20px 20px 20px;
 `;
 
 const Inner = styled.div`
+  flex-direction: row;
+  flex-grow: 1;
   box-sizing: border-box;
   background-color: ${({ theme }) => theme.greyScaleColors.fadeWhite};
   border-radius: 10px;
-  width: ${(props) => props.widthSize};
-  height: ${(props) => props.heightSize};
-  margin: auto;
   padding: 20px;
   font-size: 1.2rem;
 `;
@@ -40,9 +42,13 @@ function ContentBoard({
   children,
 }) {
   return (
-    <Outer backgroundColor={backgroundColor}>
+    <Outer
+      widthSize={width}
+      heightSize={height}
+      backgroundColor={backgroundColor}
+    >
       {heading && <Heading>{heading}</Heading>}
-      <Inner widthSize={width} heightSize={height}>
+      <Inner>
         {text}
       </Inner>
       {children}
