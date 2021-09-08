@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import Wrapper from "./Wrapper";
 import ImageWrapper from "./ImageWrapper";
+import ButtonsWrapper from "./ButtonsWrapper";
 import HeartCounter from "./HeartCounter";
 import Button from "./SButton";
 import COLORS from "../constants/colors";
@@ -76,7 +77,6 @@ const Textarea = styled.textarea`
   flex-grow: 1;
   margin: 5px 20px 20px 20px;
   padding: 5px 15px;
-  min-height: 5rem;
   line-height: 2rem;
   border-radius: 7px;
   border-style: hidden;
@@ -94,33 +94,23 @@ const HiddenInput = styled.input`
   display: none;
 `;
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  width: 630px;
-  margin: 0 auto;
-
-  button {
-    flex: 1;
-  }
-`;
-
 function ContentForm({
   color,
   hasPicture,
   onSubmit,
   submitButtonText,
   additionalButton,
+  defaultValues,
 }) {
-  const defaultCount = 0;
   const imageInput = useRef(null);
-  const [date, setDate] = useState("");
-  const [heartCount, setHeartCounts] = useState(defaultCount);
-  const [text, setText] = useState("");
+  const [date, setDate] = useState(defaultValues.date || "");
+  const [heartCount, setHeartCount] = useState(defaultValues.heartCount);
+  const [text, setText] = useState(defaultValues.text);
   const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(defaultValues.url);
 
   const handleCountChange = function (value) {
-    setHeartCounts(value);
+    setHeartCount(value);
   };
 
   const handleDateChange = function ({ target }) {
@@ -140,20 +130,21 @@ function ContentForm({
   };
 
   const handleSubmitbutton = async function () {
-    setDate("");
-    setHeartCounts(defaultCount);
-    setText("");
-    setImage(null);
-
-    let url;
+    let url = imageUrl;
 
     if (image) {
       url = await getImageUrl(image);
+      setImageUrl(url);
     }
 
-    onSubmit({
+    await onSubmit({
       date, heartCount, text, url,
     });
+
+    setDate(defaultValues.date);
+    setHeartCount(defaultValues.heartCount);
+    setText(defaultValues.text);
+    setImage(null);
   };
 
   const onImageChange = function ({ target }) {
@@ -192,10 +183,7 @@ function ContentForm({
         />
         {hasPicture
           && <ImageWrapper onClick={addImage}>
-            {image
-              ? <img src={imageUrl} />
-              : <img src="img/add-picture.png" />
-            }
+            <img src={imageUrl} />
           </ImageWrapper>
         }
         <Textarea
@@ -203,10 +191,10 @@ function ContentForm({
           value={text}
           onChange={handleTextChange} />
       </Wrapper>
-      <ButtonWrapper>
+      <ButtonsWrapper>
         <Button text={submitButtonText} onClick={handleSubmitbutton} />
         {additionalButton}
-      </ButtonWrapper>
+      </ButtonsWrapper>
     </form>
   );
 }
@@ -217,11 +205,22 @@ ContentForm.propTypes = {
   onSubmit: PropTypes.func,
   submitButtonText: PropTypes.string,
   additionalButton: PropTypes.element,
+  defaultValues: PropTypes.shape({
+    heartCount: PropTypes.number,
+    url: PropTypes.string,
+    text: PropTypes.string,
+    date: PropTypes.string,
+  }),
 };
 
 ContentForm.defaultProps = {
   color: COLORS.MAIN_CORAL,
   hasPicture: false,
+  defaultValues: {
+    heartCount: 0,
+    url: "/img/add-picture.png",
+    text: "",
+  },
 };
 
 export default ContentForm;
