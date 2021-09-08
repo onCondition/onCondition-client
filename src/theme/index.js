@@ -35,12 +35,19 @@ const greyScaleColors = {
   fadeLightGrey: "E6F5F6F6",
 };
 
+const background = {
+  main: pinkColors.lightPink,
+  sub: mintColors.mainMint,
+  modal: "rgba(0, 0, 0, 0.8)",
+};
+
 const theme = {
   gaps,
   fontSizes,
   pinkColors,
   mintColors,
   greyScaleColors,
+  background,
 };
 
 export default theme;

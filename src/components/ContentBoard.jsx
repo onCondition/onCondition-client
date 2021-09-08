@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 
 import theme from "../theme";
 
+const SIZE_UNIT = "px";
+
 const Outer = styled.div`
   display: flex;
   flex-direction: column;
@@ -11,8 +13,8 @@ const Outer = styled.div`
   box-sizing: border-box;
   box-shadow: 5px 5px 10px ${({ theme }) => theme.greyScaleColors.darkGrey};
   background-color: ${(props) => props.backgroundColor};
-  width: ${(props) => props.widthSize};
-  height: ${(props) => props.heightSize};
+  width: ${(props) => String(props.widthSize) + SIZE_UNIT};
+  height: ${(props) => String(props.heightSize) + SIZE_UNIT};
   border-radius: 10px;
   padding: 25px 20px 20px 20px;
 `;
@@ -58,18 +60,18 @@ function ContentBoard({
 
 ContentBoard.propTypes = {
   text: PropTypes.string.isRequired,
-  backgroundColor: PropTypes.string,
+  backgroundColor: PropTypes.oneOf(theme.background),
   heading: PropTypes.string,
-  width: PropTypes.string,
-  height: PropTypes.string,
+  width: PropTypes.number,
+  height: PropTypes.number,
   children: PropTypes.element,
 };
 
 ContentBoard.defaultProps = {
-  backgroundColor: theme.pinkColors.lightPink,
+  backgroundColor: theme.background.main,
   heading: "",
-  width: "480px",
-  height: "360px",
+  width: 480,
+  height: 360,
 };
 
 export default ContentBoard;
