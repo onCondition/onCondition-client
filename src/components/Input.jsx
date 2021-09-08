@@ -22,7 +22,6 @@ function Input({
   width,
   height,
 }) {
-
   return (
     <InputSt
       name={name}

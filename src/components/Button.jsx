@@ -22,12 +22,11 @@ const ButtonSt = styled.button`
 
 function Button({
   onClick,
-  buttonText,
+  text,
   backgroundColor,
   width,
   height,
 }) {
-
   return (
     <ButtonSt
       onClick={onClick}
@@ -35,14 +34,14 @@ function Button({
       width={width}
       height={height}
     >
-      {buttonText}
+      {text}
     </ButtonSt>
   );
 }
 
 Button.propTypes = {
-  buttonText: PropTypes.string,
-  onClick: PropTypes.func,
+  text: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
   backgroundColor: PropTypes.string,
   height: PropTypes.number,
   width: PropTypes.number,

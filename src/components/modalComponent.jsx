@@ -57,7 +57,6 @@ function ModalComponent({
   width,
   height,
 }) {
-
   return (
     <form>
       <ModalWrapper>

@@ -38,7 +38,6 @@ const HiddenCheckBox = styled.input`
 `;
 
 function CheckBoxComponent({ className, checked }) {
-
   return (
     <>
       <CheckBoxContainer className={className}>

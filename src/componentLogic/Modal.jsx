@@ -12,7 +12,7 @@ function Modal({
   const [isModalOn, setIsModalOn] = useState(true);
 
   function handleConfirm() {
-    console.log("OK I'm working");
+    //
   }
 
   function handleCancel() {
