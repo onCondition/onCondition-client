@@ -5,6 +5,7 @@ const ERROR = {
   ACCESS_TOKEN_NOT_EXIST: "로그인 정보를 확인할 수 없습니다.",
   COMMENT_UPDATE_FAIL: "코멘트 작성에 실패했습니다.",
   COMMENT_DELETE_FAIL: "코멘트 삭제에 실패했습니다.",
+  GOOGLE_TOKEN_NOT_AVAILABLE: "Google 정보 연결에 실패했습니다.",
 };
 
 const RESPONSE = {

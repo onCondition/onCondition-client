@@ -25,12 +25,11 @@ function parseResponseData(response) {
 }
 
 function handleResponseError(err) {
-  console.log(err.response, INTERNAL_SERVER_ERROR);
   if (err.response?.status < INTERNAL_SERVER_ERROR) {
     return err.response;
   }
 
-  throw new Error(ERROR.INTERNAL_SERVER_ERROR);
+  return new Error(ERROR.INTERNAL_SERVER_ERROR);
 }
 
 const instance = axios.create();

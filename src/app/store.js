@@ -4,7 +4,7 @@ import userReducer from "../features/userSlice";
 
 export const store = configureStore({
   reducer: {
-    user: userReducer
+    user: userReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

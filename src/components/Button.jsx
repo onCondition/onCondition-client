@@ -1,52 +1,53 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FONTS from "../constants/webFontUrl";
 import styled from "styled-components";
-import COLORS from "../constants/colors";
 
-const SButton = styled.button`
-  padding: 0.4rem 0.7rem;
-  margin: 4px;
-  background-color: ${(props) => props.backgroundColor};
+const ButtonSt = styled.button`
+  display: relative;
+  border-radius: 10px;
   border: none;
-  border-radius: 30px;
-  color: ${(props) => props.color};
-
-  :hover {
-    cursor: pointer;
-  }
-
-  @font-face {
-    font-family: "Carrois Gothic SC", sans-serif;
-    src: url(${FONTS.CARROIS_GOTHIC_SC});
-  }
+  background-color: ${(props) => props.backgroundColor};
+  box-shadow: 5px 5px 10px black;
+  color: white;
+  cursor: pointer;
+  font-size: large;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  margin: 0 auto;
+  margin-top: 15px;
 `;
 
 function Button({
-  onClick, text, color, backgroundColor
+  onClick,
+  text,
+  backgroundColor,
+  width,
+  height,
 }) {
   return (
-    <SButton
-      type="button"
+    <ButtonSt
       onClick={onClick}
-      color={color}
       backgroundColor={backgroundColor}
+      width={width}
+      height={height}
     >
       {text}
-    </SButton>
+    </ButtonSt>
   );
 }
 
 Button.propTypes = {
-  onClick: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
-  color: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
   backgroundColor: PropTypes.string,
+  height: PropTypes.number,
+  width: PropTypes.number,
 };
 
 Button.defaultProps = {
-  color: COLORS.WHITE,
-  backgroundColor: COLORS.LIGHT_PINK,
+  backgroundColor: "#FFFFFF",
+  height: "50px",
+  width: "100px",
 };
 
 export default Button;
