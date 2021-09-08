@@ -42,7 +42,7 @@ function App() {
       {isLoaded ? (
         <>
           <header>
-            <Logout onLogout={handleLogout} />e>
+            <Logout onLogout={handleLogout} />
           </header>
           <Switch>
             <Route path="/login">
