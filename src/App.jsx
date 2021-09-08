@@ -39,34 +39,31 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <AppWrapper>
-        {isLoaded ? (
-          <>
-            <header>
-              <Logout onLogout={handleLogout} />
-            </header>
-            <Switch>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <PrivateRoute exact path="/myCondition">
-                <p>my condition</p>
-              </PrivateRoute>
-              <PrivateRoute exact path="/meal">
-                <Meal />
-              </PrivateRoute>
-              <PrivateRoute exact path="/meal/:id">
-                <MealDetail />
-              </PrivateRoute>
-            </Switch>
-          </>
-        ) : (
-          <p>waiting...</p>
-        )}
-      </AppWrapper>
-      <GlobalStyle />
-    </ThemeProvider>
+    <AppWrapper>
+      {isLoaded ? (
+        <>
+          <header>
+            <Logout onLogout={handleLogout} />
+          </header>
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <PrivateRoute exact path="/myCondition">
+              <p>my condition</p>
+            </PrivateRoute>
+            <PrivateRoute exact path="/meal">
+              <Meal />
+            </PrivateRoute>
+            <PrivateRoute exact path="/meal/:id">
+              <MealDetail />
+            </PrivateRoute>
+          </Switch>
+        </>
+      ) : (
+        <p>waiting...</p>
+      )}
+    </AppWrapper>
   );
 }
 

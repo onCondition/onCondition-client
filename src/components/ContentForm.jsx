@@ -180,6 +180,7 @@ function ContentForm({
         <HiddenInput ref={imageInput} type="file"
           className="imageInput" accept="image/*"
           name="file" onChange={onImageChange}
+          disabled={defaultValues.date}
         />
         {hasPicture
           && <ImageWrapper onClick={addImage}>
