@@ -7,12 +7,12 @@ const ButtonSt = styled.button`
   display: relative;
   border-radius: 10px;
   border: none;
-  background-color: ${(prop) => prop.backgroundColor};
+  background-color: ${(props) => props.backgroundColor};
   box-shadow: 5px 5px 10px ${({ theme }) => theme.greyScaleColors.darkGrey};
   color: ${({ theme }) => theme.innerColors.button};
   font-size: ${({ theme }) => theme.fontSizes.darkGrey};
-  width: ${(prop) => prop.width};
-  height: ${(prop) => prop.height};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   margin: 0 auto;
   margin-top: 15px;
 `;
