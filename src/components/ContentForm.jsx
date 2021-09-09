@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import Wrapper from "./Wrapper";
 import ImageWrapper from "./ImageWrapper";
 import ButtonsWrapper from "./ButtonsWrapper";
-import HeartCounter from "./HeartCounter";
+import HeartInput from "./HeartInput";
 import Button from "./SButton";
 import getImageUrl from "../utils/getImageUrl";
 import theme from "../theme";
@@ -19,59 +19,6 @@ const Input = styled.input`
     outline: none;
   }
 `;
-
-const HeartInputWrapper = styled.div`
-  display: inline-flex;
-  width: 90px;
-  flex-direction: column;
-  align-items: center;
-
-  input {
-    width: 80px;
-    -webkit-appearance: none;
-  }
-
-  input::-webkit-slider-thumb {
-    width: 10px;
-    -webkit-appearance: none;
-    height: 10px;
-    cursor: pointer;
-    background: ${({ theme }) => theme.shadow.darkGrey};
-  }
-
-  input::-webkit-slider-runnable-track {
-    height: 10px;
-    -webkit-appearance: none;
-    margin-top: -1px;
-  }
-`;
-
-function HeartInput({ count, onChange }) {
-  const handleCountChange = function ({ target }) {
-    onChange(Number(target.value));
-  };
-
-  return (
-    <span>
-      <HeartInputWrapper>
-        <HeartCounter count={count} />
-        <input
-          type="range"
-          name="heartCount"
-          min="0"
-          max="10"
-          value={count}
-          onChange={handleCountChange}
-        />
-      </HeartInputWrapper>
-    </span>
-  );
-}
-
-HeartInput.propTypes = {
-  count: PropTypes.number,
-  onChange: PropTypes.func,
-};
 
 const Textarea = styled.textarea`
   flex-grow: 1;

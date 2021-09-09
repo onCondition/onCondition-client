@@ -8,6 +8,8 @@ import GlobalStyle from "./theme/global";
 import firebase from "./config/firebase";
 import Meal from "./pages/Meal";
 import MealDetail from "./pages/MealDetail";
+import Activity from "./pages/Activity";
+import ActivityDetail from "./pages/ActivityDetail";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import PrivateRoute from "./components/PrivateRoute";
@@ -58,6 +60,12 @@ function App() {
               </PrivateRoute>
               <PrivateRoute exact path="/meal/:id">
                 <MealDetail />
+              </PrivateRoute>
+              <PrivateRoute exact path="/activity">
+                <Activity />
+              </PrivateRoute>
+              <PrivateRoute exact path="/activity/:id">
+                <ActivityDetail />
               </PrivateRoute>
             </Switch>
           </>
