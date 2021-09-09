@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
+import firebase from "../config/firebase";
 import CommentBar from "./CommentBar";
 import Button from "./Button";
 import { EDIT, DELETE } from "../constants/buttons";
@@ -14,18 +15,28 @@ const Wrapper = styled.div`
 `;
 
 function CommentViewer({
-  userId, comments, onClickEdit, onClickDelete,
+  comments, onClickEdit, onClickDelete,
 }) {
+  const [uid, setUid] = useState(null);
+
+  useEffect(() => {
+    const user = firebase.auth().currentUser;
+
+    if (user) {
+      setUid(user.uid);
+    }
+  }, [firebase.auth().currentUser]);
+
   return (
     <Wrapper>
       {comments.map(({
-        _id: id, content, profileUrl, creator,
+        _id: id, content, creator,
       }) => (
-        userId === creator ? (
+        uid === creator.uid ? (
           <CommentBar
             key={id}
             id={id}
-            profileUrl={profileUrl}
+            profileUrl={creator.profileUrl}
             content={content}
           >
             <Button
@@ -45,7 +56,7 @@ function CommentViewer({
           <CommentBar
             key={id}
             id={id}
-            profileUrl={profileUrl}
+            profileUrl={creator.profileUrl}
             content={content}
           />
         )
@@ -63,7 +74,6 @@ CommentViewer.propTypes = {
     date: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
   })),
-  userId: PropTypes.string.isRequired,
   onClickEdit: PropTypes.func.isRequired,
   onClickDelete: PropTypes.func.isRequired,
 };
