@@ -14,7 +14,7 @@ const Li = styled.li`
   min-width: 435px;
   max-width: 630px;
   border-radius: 30px;
-  box-shadow: 0 3px 5px ${({ theme }) => theme.shadow.main};
+  box-shadow: ${({ theme }) => theme.shadow.main};
   background: ${(props) => props.color};
   color: ${({ theme }) => theme.text.button};
   list-style: none;
