@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
-import styled from "styled-components";
 
 import firebase from "../config/firebase";
 import ModalWrapper from "../components/ModalWrapper";
+import DetailWrapper from "../components/DetailWrapper";
 import ButtonsWrapper from "../components/ButtonsWrapper";
 import ContentViewer from "../components/ContentViewer";
 import ContentForm from "../components/ContentForm";
@@ -12,28 +12,6 @@ import Button from "../components/Button";
 import CircleButton from "../components/CircleButton";
 import theme from "../theme";
 import { getMealById, editMealById, deleteMealById } from "../utils/meal";
-
-const DetailWrapper = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  margin: 10px;
-  padding: 20px 0;
-  background-color: ${({ theme }) => theme.background.input};
-  border: 3px solid ${({ theme }) => theme.background.main};
-  border-radius: 10px;
-  box-shadow: ${({ theme }) => theme.shadow.main};
-
-  .viewer {
-    width: 680px;
-    text-align: center;
-  }
-
-  .comment {
-    margin-right: 20px;
-    flex-basis: 200px;
-    flex-grow: 1;
-  }
-`;
 
 function MealDetail() {
   const { id } = useParams();
