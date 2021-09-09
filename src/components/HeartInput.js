@@ -19,7 +19,7 @@ const HeartInputWrapper = styled.div`
     -webkit-appearance: none;
     height: 10px;
     cursor: pointer;
-    background: ${({ theme }) => theme.shadow.main};
+    background: ${({ theme }) => theme.point.main};
   }
 
   input::-webkit-slider-runnable-track {

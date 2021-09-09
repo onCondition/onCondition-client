@@ -16,17 +16,13 @@ function Error({ statusCode, message }) {
 
   const handleCancle = function () {
     dispatch(removeError());
-    if (history.length > 1) {
-      history.goBack();
-    } else {
-      history.push("/myConditoin");
-    }
+    history.push("/");
   };
 
   return (
     <Modal
       innerText={`${statusCode}: ${message}`}
-      cancelText="Go back"
+      cancelText="Go home"
       onConfirm={handleConform}
       onCancel={handleCancle}
       width={200}

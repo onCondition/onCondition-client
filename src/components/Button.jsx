@@ -28,6 +28,7 @@ function Button({
 }) {
   return (
     <ButtonSt
+      type="button"
       onClick={onClick}
       backgroundColor={backgroundColor}
       width={width}

@@ -28,7 +28,7 @@ function handleResponseError(err) {
   const error = (err.response?.status < STATUS_CODES.INTERNAL_SERVER_ERROR)
     ? ({
       statusCode: err.response.status,
-      message: err.response.message,
+      message: err.response.data.error,
     })
     : ({
       statusCode: STATUS_CODES.INTERNAL_SERVER_ERROR,
