@@ -58,11 +58,8 @@ function App() {
               <PrivateRoute exact path="/myCondition">
                 <p>my condition</p>
               </PrivateRoute>
-              <PrivateRoute exact path="/meal">
+              <PrivateRoute path="/meal">
                 <Meal />
-              </PrivateRoute>
-              <PrivateRoute exact path="/meal/:id">
-                <MealDetail />
               </PrivateRoute>
               <PrivateRoute exact path="/activity">
                 <Activity />
@@ -71,6 +68,9 @@ function App() {
                 <ActivityDetail />
               </PrivateRoute>
             </Switch>
+            <PrivateRoute path="/meal/:id">
+              <MealDetail />
+            </PrivateRoute>
           </>
         ) : (
           <p>waiting...</p>

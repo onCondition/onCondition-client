@@ -42,8 +42,8 @@ const point = {
 };
 
 const shadow = {
-  main: greyScaleColors.darkGrey,
-  sub: greyScaleColors.lightGrey,
+  main: "0.3rem 0.3rem 1rem " + greyScaleColors.darkGrey,
+  sub: "0.3rem 0.3rem 1rem " + greyScaleColors.lightGrey,
 };
 
 const theme = {

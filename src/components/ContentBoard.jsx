@@ -23,7 +23,7 @@ const Inner = styled.div`
   flex-direction: row;
   flex-grow: 1;
   box-sizing: border-box;
-  background-color: ${({ theme }) => theme.background.innerModal};
+  background-color: ${({ theme }) => theme.background.input};
   border-radius: 10px;
   padding: 20px;
   font-size: 1.2rem;

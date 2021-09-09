@@ -84,14 +84,16 @@ function ContentForm({
       setImageUrl(url);
     }
 
-    await onSubmit({
+    const result = await onSubmit({
       date, heartCount, text, url,
     });
 
-    setDate(defaultValues.date);
-    setHeartCount(defaultValues.heartCount);
-    setText(defaultValues.text);
-    setImage(null);
+    if (result) {
+      setDate(defaultValues.date);
+      setHeartCount(defaultValues.heartCount);
+      setText(defaultValues.text);
+      setImage(null);
+    }
   };
 
   const onImageChange = function ({ target }) {

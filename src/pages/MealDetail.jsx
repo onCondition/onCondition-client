@@ -3,27 +3,25 @@ import { useParams, useHistory } from "react-router";
 import styled from "styled-components";
 
 import firebase from "../config/firebase";
+import ModalWrapper from "../components/ModalWrapper";
 import ButtonsWrapper from "../components/ButtonsWrapper";
 import ContentViewer from "../components/ContentViewer";
 import ContentForm from "../components/ContentForm";
+import CommentContainer from "../components/CommentContainer";
 import Button from "../components/Button";
+import CircleButton from "../components/CircleButton";
+import theme from "../theme";
 import { getMealById, editMealById, deleteMealById } from "../utils/meal";
-
-const ModalTemp = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  opacity: 0.8;
-`;
-
-const CommentContainerTemp = styled.div`
-  text-align: center;
-`;
 
 const DetailWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
+  margin: 10px;
+  padding: 20px 0;
+  background-color: ${({ theme }) => theme.background.input};
+  border: 3px solid ${({ theme }) => theme.background.main};
+  border-radius: 10px;
+  box-shadow: ${({ theme }) => theme.shadow.main};
 
   .viewer {
     width: 680px;
@@ -31,6 +29,7 @@ const DetailWrapper = styled.div`
   }
 
   .comment {
+    margin-right: 20px;
     flex-basis: 200px;
     flex-grow: 1;
   }
@@ -45,12 +44,8 @@ function MealDetail() {
   const history = useHistory();
 
   useEffect(() => {
-    async function setUserUid() {
-      const { user } = await firebase.auth().getRedirectResult();
-      setUid(user.uid);
-    }
-
-    setUserUid();
+    const user = firebase.auth().currentUser;
+    setUid(user.uid);
   });
 
   useEffect(() => {
@@ -58,6 +53,7 @@ function MealDetail() {
       const mealData = await getMealById(mealId);
 
       setMealData({
+        creator: mealData.creator,
         date: mealData.date,
         url: mealData.url,
         heartCount: mealData.rating.heartCount,
@@ -94,11 +90,9 @@ function MealDetail() {
     }
   };
 
-  const commentElements = comments.map(({ _id, creator, content }) => (
-    <li key={_id}>
-      {creator.name}: {content}
-    </li>
-  ));
+  const handleCloseButtonClick = function () {
+    history.push("/meal");
+  };
 
   const cancelButton = (
     <Button
@@ -122,7 +116,11 @@ function MealDetail() {
   );
 
   return (
-    <ModalTemp>
+    <ModalWrapper>
+      <CircleButton
+        color={theme.background.main}
+        onClick={handleCloseButtonClick}
+      >x</CircleButton>
       {!!mealData
       && <DetailWrapper>
         <div className="viewer">
@@ -136,26 +134,20 @@ function MealDetail() {
             />
             : <>
               <ContentViewer
-                hasPicture
                 {...mealData}
               />
-              {mealData.user.uid === uid
-                && <ButtonsWrapper>
-                  {editButton}
-                  {deleteButton}
-                </ButtonsWrapper>}
+              <ButtonsWrapper>
+                {editButton}
+                {deleteButton}
+              </ButtonsWrapper>
             </>
           }
         </div>
         <div className="comment">
-          {!!comments.length
-            && <CommentContainerTemp>
-              {commentElements}
-            </CommentContainerTemp>
-          }
+          <CommentContainer comments={comments} userId={uid} />
         </div>
       </DetailWrapper>}
-    </ModalTemp>
+    </ModalWrapper>
   );
 }
 

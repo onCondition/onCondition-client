@@ -48,24 +48,22 @@ function CommentForm({
   }, [content]);
 
   return (
-    <div>
-      <Form>
-        <TextArea
-          value={comment}
-          onChange={({ target }) => setComment(target.value)}
+    <Form>
+      <TextArea
+        value={comment}
+        onChange={({ target }) => setComment(target.value)}
+      />
+      <ButtonWrapper>
+        <Button
+          text="RESET"
+          onClick={handleReset}
         />
-        <ButtonWrapper>
-          <Button
-            text="RESET"
-            onClick={handleReset}
-          />
-          <Button
-            text={buttonText}
-            onClick={handleSubmit}
-          />
-        </ButtonWrapper>
-      </Form>
-    </div>
+        <Button
+          text={buttonText}
+          onClick={handleSubmit}
+        />
+      </ButtonWrapper>
+    </Form>
   );
 }
 
