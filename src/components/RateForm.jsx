@@ -60,7 +60,7 @@ function RateForm({
           placeholder="내용을 입력해주세요"
           value={text}
           onChange={handleTextChange}
-          disabled={heartCount}
+          disabled={defaultValues.heartCount}
         />
       </Wrapper>
       <ButtonsWrapper isShrink>
@@ -87,7 +87,7 @@ RateForm.propTypes = {
 };
 
 RateForm.defaultProps = {
-  color: theme.background.main.lightPink,
+  color: theme.background.main,
   hasPicture: false,
   defaultValues: {
     heartCount: 0,

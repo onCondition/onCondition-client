@@ -1,0 +1,5 @@
+const PLUS = "+";
+
+export {
+  PLUS,
+};
