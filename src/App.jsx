@@ -3,9 +3,9 @@ import { Route, Switch, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "./theme";
+import GlobalStyle from "./theme/global";
 
 import firebase from "./config/firebase";
-import ModalComponent from "./components/modalComponent";
 import Meal from "./pages/Meal";
 import MealDetail from "./pages/MealDetail";
 import Activity from "./pages/Activity";
@@ -48,7 +48,6 @@ function App() {
             <header>
               <Logout onLogout={handleLogout} />
             </header>
-            <ModalComponent />
             <Switch>
               <Route path="/login">
                 <Login />
@@ -74,6 +73,7 @@ function App() {
           <p>waiting...</p>
         )}
       </AppWrapper>
+      <GlobalStyle />
     </ThemeProvider>
   );
 }
