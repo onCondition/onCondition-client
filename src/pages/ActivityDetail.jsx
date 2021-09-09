@@ -5,7 +5,7 @@ import styled from "styled-components";
 import RateForm from "../components/RateForm";
 import ContentBoard from "../components/ContentBoard";
 import CommentContainer from "../components/CommentContainer";
-
+import Modal from "../components/modalComponent";
 import Button from "../components/Button";
 
 import { getActivityById, editActivityById, deleteActivityById } from "../utils/activity";
@@ -34,6 +34,7 @@ function activityDetail() {
   const [activitiesData, setActivityData] = useState(null);
   const [comments, setComments] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
+  const [hasModal, setHasModal] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -76,6 +77,10 @@ function activityDetail() {
     }
   };
 
+  const handleDeletePreConfirm = function () {
+    setHasModal(true);
+  };
+
   const handleDeleteButtonClick = async function () {
     const result = await deleteActivityById(id);
 
@@ -100,7 +105,7 @@ function activityDetail() {
 
   const deleteButton = (
     <Button
-      onClick={handleDeleteButtonClick}
+      onClick={handleDeletePreConfirm}
       text={DELETE}
     />
   );
@@ -119,6 +124,11 @@ function activityDetail() {
 
   return (
     <DetailWrapper>
+      {hasModal && <Modal
+        innerText="정말로 삭제하시겠어요?"
+        onConfirm={handleDeleteButtonClick}
+        onCancel={() => setHasModal(false)}
+      />}
       {isEditing
         ? <ContentBoardWrapper>
           <RateForm
