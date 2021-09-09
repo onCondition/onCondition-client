@@ -1,21 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import theme from "../theme";
 
 const ButtonSt = styled.button`
   display: relative;
   border-radius: 10px;
   border: none;
-  background-color: ${(props) => props.backgroundColor
-    ? props.backgroundColor : "#FFFFFF"};
-  box-shadow: 5px 5px 10px black;
-  color: white;
-  cursor: pointer;
-  font-size: large;
-  width: ${(props) => props.width
-    ? props.width : "100px"};
-  height: ${(props) => props.height
-    ? props.height : "50px"};
+  background-color: ${(props) => props.backgroundColor};
+  box-shadow: 5px 5px 10px ${({ theme }) => theme.greyScaleColors.darkGrey};
+  color: ${({ theme }) => theme.innerColors.button};
+  font-size: ${({ theme }) => theme.fontSizes.darkGrey};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   margin: 0 auto;
   margin-top: 15px;
 `;
@@ -43,8 +40,14 @@ Button.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   backgroundColor: PropTypes.string,
-  height: PropTypes.number,
-  width: PropTypes.number,
+  height: PropTypes.string.isRequired,
+  width: PropTypes.string.isRequired,
+};
+
+Button.defaultProps = {
+  backgroundColor: theme.pinkColors.lightPink,
+  height: "50px",
+  width: "100px",
 };
 
 export default Button;
