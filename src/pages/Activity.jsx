@@ -7,7 +7,7 @@ import ContentBoard from "../components/ContentBoard";
 import ActivityBar from "../components/ActivityBar";
 import { getActivities, editActivityById } from "../utils/activity";
 
-const CONTENT_BOARD_PIXEL_WIDTH = 630;
+const CONTENT_BOARD_PIXEL_WIDTH = 400;
 const CONTENT_BOARD_PIXEL_HEIGHT = 150;
 
 const Title = styled.p`
