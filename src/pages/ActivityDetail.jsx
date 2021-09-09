@@ -109,8 +109,6 @@ function activityDetail() {
     return <p>Loading...</p>;
   }
 
-  console.log(activitiesData);
-
   const heading = (
     <>
       <p>{activitiesData.date}</p>
