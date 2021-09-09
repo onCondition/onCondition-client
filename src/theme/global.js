@@ -1,15 +1,9 @@
 import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
 import FONTS from "../constants/webFontUrl";
 
 const GlobalStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font: inherit;
-    vertical-align: center;
-  }
+  ${reset};
 
   @font-face {
     font-family: "Nanum Gothic", sans-serif;

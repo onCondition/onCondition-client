@@ -24,7 +24,7 @@ const CommentContainerWrapper = styled.div`
 `;
 
 const Status = styled.div`
-  color: ${({ theme }) => theme.point.mainPink};
+  color: ${({ theme }) => theme.point.main};
 `;
 
 function CommentContainer({

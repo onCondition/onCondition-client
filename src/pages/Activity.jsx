@@ -12,7 +12,7 @@ const CONTENT_BOARD_PIXEL_HEIGHT = 150;
 
 const Title = styled.p`
   margin: 10px 0px 10px 30px;
-  color: ${({ theme }) => theme.mintColors.mainMint};
+  color: ${({ theme }) => theme.background.sub};
   text-align: left;
   font-size: 50px;
 `;
