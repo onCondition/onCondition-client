@@ -16,6 +16,7 @@ const CommentContainerWrapper = styled.div`
   width: 500px;
   height: 100%;
   display: grid;
+  margin: auto;
   grid-template-rows: 6fr 1fr 3fr;
   padding: 10px 5px 5px 5px;
   border-radius: 30px;

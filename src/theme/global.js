@@ -5,6 +5,10 @@ import FONTS from "../constants/webFontUrl";
 const GlobalStyle = createGlobalStyle`
   ${reset};
 
+  a {
+    text-decoration: none;
+  }
+
   @font-face {
     font-family: "Nanum Gothic", sans-serif;
     src: url(${FONTS.NANUM_GOTHIC});
