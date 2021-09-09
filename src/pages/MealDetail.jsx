@@ -6,7 +6,7 @@ import firebase from "../config/firebase";
 import ButtonsWrapper from "../components/ButtonsWrapper";
 import ContentViewer from "../components/ContentViewer";
 import ContentForm from "../components/ContentForm";
-import Button from "../components/SButton";
+import Button from "../components/Button";
 import { getMealById, editMealById, deleteMealById } from "../utils/meal";
 
 const ModalTemp = styled.div`
@@ -128,7 +128,6 @@ function MealDetail() {
         <div className="viewer">
           {isEditing
             ? <ContentForm
-              hasPicture
               isEditForm
               onSubmit={handleFormSubmit}
               submitButtonText="save"
