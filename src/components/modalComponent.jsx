@@ -44,14 +44,14 @@ function ModalComponent({
             <ButtonWrapper>
               <Button
                 onClick={onConfirm}
-                text={confirmText}
+                buttonText={confirmText}
                 backgroundColor={backgroundColor}
                 width={width}
                 height={height}
               />
               <Button
                 onClick={onCancel}
-                text={cancelText}
+                buttonText={cancelText}
                 backgroundColor={backgroundColor}
                 width={width}
                 height={height}
@@ -73,13 +73,11 @@ ModalComponent.propTypes = {
   onCancel: PropTypes.func,
   height: PropTypes.number,
   width: PropTypes.number,
-  isError: PropTypes.bool,
 };
 
 ModalComponent.defaultProps = {
   confirmText: "Confirm",
   cancelText: "Cancel",
-  isError: false,
 };
 
 export default ModalComponent;

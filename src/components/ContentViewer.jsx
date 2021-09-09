@@ -13,6 +13,7 @@ function ContentViewer({
   heartCount,
   url,
   text,
+  hasPicture,
 }) {
   return (
     <Wrapper color={color}>
@@ -20,9 +21,9 @@ function ContentViewer({
         {date + " "}
         <HeartCounter count={heartCount} />
       </div>
-      <ImgWrapper>
+      {hasPicture && <ImgWrapper>
         <img src={url} />
-      </ImgWrapper>
+      </ImgWrapper>}
       <TextContainer>{text}</TextContainer>
     </Wrapper>
   );
@@ -34,6 +35,7 @@ ContentViewer.propTypes = {
   heartCount: PropTypes.number,
   url: PropTypes.string,
   text: PropTypes.string,
+  hasPicture: PropTypes.bool,
 };
 
 ContentViewer.defaultProps = {
@@ -41,6 +43,7 @@ ContentViewer.defaultProps = {
   heartCount: 0,
   url: "/img/add-picture.png",
   text: "",
+  hasPicture: false,
 };
 
 export default ContentViewer;

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "./theme";
 import GlobalStyle from "./theme/global";
 
 import firebase from "./config/firebase";
-import Error from "./pages/Error";
 import Meal from "./pages/Meal";
 import MealDetail from "./pages/MealDetail";
 import Activity from "./pages/Activity";
@@ -23,7 +22,6 @@ const AppWrapper = styled.div`
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const { hasError, ...error } = useSelector((state) => state.error);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -44,7 +42,6 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {hasError && <Error {...error} /> }
       <AppWrapper>
         {isLoaded ? (
           <>
@@ -58,8 +55,11 @@ function App() {
               <PrivateRoute exact path="/myCondition">
                 <p>my condition</p>
               </PrivateRoute>
-              <PrivateRoute path="/meal">
+              <PrivateRoute exact path="/meal">
                 <Meal />
+              </PrivateRoute>
+              <PrivateRoute exact path="/meal/:id">
+                <MealDetail />
               </PrivateRoute>
               <PrivateRoute exact path="/activity">
                 <Activity />
@@ -68,9 +68,6 @@ function App() {
                 <ActivityDetail />
               </PrivateRoute>
             </Switch>
-            <PrivateRoute path="/meal/:id">
-              <MealDetail />
-            </PrivateRoute>
           </>
         ) : (
           <p>waiting...</p>

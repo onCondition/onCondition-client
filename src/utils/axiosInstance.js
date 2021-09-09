@@ -1,8 +1,8 @@
 import axios from "axios";
-import { store } from "../app/store";
 import { ERROR } from "../constants/messages";
-import STATUS_CODES from "../constants/statusCodes";
-import { setError } from "../features/errorSlice";
+import STATUS_CODE from "../constants/statusCodes";
+
+const { INTERNAL_SERVER_ERROR } = STATUS_CODE;
 
 function setAccessToken(config) {
   const accessToken = localStorage.getItem("accessToken");
@@ -25,17 +25,11 @@ function parseResponseData(response) {
 }
 
 function handleResponseError(err) {
-  const error = (err.response?.status < STATUS_CODES.INTERNAL_SERVER_ERROR)
-    ? ({
-      statusCode: err.response.status,
-      message: err.response.data.error,
-    })
-    : ({
-      statusCode: STATUS_CODES.INTERNAL_SERVER_ERROR,
-      message: ERROR.INTERNAL_SERVER_ERROR,
-    });
+  if (err.response?.status < INTERNAL_SERVER_ERROR) {
+    return err.response;
+  }
 
-  store.dispatch(setError(error));
+  return new Error(ERROR.INTERNAL_SERVER_ERROR);
 }
 
 const instance = axios.create();
