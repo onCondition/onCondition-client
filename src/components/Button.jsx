@@ -2,20 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
+import theme from "../theme";
+
 const ButtonSt = styled.button`
   display: relative;
   border-radius: 10px;
   border: none;
-  background-color: ${(props) => props.backgroundColor
-    ? props.backgroundColor : "#FFFFFF"};
+  background-color: ${(props) => props.backgroundColor};
   box-shadow: 5px 5px 10px black;
   color: white;
   cursor: pointer;
   font-size: large;
-  width: ${(props) => props.width
-    ? props.width : "100px"};
-  height: ${(props) => props.height
-    ? props.height : "50px"};
+  width: ${(props) => props.width + "px"};
+  height: ${(props) => props.height + "px"};
   margin: 0 auto;
   margin-top: 15px;
 `;
@@ -45,6 +44,12 @@ Button.propTypes = {
   backgroundColor: PropTypes.string,
   height: PropTypes.number,
   width: PropTypes.number,
+};
+
+Button.defaultProps = {
+  backgroundColor: theme.backgroundColor.main,
+  width: 100,
+  height: 50,
 };
 
 export default Button;
