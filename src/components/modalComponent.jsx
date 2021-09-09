@@ -8,6 +8,7 @@ const ModalWrapper = styled.div`
   position: fixed;
   display: flex;
   background-color: rgba(0, 0, 0, 0.8);
+  background-color: ${({ theme }) => theme.background.modal};;
   top: 0;
   left: 0;
   right: 0;

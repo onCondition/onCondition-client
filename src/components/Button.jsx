@@ -41,13 +41,13 @@ function Button({
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  backgroundColor: PropTypes.string,
+  backgroundColor: PropTypes.oneOf(Object.values(theme.background)),
   height: PropTypes.number,
   width: PropTypes.number,
 };
 
 Button.defaultProps = {
-  backgroundColor: theme.backgroundColor.main,
+  backgroundColor: theme.background.main,
   width: 100,
   height: 50,
 };

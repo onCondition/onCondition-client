@@ -10,7 +10,7 @@ import theme from "../theme";
 
 const Title = styled.p`
   margin: 10px 0px 10px 30px;
-  color: ${({ theme }) => theme.background.mint};
+  color: ${({ theme }) => theme.background.sub};
   text-align: left;
   font-size: 50px;
 `;
@@ -59,7 +59,7 @@ function Meal() {
   const mealBars = meals.map((meal) => {
     return (
       <Link to={`/meal/${meal._id}`} key={meal._id}>
-        <List color={theme.point.mainPink} key={meal.id}>
+        <List color={theme.background.main} key={meal.id}>
           {meal.url
             ? <img src={meal.url} />
             : <img src="/img/add-picture.png" />}
