@@ -19,12 +19,12 @@ const CommentContainerWrapper = styled.div`
   grid-template-rows: 6fr 1fr 3fr;
   padding: 10px 5px;
   border-radius: 30px;
-  background-color: ${({ theme }) => theme.greyScaleColors.lightGrey};
-  box-shadow: 0 0.3rem 0.3rem ${({ theme }) => theme.greyScaleColors.darkGrey};
+  background-color: ${({ theme }) => theme.shadow.sub};
+  box-shadow: 0 0.3rem 0.3rem ${({ theme }) => theme.shadow.main};
 `;
 
 const Status = styled.div`
-  color: ${({ theme }) => theme.pinkColors.mainPink};
+  color: ${({ theme }) => theme.point.mainPink};
 `;
 
 function CommentContainer({

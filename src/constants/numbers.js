@@ -14,14 +14,9 @@ const TEXT = {
   TITLE: 100,
 };
 
-const RATIO = {
-  MODAL: 0.92,
-};
-
 const SIZE = {
   TEXT,
   GAP,
-  RATIO,
 };
 
 export default SIZE;

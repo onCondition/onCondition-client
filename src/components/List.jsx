@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import COLORS from "../constants/colors";
+import theme from "../theme";
 
 const Li = styled.li`
   display: flex;
@@ -14,9 +14,9 @@ const Li = styled.li`
   min-width: 435px;
   max-width: 630px;
   border-radius: 30px;
-  box-shadow: 0 3px 5px ${COLORS.DARK_GREY};
-  background: ${props => props.color};
-  color: ${COLORS.WHITE};
+  box-shadow: 0 3px 5px ${({ theme }) => theme.shadow.main};
+  background: ${(props) => props.color};
+  color: ${({ theme }) => theme.text.button};
   list-style: none;
 
   img {
@@ -45,7 +45,7 @@ function List({
 }
 
 List.propTypes = {
-  color: PropTypes.oneOf([COLORS.MAIN_CORAL, COLORS.MAIN_MINT]),
+  color: PropTypes.oneOf(Object.values(theme.background)),
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element,
