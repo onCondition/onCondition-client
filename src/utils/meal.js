@@ -1,10 +1,16 @@
 import axios from "./axiosInstance";
 
-async function getMeals() {
-  const res = await axios.get("/api/meal");
+async function getMeals(page) {
+  const res = await axios.get("/api/meal", {
+    headers: {
+      page,
+    },
+  });
 
   if (res) {
-    return res.data;
+    const { data, prevPage, nextPage } = res;
+
+    return { data, prevPage, nextPage };
   }
 }
 

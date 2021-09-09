@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import List from "../components/List";
+import { PrevButton, NextButton } from "../components/PageButton";
 import ContentForm from "../components/ContentForm";
 import HeartCounter from "../components/HeartCounter";
 import { getMeals, postMeal } from "../utils/meal";
@@ -22,6 +23,7 @@ const Container = styled.div`
 
   .list {
     flex-grow: 1;
+    justify-items: center;
     max-width: 680px;
   }
 
@@ -33,16 +35,30 @@ const Container = styled.div`
 
 function Meal() {
   const [meals, setMeals] = useState([]);
+  const [isReloadRequired, setIsReloadRequired] = useState(true);
+  const [prevPage, setPrevPage] = useState(null);
+  const [nextPage, setNextPage] = useState(null);
+
+  async function loadMeals(page = 1) {
+    const result = await getMeals(page);
+
+    if (!result) {
+      return;
+    }
+
+    setPrevPage(result.prevPage);
+    setNextPage(result.nextPage);
+    setMeals(result.data);
+    setIsReloadRequired(false);
+  }
 
   useEffect(() => {
-    async function loadMeals() {
-      const loadedMeals = await getMeals();
-
-      setMeals(loadedMeals);
+    if (!isReloadRequired) {
+      return;
     }
 
     loadMeals();
-  }, []);
+  }, [isReloadRequired]);
 
   const handleSubmitForm = async function ({
     date, heartCount, url, text,
@@ -52,11 +68,19 @@ function Meal() {
     });
 
     if (newMeal) {
-      setMeals((meals) => [...meals, newMeal]);
+      setIsReloadRequired(true);
     }
   };
 
-  const mealBars = meals.map((meal) => {
+  const handlePrevPageButton = function () {
+    loadMeals(prevPage);
+  };
+
+  const handleNextPageButton = function () {
+    loadMeals(nextPage);
+  };
+
+  const mealBars = (meals.length) ? meals.map((meal) => {
     return (
       <Link to={`/meal/${meal._id}`} key={meal._id}>
         <List color={theme.background.main} key={meal.id}>
@@ -68,7 +92,7 @@ function Meal() {
         </List>
       </Link>
     );
-  });
+  }) : [];
 
   return (
     <div>
@@ -82,7 +106,9 @@ function Meal() {
           />
         </div>
         <div className="list">
+          {!!prevPage && <PrevButton onClick={handlePrevPageButton} />}
           {mealBars}
+          {!!nextPage && <NextButton onClick={handleNextPageButton} />}
         </div>
       </Container>
     </div>

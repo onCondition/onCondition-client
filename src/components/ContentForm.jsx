@@ -97,6 +97,7 @@ const HiddenInput = styled.input`
 function ContentForm({
   color,
   hasPicture,
+  isEditForm,
   onSubmit,
   submitButtonText,
   additionalButton,
@@ -130,7 +131,7 @@ function ContentForm({
   };
 
   const handleSubmitButton = async function () {
-    let url = imageUrl;
+    let url = "";
 
     if (image) {
       url = await getImageUrl(image);
@@ -180,7 +181,7 @@ function ContentForm({
         <HiddenInput ref={imageInput} type="file"
           className="imageInput" accept="image/*"
           name="file" onChange={onImageChange}
-          disabled={defaultValues.date}
+          disabled={isEditForm}
         />
         {hasPicture
           && <ImageWrapper onClick={addImage}>
@@ -203,6 +204,7 @@ function ContentForm({
 ContentForm.propTypes = {
   color: PropTypes.oneOf(Object.values(theme.background)),
   hasPicture: PropTypes.bool,
+  isEditForm: PropTypes.bool,
   onSubmit: PropTypes.func,
   submitButtonText: PropTypes.string,
   additionalButton: PropTypes.element,
@@ -217,6 +219,7 @@ ContentForm.propTypes = {
 ContentForm.defaultProps = {
   color: theme.background.main,
   hasPicture: false,
+  isEditForm: false,
   defaultValues: {
     heartCount: 0,
     url: "/img/add-picture.png",
