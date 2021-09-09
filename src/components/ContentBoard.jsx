@@ -11,7 +11,7 @@ const Outer = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   box-sizing: border-box;
-  box-shadow: 0 3px 5px ${({ theme }) => theme.shadow.main};
+  box-shadow: ${({ theme }) => theme.shadow.main};
   background-color: ${(props) => props.backgroundColor};
   width: ${(props) => String(props.widthSize) + SIZE_UNIT};
   height: ${(props) => String(props.heightSize) + SIZE_UNIT};

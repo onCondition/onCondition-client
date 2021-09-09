@@ -20,7 +20,7 @@ const CommentContainerWrapper = styled.div`
   padding: 10px 5px 5px 5px;
   border-radius: 30px;
   background-color: ${({ theme }) => theme.shadow.sub};
-  box-shadow: 0 0.3rem 0.3rem ${({ theme }) => theme.shadow.main};
+  box-shadow: ${({ theme }) => theme.shadow.main};
 `;
 
 const Status = styled.div`

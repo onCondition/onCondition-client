@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   margin: 10px auto;
   padding-top: 20px;
   border-radius: 4%;
-  box-shadow: 0 3px 5px ${({ theme }) => theme.shadow.main};
+  box-shadow: ${({ theme }) => theme.shadow.main};
   background: ${props => props.color};
   color: ${({ theme }) => theme.background.input};
   font-size: 0.9rem;

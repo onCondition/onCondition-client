@@ -9,7 +9,7 @@ const ButtonSt = styled.button`
   border-radius: 10px;
   border: none;
   background-color: ${(props) => props.backgroundColor};
-  box-shadow: 0 3px 5px ${({ theme }) => theme.shadow.main};
+  box-shadow: ${({ theme }) => theme.shadow.main};
   color: white;
   cursor: pointer;
   font-size: large;
