@@ -14,10 +14,10 @@ import { ERROR } from "../constants/messages";
 
 const CommentContainerWrapper = styled.div`
   width: 500px;
-  height: 500px;
+  height: 100%;
   display: grid;
   grid-template-rows: 6fr 1fr 3fr;
-  padding: 10px 5px;
+  padding: 10px 5px 5px 5px;
   border-radius: 30px;
   background-color: ${({ theme }) => theme.shadow.sub};
   box-shadow: 0 0.3rem 0.3rem ${({ theme }) => theme.shadow.main};

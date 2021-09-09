@@ -11,7 +11,7 @@ const Outer = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   box-sizing: border-box;
-  box-shadow: 5px 5px 10px ${({ theme }) => theme.shadow.main};
+  box-shadow: 0 3px 5px ${({ theme }) => theme.shadow.main};
   background-color: ${(props) => props.backgroundColor};
   width: ${(props) => String(props.widthSize) + SIZE_UNIT};
   height: ${(props) => String(props.heightSize) + SIZE_UNIT};
@@ -23,7 +23,7 @@ const Inner = styled.div`
   flex-direction: row;
   flex-grow: 1;
   box-sizing: border-box;
-  background-color: ${({ theme }) => theme.background.innerModal};
+  background-color: ${({ theme }) => theme.background.input};
   border-radius: 10px;
   padding: 20px;
   font-size: 1.2rem;
@@ -44,17 +44,19 @@ function ContentBoard({
   children,
 }) {
   return (
-    <Outer
-      widthSize={width}
-      heightSize={height}
-      backgroundColor={backgroundColor}
-    >
-      {heading && <Heading>{heading}</Heading>}
-      <Inner>
-        {text}
-      </Inner>
+    <>
+      <Outer
+        widthSize={width}
+        heightSize={height}
+        backgroundColor={backgroundColor}
+      >
+        {heading && <Heading>{heading}</Heading>}
+        <Inner>
+          {text}
+        </Inner>
+      </Outer>
       {children}
-    </Outer>
+    </>
   );
 }
 

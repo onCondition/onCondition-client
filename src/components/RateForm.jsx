@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import Wrapper from "./Wrapper";
 import HeartInput from "./HeartInput";
 import ButtonsWrapper from "./ButtonsWrapper";
-import Button from "./SButton";
+import Button from "./Button";
 import theme from "../theme";
 
 const Textarea = styled.textarea`

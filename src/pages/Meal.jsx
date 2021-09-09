@@ -100,7 +100,6 @@ function Meal() {
       <Container>
         <div className="viewer">
           <ContentForm
-            hasPicture
             onSubmit={handleSubmitForm}
             submitButtonText="add meal"
           />

@@ -6,7 +6,7 @@ import Wrapper from "./Wrapper";
 import ImageWrapper from "./ImageWrapper";
 import ButtonsWrapper from "./ButtonsWrapper";
 import HeartInput from "./HeartInput";
-import Button from "./SButton";
+import Button from "./Button";
 import getImageUrl from "../utils/getImageUrl";
 import theme from "../theme";
 
@@ -43,7 +43,6 @@ const HiddenInput = styled.input`
 
 function ContentForm({
   color,
-  hasPicture,
   isEditForm,
   onSubmit,
   submitButtonText,
@@ -85,14 +84,16 @@ function ContentForm({
       setImageUrl(url);
     }
 
-    await onSubmit({
+    const result = await onSubmit({
       date, heartCount, text, url,
     });
 
-    setDate(defaultValues.date);
-    setHeartCount(defaultValues.heartCount);
-    setText(defaultValues.text);
-    setImage(null);
+    if (result) {
+      setDate(defaultValues.date);
+      setHeartCount(defaultValues.heartCount);
+      setText(defaultValues.text);
+      setImage(null);
+    }
   };
 
   const onImageChange = function ({ target }) {
@@ -130,11 +131,9 @@ function ContentForm({
           name="file" onChange={onImageChange}
           disabled={isEditForm}
         />
-        {hasPicture
-          && <ImageWrapper onClick={addImage}>
-            <img src={imageUrl} />
-          </ImageWrapper>
-        }
+        <ImageWrapper onClick={addImage}>
+          <img src={imageUrl} />
+        </ImageWrapper>
         <Textarea
           placeholder="내용을 입력해주세요"
           value={text}
@@ -150,7 +149,6 @@ function ContentForm({
 
 ContentForm.propTypes = {
   color: PropTypes.oneOf(Object.values(theme.background)),
-  hasPicture: PropTypes.bool,
   isEditForm: PropTypes.bool,
   onSubmit: PropTypes.func,
   submitButtonText: PropTypes.string,
@@ -165,7 +163,6 @@ ContentForm.propTypes = {
 
 ContentForm.defaultProps = {
   color: theme.background.main,
-  hasPicture: false,
   isEditForm: false,
   defaultValues: {
     heartCount: 0,
