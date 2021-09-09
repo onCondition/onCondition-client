@@ -7,11 +7,11 @@ import { PrevButton, NextButton } from "../components/PageButton";
 import ContentForm from "../components/ContentForm";
 import HeartCounter from "../components/HeartCounter";
 import { getMeals, postMeal } from "../utils/meal";
-import COLORS from "../constants/colors";
+import theme from "../theme";
 
 const Title = styled.p`
   margin: 10px 0px 10px 30px;
-  color: ${COLORS.MAIN_MINT};
+  color: ${({ theme }) => theme.background.sub};
   text-align: left;
   font-size: 50px;
 `;
@@ -83,7 +83,7 @@ function Meal() {
   const mealBars = (meals.length) ? meals.map((meal) => {
     return (
       <Link to={`/meal/${meal._id}`} key={meal._id}>
-        <List color={COLORS.MAIN_CORAL} key={meal.id}>
+        <List color={theme.background.main} key={meal.id}>
           {meal.url
             ? <img src={meal.url} />
             : <img src="/img/add-picture.png" />}

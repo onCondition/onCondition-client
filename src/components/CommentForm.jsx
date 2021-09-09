@@ -13,7 +13,7 @@ const TextArea = styled.textarea`
   flex-grow: 1;
   min-height: 80px;
   padding: 10px;
-  border: solid 2px ${({ theme }) => theme.pinkColors.mainPink};
+  border: solid 2px ${({ theme }) => theme.point.main};
   border-radius: 16px;
   resize: none;
   outline: none;

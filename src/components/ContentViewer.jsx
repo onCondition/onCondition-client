@@ -5,7 +5,7 @@ import Wrapper from "./Wrapper";
 import ImgWrapper from "./ImageWrapper";
 import TextContainer from "./TextContainer";
 import HeartCounter from "./HeartCounter";
-import COLORS from "../constants/colors";
+import theme from "../theme";
 
 function ContentViewer({
   color,
@@ -30,7 +30,7 @@ function ContentViewer({
 }
 
 ContentViewer.propTypes = {
-  color: PropTypes.oneOf([COLORS.MAIN_CORAL, COLORS.MAIN_MINT]),
+  color: PropTypes.oneOf(Object.values(theme.background)),
   date: PropTypes.string.isRequired,
   heartCount: PropTypes.number,
   url: PropTypes.string,
@@ -39,7 +39,7 @@ ContentViewer.propTypes = {
 };
 
 ContentViewer.defaultProps = {
-  color: COLORS.MAIN_CORAL,
+  color: theme.background.main,
   heartCount: 0,
   url: "/img/add-picture.png",
   text: "",

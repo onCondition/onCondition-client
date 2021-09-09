@@ -7,7 +7,6 @@ import firebase from "../config/firebase";
 import { login } from "../features/userSlice";
 import { ERROR } from "../constants/messages";
 import USER_INFO_SCOPE from "../constants/userInfoScope";
-import COLORS from "../constants/colors";
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,7 +20,7 @@ const Wrapper = styled.div`
   bottom: 0;
   align-items: center;
   justify-content: center;
-  background-color: ${COLORS.MAIN_MINT};
+  background-color: ${({ theme }) => theme.background.sub};
 `;
 
 const Logo = styled.img`

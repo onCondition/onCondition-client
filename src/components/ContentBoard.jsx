@@ -11,7 +11,7 @@ const Outer = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   box-sizing: border-box;
-  box-shadow: 5px 5px 10px ${({ theme }) => theme.greyScaleColors.darkGrey};
+  box-shadow: 5px 5px 10px ${({ theme }) => theme.shadow.main};
   background-color: ${(props) => props.backgroundColor};
   width: ${(props) => String(props.widthSize) + SIZE_UNIT};
   height: ${(props) => String(props.heightSize) + SIZE_UNIT};
@@ -23,7 +23,7 @@ const Inner = styled.div`
   flex-direction: row;
   flex-grow: 1;
   box-sizing: border-box;
-  background-color: ${({ theme }) => theme.greyScaleColors.fadeWhite};
+  background-color: ${({ theme }) => theme.background.innerModal};
   border-radius: 10px;
   padding: 20px;
   font-size: 1.2rem;
@@ -31,7 +31,7 @@ const Inner = styled.div`
 
 const Heading = styled.p`
   margin: 0 0 10px 0;
-  color: ${({ theme }) => theme.greyScaleColors.fadeWhite};
+  color: ${({ theme }) => theme.background.innerModal};
   font-size: 1.5rem;
 `;
 
