@@ -50,7 +50,7 @@ function ContentBoard({
         heightSize={height}
         backgroundColor={backgroundColor}
       >
-        {heading && <Heading>{heading}</Heading>}
+        <Heading>{heading}</Heading>
         <Inner>
           {text}
         </Inner>
@@ -63,7 +63,7 @@ function ContentBoard({
 ContentBoard.propTypes = {
   text: PropTypes.string.isRequired,
   backgroundColor: PropTypes.oneOf(Object.values(theme.background)),
-  heading: PropTypes.string,
+  heading: PropTypes.element,
   width: PropTypes.number,
   height: PropTypes.number,
   children: PropTypes.element,

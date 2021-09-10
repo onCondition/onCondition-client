@@ -16,19 +16,20 @@ const CommentContainerWrapper = styled.div`
   width: 500px;
   height: 100%;
   display: grid;
+  margin: auto;
   grid-template-rows: 6fr 1fr 3fr;
   padding: 10px 5px 5px 5px;
   border-radius: 30px;
-  background-color: ${({ theme }) => theme.shadow.sub};
+  background-color: ${({ theme }) => theme.background.comment};
   box-shadow: ${({ theme }) => theme.shadow.main};
 `;
 
 const Status = styled.div`
-  color: ${({ theme }) => theme.point.mainPink};
+  color: ${({ theme }) => theme.point.main};
 `;
 
 function CommentContainer({
-  comments, userId, category, ratingId,
+  comments, category, ratingId,
 }) {
   const [userComment, setUserComment] = useState({
     id: "", content: "", isUpdated: false,
@@ -95,7 +96,6 @@ function CommentContainer({
   return (
     <CommentContainerWrapper>
       <CommentViewer
-        userId={userId}
         comments={comments}
         onClickEdit={handleClickEdit}
         onClickDelete={handleClickDelete}
@@ -116,11 +116,13 @@ CommentContainer.propTypes = {
     _id: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     ratingId: PropTypes.string.isRequired,
-    creator: PropTypes.string.isRequired,
+    creator: PropTypes.shape({
+      uid: PropTypes.string.isRequired,
+      profileUrl: PropTypes.string.isRequired,
+    }),
     date: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
   })),
-  userId: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   ratingId: PropTypes.string.isRequired,
 };
