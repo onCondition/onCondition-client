@@ -12,7 +12,7 @@ const GridColumn = styled.div`
 
 const Comment = styled.span`
   align-self: center;
-  margin-tpp: 10xp;
+  margin-top: 10px;
   padding: 10px 10px;
   color: ${({ theme }) => theme.background.main};
   text-align: left;
