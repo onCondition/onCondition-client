@@ -7,7 +7,7 @@ import ImageWrapper from "./ImageWrapper";
 import ButtonsWrapper from "./ButtonsWrapper";
 import HeartInput from "./HeartInput";
 import Button from "./Button";
-import getImageUrl from "../utils/getImageUrl";
+import getImageUrl from "../api/getImageUrl";
 import theme from "../theme";
 
 const Input = styled.input`

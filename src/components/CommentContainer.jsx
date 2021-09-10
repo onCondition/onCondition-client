@@ -8,7 +8,7 @@ import {
   postComment,
   editCommentById,
   deleteCommentById,
-} from "../utils/comment";
+} from "../api/comment";
 import { COMMENT, EDIT } from "../constants/buttons";
 import { ERROR } from "../constants/messages";
 

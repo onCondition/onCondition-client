@@ -30,7 +30,7 @@ function ActivityBar({ activity, onClickRating }) {
 
   return (
     <Link to={`/activity/${id}`} key={id} onClick={handleClickBar}>
-      <List color={theme.pinkColors.lightPink} key={id}>
+      <List color={theme.background.main} key={id}>
         <div>{type}</div>
         <div>{getKoreanTimeString(startTime)}</div>
         <div>{duration} min</div>

@@ -11,7 +11,7 @@ import CommentContainer from "../components/CommentContainer";
 import Button from "../components/Button";
 import CircleButton from "../components/CircleButton";
 import theme from "../theme";
-import { getMealById, editMealById, deleteMealById } from "../utils/meal";
+import { getMealById, editMealById, deleteMealById } from "../api/meal";
 
 function MealDetail() {
   const { id } = useParams();
