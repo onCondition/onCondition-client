@@ -30,6 +30,7 @@ const background = {
   input: greyScaleColors.white,
   graph: greyScaleColors.lightGrey,
   graphData: pinkColors.fadePink,
+  comment: greyScaleColors.lightGrey,
 };
 
 const text = {

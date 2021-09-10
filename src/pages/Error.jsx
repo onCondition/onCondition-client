@@ -26,6 +26,7 @@ function Error({ statusCode, message }) {
       onConfirm={handleConform}
       onCancel={handleCancle}
       width={200}
+      isError={true}
     />
   );
 }

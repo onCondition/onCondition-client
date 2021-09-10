@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { postLogin, postGoogleToken } from "../utils/auth";
+import { postLogin, postGoogleToken } from "../api/auth";
 import { storeTokens, removeTokens } from "../utils/tokens";
 
 const initialState = {
