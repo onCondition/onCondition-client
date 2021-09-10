@@ -6,27 +6,19 @@ import RateForm from "../components/RateForm";
 import ContentBoard from "../components/ContentBoard";
 import CommentContainer from "../components/CommentContainer";
 import Modal from "../components/modalComponent";
+import HeartCounter from "../components/HeartCounter";
 import Button from "../components/Button";
+import DetailWrapper from "../components/DetailWrapper";
+import ButtonWrapper from "../components/ButtonsWrapper";
 
 import { getActivityById, editActivityById, deleteActivityById } from "../utils/activity";
 import { ERROR } from "../constants/messages";
 import {
   CANCEL, EDIT, DELETE, SAVE,
 } from "../constants/buttons";
-import HeartCounter from "../components/HeartCounter";
-import DetailWrapper from "../components/DetailWrapper";
 
 const ContentBoardWrapper = styled.div`
   margin: auto;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  margin-top: 10px;
-
-  button {
-    flex: 1;
-  }
 `;
 
 function activityDetail() {
@@ -145,7 +137,7 @@ function activityDetail() {
             width={400}
             height={240}
           />
-          <ButtonWrapper>
+          <ButtonWrapper isShrink>
             {editButton}
             {deleteButton}
           </ButtonWrapper>

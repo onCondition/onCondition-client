@@ -18,9 +18,9 @@ function CommentViewer({
   comments, onClickEdit, onClickDelete,
 }) {
   const [uid, setUid] = useState(null);
- const user = firebase.auth().currentUser;
- 
-   useEffect(() => {
+  const user = firebase.auth().currentUser;
+
+  useEffect(() => {
     if (user) {
       setUid(user.uid);
     }
