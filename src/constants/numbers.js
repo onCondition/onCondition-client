@@ -11,7 +11,6 @@ const TEXT = {
   MEDIUM: 36,
   LARGE: 44,
   X_LARGE: 52,
-  TITLE: 100,
 };
 
 const SIZE = {
