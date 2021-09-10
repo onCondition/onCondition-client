@@ -7,6 +7,7 @@ import GlobalStyle from "./theme/global";
 
 import firebase from "./config/firebase";
 import Error from "./pages/Error";
+import MyCondition from "./pages/MyCondition";
 import Meal from "./pages/Meal";
 import MealDetail from "./pages/MealDetail";
 import Activity from "./pages/Activity";
@@ -56,7 +57,7 @@ function App() {
                 <Login />
               </Route>
               <PrivateRoute exact path="/myCondition">
-                <p>my condition</p>
+                <MyCondition />
               </PrivateRoute>
               <PrivateRoute path="/meal">
                 <Meal />

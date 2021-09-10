@@ -28,10 +28,12 @@ const background = {
   modal: greyScaleColors.opaqueGrey,
   innerModal: greyScaleColors.fadeWhite,
   input: greyScaleColors.white,
+  graph: greyScaleColors.lightGrey,
+  graphData: pinkColors.fadePink,
 };
 
 const text = {
-  main: pinkColors.lightPink,
+  main: greyScaleColors.white,
   sub: mintColors.mainMint,
   button: greyScaleColors.white,
   input: greyScaleColors.black,
@@ -42,8 +44,9 @@ const point = {
 };
 
 const shadow = {
-  main: "0.3rem 0.3rem 1rem " + greyScaleColors.darkGrey,
-  sub: "0.3rem 0.3rem 1rem " + greyScaleColors.lightGrey,
+  main: "0 0.3rem 0.5rem " + greyScaleColors.mediumGrey,
+  sub: "0 0.3rem 0.5rem " + greyScaleColors.darkGrey,
+  range: "inset 0.1rem 0.1rem 0.3rem" + greyScaleColors.darkGrey,
 };
 
 const theme = {

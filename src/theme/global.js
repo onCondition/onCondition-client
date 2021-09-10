@@ -32,6 +32,14 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Nanum Gothic", sans-serif;
   }
 
+  h1 {
+    margin: 10px 0px 10px 30px;
+    color: #539A92;
+    text-align: left;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
   button {
     font-family: "Carrois Gothic SC", sans-serif;
     cursor: pointer;

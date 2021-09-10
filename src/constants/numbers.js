@@ -7,7 +7,7 @@ const GAP = {
 
 const TEXT = {
   DIVIDE_OCTUPLE: 8,
-  SMALL: 28,
+  SMALL: 15,
   MEDIUM: 36,
   LARGE: 44,
   X_LARGE: 52,
