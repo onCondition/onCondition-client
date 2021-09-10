@@ -35,13 +35,18 @@ const background = {
 
 const text = {
   main: greyScaleColors.white,
-  sub: mintColors.mainMint,
+  sub: mintColors.darkMint,
   button: greyScaleColors.white,
   input: greyScaleColors.black,
 };
 
 const point = {
   main: pinkColors.mainPink,
+};
+
+const lineGraph = {
+  clicked: pinkColors.fadePink,
+  unclicked: greyScaleColors.fadeGrey,
 };
 
 const shadow = {
@@ -56,6 +61,7 @@ const theme = {
   background,
   text,
   point,
+  lineGraph,
   shadow,
 };
 

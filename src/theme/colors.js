@@ -14,9 +14,9 @@ const greyScaleColors = {
   lightGrey: "#F5F6F6",
   mediumGrey: "#B0B0B0",
   darkGrey: "#5c5c5c",
-  fadeWhite: "#E6FFFFFF",
-  fadeGrey: "#4DF5F6F6",
-  fadeLightGrey: "#E6F5F6F6",
+  fadeWhite: "#FFFFFFE6",
+  fadeGrey: "#B0B0B04D",
+  fadeLightGrey: "#F5F6F6E6",
   opaqueGrey: "#000000CC",
   black: "#000000",
 };
