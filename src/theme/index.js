@@ -28,6 +28,7 @@ const background = {
   modal: greyScaleColors.opaqueGrey,
   innerModal: greyScaleColors.fadeWhite,
   input: greyScaleColors.white,
+  comment: greyScaleColors.lightGrey,
 };
 
 const text = {

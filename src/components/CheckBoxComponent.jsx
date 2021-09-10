@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Icon = styled.svg`
   fill: none;
-  stroke: ${(props) => props.theme.mintColors.mainMint};
+  stroke: ${(props) => props.theme.background.sub};
   stroke-width: 3px;
 `;
 
@@ -17,7 +17,7 @@ const StyledCheckBox = styled.div`
   display: inline-block;
   width: 40px;
   height: 40px;
-  border: 3px solid ${(props) => props.theme.mintColors.mainMint};
+  border: 3px solid ${(props) => props.theme.background.sub};
   border-radius: 10px;
 
   ${Icon} {

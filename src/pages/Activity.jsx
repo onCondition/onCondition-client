@@ -12,7 +12,7 @@ const CONTENT_BOARD_PIXEL_HEIGHT = 150;
 
 const Title = styled.p`
   margin: 10px 0px 10px 30px;
-  color: ${({ theme }) => theme.mintColors.mainMint};
+  color: ${({ theme }) => theme.background.sub};
   text-align: left;
   font-size: 50px;
 `;
@@ -103,11 +103,12 @@ function Activity() {
       <Container>
         <div className="viewer">
           <ContentBoard
-            heading="Daily Walking"
             text={`${stepCount} STEPS`}
             width={CONTENT_BOARD_PIXEL_WIDTH}
             height={CONTENT_BOARD_PIXEL_HEIGHT}
-          />
+          >
+            <span>Daily Walking</span>
+          </ContentBoard>
           {selectedActivity ? (
             <RateForm
               defaultValues={selectedActivity}
