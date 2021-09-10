@@ -1,5 +1,5 @@
 import Cookie from "js-cookie";
-import { postRefresh } from "./auth";
+import { postRefresh } from "../api/auth";
 
 const REFRESH_TOKEN = "refreshToken";
 const ACCESS_TOKEN = "accessToken";

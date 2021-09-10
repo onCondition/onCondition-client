@@ -5,7 +5,7 @@ import { PrevButton, NextButton } from "../components/PageButton";
 import RateForm from "../components/RateForm";
 import ContentBoard from "../components/ContentBoard";
 import ActivityBar from "../components/ActivityBar";
-import { getActivities, editActivityById } from "../utils/activity";
+import { getActivities, editActivityById } from "../api/activity";
 
 const CONTENT_BOARD_PIXEL_WIDTH = 400;
 const CONTENT_BOARD_PIXEL_HEIGHT = 150;

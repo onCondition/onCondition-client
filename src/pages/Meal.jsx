@@ -6,7 +6,7 @@ import List from "../components/List";
 import { PrevButton, NextButton } from "../components/PageButton";
 import ContentForm from "../components/ContentForm";
 import HeartCounter from "../components/HeartCounter";
-import { getMeals, postMeal } from "../utils/meal";
+import { getMeals, postMeal } from "../api/meal";
 import theme from "../theme";
 
 const Title = styled.p`
