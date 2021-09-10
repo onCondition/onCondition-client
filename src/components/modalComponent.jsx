@@ -12,7 +12,7 @@ const ModalWrapper = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: ${(props) => props.isError ? "2" : "1"};
   justify-content: center;
   align-items: center;
 `;
@@ -35,10 +35,11 @@ function ModalComponent({
   backgroundColor,
   width,
   height,
+  isError,
 }) {
   return (
     <form>
-      <ModalWrapper>
+      <ModalWrapper isError={isError}>
         <BoardWrapper>
           <ContentBoard backgroundColor={backgroundColor} text={innerText}>
             <ButtonWrapper>
