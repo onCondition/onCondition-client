@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
+import {
+  Route, Switch, Redirect, useHistory,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "./theme";
@@ -7,6 +9,7 @@ import GlobalStyle from "./theme/global";
 
 import firebase from "./config/firebase";
 import Error from "./pages/Error";
+import Condition from "./pages/Condition";
 import Meal from "./pages/Meal";
 import MealDetail from "./pages/MealDetail";
 import Activity from "./pages/Activity";
@@ -53,11 +56,14 @@ function App() {
               <Logout onLogout={handleLogout} />
             </header>
             <Switch>
+              <Route exact path="/">
+                <Redirect to="/condition" />
+              </Route>
               <Route path="/login">
                 <Login />
               </Route>
-              <PrivateRoute exact path="/myCondition">
-                <p>my condition</p>
+              <PrivateRoute exact path="/condition">
+                <Condition />
               </PrivateRoute>
               <PrivateRoute path="/meal">
                 <Meal />

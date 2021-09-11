@@ -9,13 +9,6 @@ import HeartCounter from "../components/HeartCounter";
 import { getMeals, postMeal } from "../api/meal";
 import theme from "../theme";
 
-const Title = styled.p`
-  margin: 10px 0px 10px 30px;
-  color: ${({ theme }) => theme.background.sub};
-  text-align: left;
-  font-size: 50px;
-`;
-
 const Container = styled.div`
   display: flex;
   flex-flow: row-reverse wrap;
@@ -96,7 +89,7 @@ function Meal() {
 
   return (
     <div>
-      <Title>식사</Title>
+      <h1>식사</h1>
       <Container>
         <div className="viewer">
           <ContentForm
