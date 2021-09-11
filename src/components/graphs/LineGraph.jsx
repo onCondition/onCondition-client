@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Line } from "react-chartjs-2";
 
 import theme from "../../theme";
+import GraphWrapper from "./GraphWrapper";
 
 function LineGraph({ categories, dataPerDate }) {
   const [clickedDatasetLabel, setClickedDatasetLabel] = useState(categories[0]);
@@ -87,11 +88,13 @@ function LineGraph({ categories, dataPerDate }) {
   };
 
   return (
-    <Line
-      data={data}
-      options={LineOptions}
-      getElementAtEvent={handleGraphClick}
-    />
+    <GraphWrapper>
+      <Line
+        data={data}
+        options={LineOptions}
+        getElementAtEvent={handleGraphClick}
+      />
+    </GraphWrapper>
   );
 }
 

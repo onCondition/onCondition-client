@@ -88,19 +88,17 @@ function RadarGraph({ categories, dataPerDate }) {
   };
 
   return (
-    <>
-      <GraphWrapper>
-        <Radar
-          data={data[data.length + dateBackwardIndex]}
-          options={radarOptions}
-        />
-      </GraphWrapper>
+    <GraphWrapper>
+      <Radar
+        data={data[data.length + dateBackwardIndex]}
+        options={radarOptions}
+      />
       <DragBar
         min={0 - data.length} max={latestDayIndex}
         value={dateBackwardIndex}
         onChange={handleRangeInput}
       />
-    </>
+    </GraphWrapper>
   );
 }
 

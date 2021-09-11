@@ -13,8 +13,12 @@ const ConditionWrapper = styled.div`
   justify-content: center;
   color: ${({ theme }) => theme.text.main};
 
+  .graph, .status {
+    margin: 5px;
+  }
+
   .graph {
-    width: 700px;
+    width: 630px;
   }
 
   .graph button {
@@ -22,7 +26,7 @@ const ConditionWrapper = styled.div`
   }
 
   .status {
-    flex-basis: 680px;
+    flex-basis: 630px;
     align-items: center;
   }
 `;
