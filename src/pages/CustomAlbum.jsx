@@ -38,76 +38,78 @@ function CustomAlbum() {
     });
   };
 
-  useEffect(async () => {
-    if (albums.prevBuffer.length > LENGTH || !albums.prevPage) {
-      return;
-    }
+  useEffect(() => {
+    async function fetchAlbums() {
+      const result = await getAlbums(category, 1);
 
-    if (albums.current.length < LENGTH && albums.prevBuffer.length) {
+      if (!result) {
+        return;
+      }
+
       setAlbums((prevState) => {
-        const count = LENGTH - prevState.current.length;
-        const added = prevState.prevBuffer.slice(-count);
-        const newPrevBuffer = prevState.prevBuffer.slice(0, -count);
-
         return {
           ...prevState,
-          prevBuffer: newPrevBuffer,
-          current: [...added, ...prevState.current],
+          current: result.data,
+          nextPage: result.nextPage,
         };
       });
+    }
 
+    fetchAlbums();
+  }, []);
+
+  useEffect(() => {
+    async function fetchBuffer() {
+      const result = await getAlbums(category, albums.prevPage);
+
+      if (!result) {
+        return;
+      }
+
+      setAlbums((prevState) => {
+        return {
+          ...prevState,
+          prevBuffer: [...result.data, ...prevState.prevBuffer],
+          prevPage: result.prevPage,
+        };
+      });
+    }
+
+    const isDataEnough = albums.prevBuffer.length >= LENGTH;
+    const isFetchEnable = Boolean(albums.prevPage);
+
+    if (isDataEnough || !isFetchEnable) {
       return;
     }
 
-    const result = await getAlbums(category, albums.prevPage);
-
-    if (!result) {
-      return;
-    }
-
-    setAlbums((prevState) => {
-      return {
-        ...prevState,
-        prevBuffer: [...result.data, ...prevState.prevBuffer],
-        nextPage: result.prevPage,
-      };
-    });
+    fetchBuffer();
   }, [albums.prevBuffer.length]);
 
-  useEffect(async () => {
-    if (albums.nextBuffer.length > LENGTH || !albums.nextPage) {
-      return;
-    }
+  useEffect(() => {
+    async function fetchBuffer() {
+      const result = await getAlbums(category, albums.nextPage);
 
-    if (albums.current.length < LENGTH && albums.nextBuffer.length) {
+      if (!result) {
+        return;
+      }
+
       setAlbums((prevState) => {
-        const count = LENGTH - prevState.current.length;
-        const added = prevState.nextBuffer.slice(0, count);
-        const newNextBuffer = prevState.nextBuffer.slice(count);
-
         return {
           ...prevState,
-          nextBuffer: newNextBuffer,
-          current: [...prevState.current, ...added],
+          nextBuffer: [...prevState.nextBuffer, ...result.data],
+          nextPage: result.nextPage,
         };
       });
+    }
 
+    const isDataEnough = albums.nextBuffer.length >= LENGTH;
+    const isFetchEnable = Boolean(albums.nextPage);
+
+    if (isDataEnough || !isFetchEnable) {
       return;
     }
 
-    const result = await getAlbums(category, albums.nextPage);
-
-    if (!result) {
-      return;
-    }
-
-    setAlbums((prevState) => {
-      return {
-        ...prevState,
-        nextBuffer: [...prevState.nextBuffer, ...result.data],
-        nextPage: result.nextPage,
-      };
-    });
+    fetchBuffer();
   }, [albums.nextBuffer.length]);
 
   const handleWheel = function (isAscending, count) {
