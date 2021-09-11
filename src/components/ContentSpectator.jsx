@@ -8,7 +8,7 @@ import ContentViewer from "../components/ContentViewer";
 import ContentViewerWrapper from "../components/Wrapper";
 import SIZE from "../constants/numbers";
 
-const { PAGE_PER_CONTENT } = SIZE;
+const { CONTENT_PER_PAGE } = SIZE;
 const CELL_GAP = 7;
 const WHEEL_TIME = 300;
 
@@ -20,7 +20,7 @@ const ContentSpectatorWrapper = styled.div`
   display: grid;
   width: 600px;
   height: 600px;
-  grid-template-rows: repeat(${PAGE_PER_CONTENT}, 80px);
+  grid-template-rows: repeat(${CONTENT_PER_PAGE}, 80px);
   grid-rows-gap: ${CELL_GAP}px;
   margin: 10px;
 
@@ -44,7 +44,7 @@ const ContentSpectatorWrapper = styled.div`
 
 function getMarginByIndex(index) {
   const divider = 2;
-  const center = Math.floor(PAGE_PER_CONTENT / divider);
+  const center = Math.floor(CONTENT_PER_PAGE / divider);
   const multiplier = center - Math.abs(center - index) - 1;
   const unitSize = 60;
 
@@ -53,21 +53,20 @@ function getMarginByIndex(index) {
 
 function calcRange(deltaY) {
   const delta = Math.abs(deltaY);
+  const divider = 2;
   const onePoint = 50;
   const halfPoint = 200;
-  const one = 1;
-  const half = 4;
-  const all = 7;
+  const half = Math.ceil(CONTENT_PER_PAGE / divider);
 
   if (delta < onePoint) {
-    return one;
+    return 1;
   }
 
   if (delta < halfPoint) {
     return half;
   }
 
-  return all;
+  return CONTENT_PER_PAGE;
 }
 
 function ContentSpectator({ contents, onWheel }) {
