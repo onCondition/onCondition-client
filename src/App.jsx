@@ -18,7 +18,7 @@ import Login from "./components/Login";
 import Logout from "./components/Logout";
 import PrivateRoute from "./components/PrivateRoute";
 import { setLogin, logout } from "./features/userSlice";
-import { checkTokenExist } from "./utils/tokens";
+import { checkUserInfoExist } from "./helpers/userInfo";
 
 const AppWrapper = styled.div`
   text-align: center;
@@ -38,7 +38,7 @@ function App() {
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         dispatch(logout());
-      } else if (checkTokenExist()) {
+      } else if (checkUserInfoExist()) {
         dispatch(setLogin());
       }
       setIsLoaded(true);

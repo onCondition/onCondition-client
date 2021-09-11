@@ -8,9 +8,13 @@ async function postLogin(idToken) {
       null,
       { headers: { token: idToken } });
 
-    const { accessToken, refreshToken } = res.data;
+    const {
+      accessToken, refreshToken, id, categories,
+    } = res.data;
 
-    return { accessToken, refreshToken };
+    return {
+      accessToken, refreshToken, id, categories,
+    };
   } catch (err) {
     throw new Error(ERROR.LOGIN_FAIL);
   }
@@ -30,9 +34,11 @@ async function postRefresh(refreshToken) {
 
 async function postGoogleToken(googleToken) {
   try {
-    const res = await axiosInstance.post("api/googleFit", googleToken);
+    const res = await axiosInstance.post("/api/googleFit", googleToken);
 
-    return res;
+    if (res) {
+      return res;
+    }
   } catch (err) {
     throw new Error(ERROR.GOOGLE_TOKEN_NOT_AVAILABLE);
   }

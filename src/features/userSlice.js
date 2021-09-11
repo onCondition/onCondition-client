@@ -1,40 +1,68 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postLogin, postGoogleToken } from "../api/auth";
-import { storeTokens, removeTokens } from "../utils/tokens";
+import { storeUserInfos, removeUserInfos } from "../helpers/userInfo";
 
 const initialState = {
+  id: "",
+  categories: [],
   hasLoggedIn: false,
 };
 
 const login = createAsyncThunk("user/login",
   async function ({ idToken, googleToken }) {
     try {
-      const { accessToken, refreshToken } = await postLogin(idToken);
+      const {
+        accessToken,
+        refreshToken,
+        id,
+        categories,
+      } = await postLogin(idToken);
 
-      storeTokens({ accessToken, refreshToken });
+      storeUserInfos({
+        accessToken,
+        refreshToken,
+        id,
+        categories,
+      });
 
       const res = await postGoogleToken(googleToken);
 
       if (res.status) {
         return Promise.reject(res.message);
       }
+
+      return { id, categories };
     } catch (err) {
       return Promise.reject(err);
     }
   });
 
-const logout = createAsyncThunk("user/logout", removeTokens);
+const logout = createAsyncThunk("user/logout", removeUserInfos);
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setLogin(state) {
-      state.hasLoggedIn = true;
+    setUserInfos(state, { payload }) {
+      const { id, categories } = payload;
+
+      if (id && categories) {
+        state.id = id;
+        state.categories = categories;
+        state.hasLoggedIn = true;
+      } else {
+        state.id = null;
+        state.categories = [];
+        state.hasLoggedIn = false;
+      }
     },
   },
   extraReducers: {
-    [login.fulfilled]: (state) => {
+    [login.fulfilled]: (state, { payload }) => {
+      const { id, categories } = payload;
+
+      state.id = id;
+      state.categories = categories;
       state.hasLoggedIn = true;
     },
     [login.pending]: (state) => {
@@ -44,6 +72,8 @@ const userSlice = createSlice({
       state.hasLoggedIn = false;
     },
     [logout.fulfilled]: (state) => {
+      state.id = null;
+      state.categories = [];
       state.hasLoggedIn = false;
     },
     [logout.rejected]: (state) => {
@@ -52,6 +82,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setLogin } = userSlice.actions;
+export const { setUserInfos } = userSlice.actions;
 export { login, logout };
 export default userSlice.reducer;
