@@ -29,7 +29,7 @@ const Inner = styled.div`
   font-size: 1.2rem;
 `;
 
-const Heading = styled.p`
+const Heading = styled.div`
   margin: 0 0 10px 0;
   color: ${({ theme }) => theme.background.innerModal};
   font-size: 1.5rem;

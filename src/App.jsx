@@ -12,6 +12,7 @@ import Error from "./pages/Error";
 import Condition from "./pages/Condition";
 import Meal from "./pages/Meal";
 import Activity from "./pages/Activity";
+import Detail from "./pages/Detail";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import PrivateRoute from "./components/PrivateRoute";
@@ -85,7 +86,7 @@ function App() {
               </PrivateRoute>
             </Switch>
             <Route path="/:id/:category/:ratingId">
-              <p>Detail</p>
+              <Detail />
             </Route>
             <Route path="*">
               <p>Not Found</p>
