@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Radar } from "react-chartjs-2";
 
 import GraphWrapper from "./GraphWrapper";
 import theme from "../../theme";
-import SIZE from "../../constants/numbers";
 import PropTypes from "prop-types";
-import { convertToRadar } from "../../utils/graphData";
 
 const DragBar = styled.input.attrs({
   type: "range",
@@ -42,13 +40,13 @@ const DragBar = styled.input.attrs({
 
 function RadarGraph({ categories, dataPerDate }) {
   const latestDayIndex = -1;
-  const [data, setData] = useState([]);
-  const [displayDateIndex, setDisplayDateIndex] = useState(latestDayIndex);
+  const [dateBackwardIndex, setDateBackwardIndex] = useState(latestDayIndex);
 
-  useEffect(() => {
-    const newData = convertToRadar(categories, dataPerDate);
-    setData(newData);
-  }, []);
+  const data = Object.keys(dataPerDate).sort().map((date) => {
+    const datasets = [{ label: date, data: dataPerDate[date] }];
+
+    return { labels: categories, datasets };
+  });
 
   const radarOptions = {
     datasets: {
@@ -69,13 +67,13 @@ function RadarGraph({ categories, dataPerDate }) {
           stepSize: 2,
           color: theme.text.sub,
           font: {
-            size: SIZE.TEXT.SMALL,
+            size: theme.fontSizes.graph,
           },
         },
         pointLabels: {
           color: theme.text.sub,
           font: {
-            size: SIZE.TEXT.SMALL,
+            size: theme.fontSizes.graph,
           },
         },
       },
@@ -86,21 +84,20 @@ function RadarGraph({ categories, dataPerDate }) {
   };
 
   const handleRangeInput = function ({ target }) {
-    console.log(target.value, data[data.length + displayDateIndex]);
-    setDisplayDateIndex(Number(target.value));
+    setDateBackwardIndex(Number(target.value));
   };
 
   return (
     <>
       <GraphWrapper>
         <Radar
-          data={data[data.length + displayDateIndex]}
+          data={data[data.length + dateBackwardIndex]}
           options={radarOptions}
         />
       </GraphWrapper>
       <DragBar
         min={0 - data.length} max={latestDayIndex}
-        value={displayDateIndex}
+        value={dateBackwardIndex}
         onChange={handleRangeInput}
       />
     </>

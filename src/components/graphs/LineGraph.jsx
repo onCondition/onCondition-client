@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Line } from "react-chartjs-2";
 
 import theme from "../../theme";
-import SIZE from "../../constants/numbers";
-import { convertToLine } from "../../utils/graphData";
 
 function LineGraph({ categories, dataPerDate }) {
   const [clickedDatasetLabel, setClickedDatasetLabel] = useState(categories[0]);
-  const [data, setData] = useState([]);
+  const lastestSevenDaysIndex = -7;
+  const dates = Object.keys(dataPerDate).sort().slice(lastestSevenDaysIndex);
+  const datasets = categories.map((category, i) => {
+    const data = dates.map((date) => dataPerDate[date][i]);
 
-  useEffect(() => {
-    const newData = convertToLine(categories, dataPerDate);
-    setData(newData);
-  }, []);
+    return { label: category, data };
+  });
+
+  const data = { labels: dates, datasets };
 
   const LineOptions = {
     scales: {
@@ -25,7 +26,7 @@ function LineGraph({ categories, dataPerDate }) {
           z: 1,
           color: theme.text.sub,
           font: {
-            size: SIZE.TEXT.SMALL,
+            size: theme.fontSizes.graph,
           },
         },
       },
@@ -36,7 +37,7 @@ function LineGraph({ categories, dataPerDate }) {
         ticks: {
           color: theme.text.sub,
           font: {
-            size: SIZE.TEXT.SMALL,
+            size: theme.fontSizes.graph,
           },
         },
       },
@@ -86,13 +87,11 @@ function LineGraph({ categories, dataPerDate }) {
   };
 
   return (
-    <>
-      {!data.length && <Line
-        data={data}
-        options={LineOptions}
-        getElementAtEvent={handleGraphClick}
-      />}
-    </>
+    <Line
+      data={data}
+      options={LineOptions}
+      getElementAtEvent={handleGraphClick}
+    />
   );
 }
 

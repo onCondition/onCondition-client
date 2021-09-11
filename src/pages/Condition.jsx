@@ -6,7 +6,6 @@ import HeartCounter from "../components/HeartCounter";
 import Button from "../components/Button";
 import LineGraph from "../components/graphs/LineGraph";
 import RadarGraph from "../components/graphs/RadarGraph";
-import { sortData } from "../utils/graphData";
 import { getCondition } from "../api/condition";
 
 const ConditionWrapper = styled.div`
@@ -34,7 +33,6 @@ const StatusInfo = styled.div`
   justify-items: start;
   column-gap: 1rem;
   padding: 20px;
-  width: 630px;
   margin: 0 auto;
   border-radius: 20px;
   box-shadow: ${({ theme }) => theme.shadow.main};
@@ -52,11 +50,38 @@ function Condition() {
   useEffect(() => {
     async function loadCondition() {
       const conditionData = await getCondition();
-      const [
-        loadedCategories, dataPerCategory, loadedDataPerDate,
-      ] = sortData(conditionData);
 
-      const loadedStatus = dataPerCategory.map((data, i) => {
+      if (!conditionData) {
+        return;
+      }
+
+      const {
+        activityData,
+        mealData,
+        sleepData,
+        albumData,
+        gridData,
+      } = conditionData;
+
+      const loadedCategories = ["운동", "식사", "수면"];
+      const loadedDataPerCategory = [activityData, mealData, sleepData];
+      const loadedDataPerDate = {};
+
+      [...albumData, ...gridData].forEach(({ _id: category, data }) => {
+        loadedCategories.push(category);
+        loadedDataPerCategory.push(data);
+      });
+
+      loadedDataPerCategory.forEach((data, i) => {
+        data.forEach(({ _id: date, average }) => {
+          if (!loadedDataPerDate[date]) {
+            loadedDataPerDate[date] = Array(loadedCategories.length).fill(0);
+          }
+          loadedDataPerDate[date][i] = average;
+        });
+      });
+
+      const loadedStatus = loadedDataPerCategory.map((data, i) => {
         let total = data.length;
         const sum = data.reduce((sum, { average }) => {
           if (!average) {
@@ -100,13 +125,13 @@ function Condition() {
 
   const statusInfos = status.map(({ category, heartCount }) => (
     <>
-      <span>{category}</span>
-      <HeartCounter count={heartCount} />
+      <span key={category}>{category}</span>
+      <HeartCounter key={category + "status"} count={heartCount} />
     </>
   ));
 
   return (
-    <>
+    <div>
       <h1>내 컨디션</h1>
       {!!dataPerDate && <ConditionWrapper>
         <div className="graph">
@@ -134,7 +159,7 @@ function Condition() {
           />
         </div>
       </ConditionWrapper>}
-    </>
+    </div>
   );
 }
 

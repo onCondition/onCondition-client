@@ -19,6 +19,7 @@ const fontSizes = {
   medium: calcRem(SIZE.TEXT.MEDIUM),
   large: calcRem(SIZE.TEXT.LARGE),
   xLarge: calcRem(SIZE.TEXT.X_LARGE),
+  graph: SIZE.TEXT.SMALL,
 };
 
 const background = {
