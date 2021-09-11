@@ -62,8 +62,7 @@ const api = {
   meal: generateApiInstance("meal"),
   activity: generateApiInstance("activity"),
   sleep: generateApiInstance("sleep"),
-  customAlbum: generateApiInstance("customAlbum"),
-  customGrid: generateApiInstance("customGrid"),
+  custom: generateApiInstance,
 };
 
 export default api;
