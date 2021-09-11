@@ -6,7 +6,7 @@ import { PrevButton, NextButton } from "../components/PageButton";
 import RateForm from "../components/RateForm";
 import ContentBoard from "../components/ContentBoard";
 import ActivityBar from "../components/ActivityBar";
-import { getActivities, editActivityById } from "../api/activity";
+import api from "../api/category";
 
 const CONTENT_BOARD_PIXEL_WIDTH = 400;
 const CONTENT_BOARD_PIXEL_HEIGHT = 150;
@@ -41,15 +41,18 @@ function Activity() {
   const [prevPage, setPrevPage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
   const [selectedActivity, setSelectedActivity] = useState(null);
+  const { get, editById } = api.activity;
 
   async function loadActivities(page = currentPage) {
-    const result = await getActivities(id, page);
+    const result = await get(id, page);
 
     if (result) {
-      setActivities(result.activities);
-      setStepCount(result.stepCount);
-      setPrevPage(result.prevPage);
-      setNextPage(result.nextPage);
+      const { data, prevPage, nextPage } = result;
+
+      setActivities(data.activities);
+      setStepCount(data.stepCount);
+      setPrevPage(prevPage);
+      setNextPage(nextPage);
       setSelectedActivity(null);
     }
   }
@@ -65,7 +68,7 @@ function Activity() {
   const handleSubmitForm = async function ({
     date, heartCount, type, text,
   }) {
-    const res = await editActivityById(id, selectedActivity.ratingId, {
+    const res = await editById(id, selectedActivity.ratingId, {
       date, type, heartCount, text,
     });
 

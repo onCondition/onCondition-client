@@ -7,7 +7,7 @@ import List from "../components/List";
 import { PrevButton, NextButton } from "../components/PageButton";
 import ContentForm from "../components/ContentForm";
 import HeartCounter from "../components/HeartCounter";
-import { getMeals, postMeal } from "../api/meal";
+import api from "../api/category";
 import theme from "../theme";
 
 const Container = styled.div`
@@ -33,9 +33,10 @@ function Meal() {
   const [isReloadRequired, setIsReloadRequired] = useState(true);
   const [prevPage, setPrevPage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
+  const { get, post } = api.meal;
 
   async function loadMeals(page = 1) {
-    const result = await getMeals(id, page);
+    const result = await get(id, page);
 
     if (!result) {
       return;
@@ -58,7 +59,7 @@ function Meal() {
   const handleSubmitForm = async function ({
     date, heartCount, url, text,
   }) {
-    const newMeal = await postMeal(id, {
+    const newMeal = await post(id, {
       date, url, heartCount, text,
     });
 
