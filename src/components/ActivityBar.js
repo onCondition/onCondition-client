@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
@@ -15,22 +16,23 @@ const RatingOpener = styled.span`
 `;
 
 function ActivityBar({ activity, onClickRating }) {
+  const { id } = useParams();
   const {
-    _id: id, type, startTime, duration, rating,
+    _id: ratingId, type, startTime, duration, rating,
   } = activity;
 
   const handleClickBar = function (ev) {
     if (ev.target.textContent === PLUS) {
       ev.preventDefault();
       onClickRating({
-        id, type, startTime, duration, rating,
+        ratingId, type, startTime, duration, rating,
       });
     }
   };
 
   return (
-    <Link to={`/activity/${id}`} key={id} onClick={handleClickBar}>
-      <List color={theme.background.main} key={id}>
+    <Link to={`/${id}/activity/${ratingId}`} key={ratingId} onClick={handleClickBar}>
+      <List color={theme.background.main} key={ratingId}>
         <div>{type}</div>
         <div>{getKoreanTimeString(startTime)}</div>
         <div>{duration} min</div>

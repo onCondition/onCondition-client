@@ -22,7 +22,7 @@ const ContentBoardWrapper = styled.div`
 `;
 
 function activityDetail() {
-  const { id } = useParams();
+  const { id, ratingId } = useParams();
   const [activitiesData, setActivityData] = useState(null);
   const [comments, setComments] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -30,8 +30,8 @@ function activityDetail() {
   const history = useHistory();
 
   useEffect(() => {
-    async function loadActivityById(activitiesId) {
-      const data = await getActivityById(activitiesId);
+    async function loadActivityById(ratingId) {
+      const data = await getActivityById(ratingId);
       const {
         comments, startTime: date, duration, type, rating,
       } = data;
@@ -51,8 +51,8 @@ function activityDetail() {
       setComments(comments);
     }
 
-    loadActivityById(id);
-  }, [id]);
+    loadActivityById(ratingId);
+  }, [ratingId]);
 
   const handleRedirect = function () {
     history.push("/activity");
@@ -60,7 +60,7 @@ function activityDetail() {
 
   const handleFormSubmit = async function (values) {
     const { heartCount, text } = values;
-    const result = await editActivityById(id, { heartCount, text });
+    const result = await editActivityById(id, ratingId, { heartCount, text });
 
     setActivityData(values);
 
@@ -74,7 +74,7 @@ function activityDetail() {
   };
 
   const handleDeleteButtonClick = async function () {
-    const result = await deleteActivityById(id);
+    const result = await deleteActivityById(id, ratingId);
 
     if (result) {
       handleRedirect();

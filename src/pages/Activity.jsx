@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import styled from "styled-components";
 
 import { PrevButton, NextButton } from "../components/PageButton";
@@ -33,6 +34,7 @@ const Container = styled.div`
 `;
 
 function Activity() {
+  const { id } = useParams();
   const [activities, setActivities] = useState([]);
   const [stepCount, setStepCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -41,7 +43,7 @@ function Activity() {
   const [selectedActivity, setSelectedActivity] = useState(null);
 
   async function loadActivities(page = currentPage) {
-    const result = await getActivities(page);
+    const result = await getActivities(id, page);
 
     if (result) {
       setActivities(result.activities);
@@ -63,7 +65,7 @@ function Activity() {
   const handleSubmitForm = async function ({
     date, heartCount, type, text,
   }) {
-    const res = await editActivityById(selectedActivity.id, {
+    const res = await editActivityById(id, selectedActivity.ratingId, {
       date, type, heartCount, text,
     });
 

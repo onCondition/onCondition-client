@@ -1,7 +1,7 @@
 import axios from "./axiosInstance";
 
-async function getActivities(page) {
-  const res = await axios.get("/api/activity", {
+async function getActivities(id, page) {
+  const res = await axios.get(`/api/${id}/activity`, {
     headers: {
       page,
     },
@@ -18,22 +18,22 @@ async function getActivities(page) {
   }
 }
 
-async function getActivityById(id) {
-  const res = await axios.get(`/api/activity/${id}`);
+async function getActivityById(activityId) {
+  const res = await axios.get(`/api/activity/${activityId}`);
 
   if (res) {
     return res.data;
   }
 }
 
-async function editActivityById(id, data) {
-  const res = await axios.patch(`/api/activity/${id}`, data);
+async function editActivityById(id, activityId, data) {
+  const res = await axios.patch(`/api/${id}/activity/${activityId}`, data);
 
   return res;
 }
 
-async function deleteActivityById(id) {
-  const res = await axios.delete(`/api/activity/${id}`);
+async function deleteActivityById(id, activityId) {
+  const res = await axios.delete(`/api/${id}/activity/${activityId}`);
 
   return res;
 }
