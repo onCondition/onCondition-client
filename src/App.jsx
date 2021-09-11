@@ -11,14 +11,12 @@ import firebase from "./config/firebase";
 import Error from "./pages/Error";
 import Condition from "./pages/Condition";
 import Meal from "./pages/Meal";
-import MealDetail from "./pages/MealDetail";
 import Activity from "./pages/Activity";
-import ActivityDetail from "./pages/ActivityDetail";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import PrivateRoute from "./components/PrivateRoute";
-import { setLogin, logout } from "./features/userSlice";
-import { checkUserInfoExist } from "./helpers/userInfo";
+import { setUserInfos,logout } from "./features/userSlice";
+import { getUserInfos } from "./helpers/userInfo";
 
 const AppWrapper = styled.div`
   text-align: center;
@@ -38,9 +36,12 @@ function App() {
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         dispatch(logout());
-      } else if (checkUserInfoExist()) {
-        dispatch(setLogin());
+      } else {
+        const { id, categories } = getUserInfos();
+
+        dispatch(setUserInfos({ id, categories }));
       }
+
       setIsLoaded(true);
     });
   }, []);
@@ -55,28 +56,40 @@ function App() {
               <Logout onLogout={handleLogout} />
             </header>
             <Switch>
-              <Route exact path="/">
-                <Redirect to="/condition" />
-              </Route>
               <Route path="/login">
                 <Login />
               </Route>
-              <PrivateRoute exact path="/condition">
+              <PrivateRoute exact path="/">
+                <Redirect to="/login" />
+              </PrivateRoute>
+              <PrivateRoute exact path="/:id">
                 <Condition />
               </PrivateRoute>
-              <PrivateRoute path="/meal">
+              <PrivateRoute exact path="/:id/friends/">
+                <p>Friends</p>
+              </PrivateRoute>
+              <PrivateRoute path="/:id/meal">
                 <Meal />
               </PrivateRoute>
-              <PrivateRoute exact path="/activity">
+              <PrivateRoute exact path="/:id/activity">
                 <Activity />
               </PrivateRoute>
-              <PrivateRoute exact path="/activity/:id">
-                <ActivityDetail />
+              <PrivateRoute exact path="/:id/sleep">
+                <p>Sleep</p>
+              </PrivateRoute>
+              <PrivateRoute exact path="/:id/:category/">
+                <p>Custom Category</p>
+              </PrivateRoute>
+              <PrivateRoute exact path="/:id/friends/:friendId">
+                <p>Friend Detail</p>
               </PrivateRoute>
             </Switch>
-            <PrivateRoute path="/meal/:id">
-              <MealDetail />
-            </PrivateRoute>
+            <Route path="/:id/:category/:ratingId">
+              <p>Detail</p>
+            </Route>
+            <Route path="*">
+              <p>Not Found</p>
+            </Route>
           </>
         ) : (
           <p>waiting...</p>

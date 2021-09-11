@@ -5,7 +5,7 @@ import { storeUserInfos, removeUserInfos } from "../helpers/userInfo";
 const initialState = {
   id: "",
   categories: [],
-  hasLoggedIn: false,
+  isLoading: false,
 };
 
 const login = createAsyncThunk("user/login",
@@ -49,11 +49,9 @@ const userSlice = createSlice({
       if (id && categories) {
         state.id = id;
         state.categories = categories;
-        state.hasLoggedIn = true;
       } else {
         state.id = null;
         state.categories = [];
-        state.hasLoggedIn = false;
       }
     },
   },
@@ -63,21 +61,14 @@ const userSlice = createSlice({
 
       state.id = id;
       state.categories = categories;
-      state.hasLoggedIn = true;
-    },
-    [login.pending]: (state) => {
-      state.hasLoggedIn = false;
     },
     [login.rejected]: (state) => {
-      state.hasLoggedIn = false;
+      state.id = "";
+      state.categories = [];
     },
     [logout.fulfilled]: (state) => {
       state.id = null;
       state.categories = [];
-      state.hasLoggedIn = false;
-    },
-    [logout.rejected]: (state) => {
-      state.hasLoggedIn = true;
     },
   },
 });
