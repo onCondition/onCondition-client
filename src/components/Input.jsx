@@ -6,7 +6,7 @@ const InputSt = styled.input`
   display: relative;
   border-radius: 10px;
   border: 3px solid ${(props) => props.lineColor
-    ? props.lineColor : props.theme.pinkColors.mainPink};
+    ? props.lineColor : props.theme.background.main};
   width: ${(props) => props.width
     ? props.width : "150px"};
   height: ${(props) => props.height

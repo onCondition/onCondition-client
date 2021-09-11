@@ -8,6 +8,7 @@ import ButtonsWrapper from "../components/ButtonsWrapper";
 import ContentViewer from "../components/ContentViewer";
 import ContentForm from "../components/ContentForm";
 import CommentContainer from "../components/CommentContainer";
+import Modal from "../components/modalComponent";
 import Button from "../components/Button";
 import CircleButton from "../components/CircleButton";
 import theme from "../theme";
@@ -19,6 +20,7 @@ function MealDetail() {
   const [mealData, setMealData] = useState(null);
   const [comments, setComments] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
+  const [hasModal, setHasModal] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -72,6 +74,10 @@ function MealDetail() {
     history.push("/meal");
   };
 
+  const handleDeletePreConfirm = function () {
+    setHasModal(true);
+  };
+
   const cancelButton = (
     <Button
       onClick={() => setIsEditing(false)}
@@ -88,13 +94,18 @@ function MealDetail() {
 
   const deleteButton = (
     <Button
-      onClick={handleDeleteButtonClick}
+      onClick={handleDeletePreConfirm}
       text="delete"
     />
   );
 
   return (
     <ModalWrapper>
+      {hasModal && <Modal
+        innerText="정말로 삭제하시겠어요?"
+        onConfirm={handleDeleteButtonClick}
+        onCancel={() => setHasModal(false)}
+      />}
       <CircleButton
         color={theme.background.main}
         onClick={handleCloseButtonClick}

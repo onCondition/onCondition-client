@@ -103,11 +103,12 @@ function Activity() {
       <Container>
         <div className="viewer">
           <ContentBoard
-            heading="Daily Walking"
             text={`${stepCount} STEPS`}
             width={CONTENT_BOARD_PIXEL_WIDTH}
             height={CONTENT_BOARD_PIXEL_HEIGHT}
-          />
+          >
+            <span>Daily Walking</span>
+          </ContentBoard>
           {selectedActivity ? (
             <RateForm
               defaultValues={selectedActivity}
