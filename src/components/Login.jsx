@@ -49,29 +49,31 @@ function Login() {
     history.push("/condition");
   };
 
-  useEffect(async () => {
+  useEffect(() => {
+    async function dispatchRedirectResult() {
+      try {
+        const { user, credential } = await firebase.auth().getRedirectResult();
+
+        if (!user) {
+          return;
+        }
+
+        const idToken = await user.getIdToken(true);
+        const { accessToken } = credential;
+        const refreshToken = user.refreshToken;
+        const googleToken = { accessToken, refreshToken };
+
+        dispatch(login({ idToken, googleToken }));
+      } catch {
+        setErrorStatus(ERROR.LOGIN_FAIL);
+      }
+    }
+
     if (hasLoggedIn) {
       handleLogin();
-
-      return;
     }
 
-    try {
-      const { user, credential } = await firebase.auth().getRedirectResult();
-
-      if (!user) {
-        return;
-      }
-
-      const idToken = await user.getIdToken(true);
-      const { accessToken } = credential;
-      const refreshToken = user.refreshToken;
-      const googleToken = { accessToken, refreshToken };
-
-      dispatch(login({ idToken, googleToken }));
-    } catch {
-      setErrorStatus(ERROR.LOGIN_FAIL);
-    }
+    dispatchRedirectResult();
   }, [hasLoggedIn]);
 
   return (
