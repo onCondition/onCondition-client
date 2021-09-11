@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -27,13 +28,14 @@ const Container = styled.div`
 `;
 
 function Meal() {
+  const { id } = useParams();
   const [meals, setMeals] = useState([]);
   const [isReloadRequired, setIsReloadRequired] = useState(true);
   const [prevPage, setPrevPage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
 
   async function loadMeals(page = 1) {
-    const result = await getMeals(page);
+    const result = await getMeals(id, page);
 
     if (!result) {
       return;
@@ -56,7 +58,7 @@ function Meal() {
   const handleSubmitForm = async function ({
     date, heartCount, url, text,
   }) {
-    const newMeal = await postMeal({
+    const newMeal = await postMeal(id, {
       date, url, heartCount, text,
     });
 
@@ -75,7 +77,7 @@ function Meal() {
 
   const mealBars = (meals.length) ? meals.map((meal) => {
     return (
-      <Link to={`/meal/${meal._id}`} key={meal._id}>
+      <Link to={`/${id}/meal/${meal._id}`} key={meal._id}>
         <List color={theme.background.main} key={meal.id}>
           {meal.url
             ? <img src={meal.url} />

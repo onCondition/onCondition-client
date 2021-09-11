@@ -56,19 +56,19 @@ function App() {
               <Logout onLogout={handleLogout} />
             </header>
             <Switch>
+              <Route exact path="/">
+                <Redirect to="/login" />
+              </Route>
               <Route path="/login">
                 <Login />
               </Route>
-              <PrivateRoute exact path="/">
-                <Redirect to="/login" />
-              </PrivateRoute>
               <PrivateRoute exact path="/:id">
                 <Condition />
               </PrivateRoute>
               <PrivateRoute exact path="/:id/friends/">
                 <p>Friends</p>
               </PrivateRoute>
-              <PrivateRoute path="/:id/meal">
+              <PrivateRoute exact path="/:id/meal">
                 <Meal />
               </PrivateRoute>
               <PrivateRoute exact path="/:id/activity">

@@ -15,7 +15,7 @@ import theme from "../theme";
 import { getMealById, editMealById, deleteMealById } from "../api/meal";
 
 function MealDetail() {
-  const { id } = useParams();
+  const { id, ratingId } = useParams();
   const [uid, setUid] = useState("");
   const [mealData, setMealData] = useState(null);
   const [comments, setComments] = useState([]);
@@ -49,7 +49,7 @@ function MealDetail() {
   const handleFormSubmit = async function (values) {
     const { date, heartCount, text } = values;
 
-    const result = await editMealById(id, {
+    const result = await editMealById(id, ratingId, {
       date,
       heartCount,
       text,
@@ -63,7 +63,7 @@ function MealDetail() {
   };
 
   const handleDeleteButtonClick = async function () {
-    const result = await deleteMealById(id);
+    const result = await deleteMealById(id, ratingId);
 
     if (result) {
       history.push("/meal");

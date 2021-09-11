@@ -1,7 +1,7 @@
 import axios from "./axiosInstance";
 
-async function getMeals(page) {
-  const res = await axios.get("/api/meal", {
+async function getMeals(id, page) {
+  const res = await axios.get(`/api/${id}/meal`, {
     headers: {
       page,
     },
@@ -14,30 +14,30 @@ async function getMeals(page) {
   }
 }
 
-async function postMeal(data) {
-  const res = await axios.post("/api/meal", data);
+async function postMeal(id, data) {
+  const res = await axios.post(`/api/${id}/meal`, data);
 
   if (res) {
     return res.data;
   }
 }
 
-async function getMealById(id) {
-  const res = await axios.get(`/api/meal/${id}`);
+async function getMealById(mealId) {
+  const res = await axios.get(`/api/meal/${mealId}`);
 
   if (res) {
     return res.data;
   }
 }
 
-async function editMealById(id, data) {
-  const res = await axios.patch(`/api/meal/${id}`, data);
+async function editMealById(id, mealId, data) {
+  const res = await axios.patch(`/api/${id}/meal/${mealId}`, data);
 
   return res;
 }
 
-async function deleteMealById(id) {
-  const res = await axios.delete(`/api/meal/${id}`);
+async function deleteMealById(id, mealId) {
+  const res = await axios.delete(`/api/${id}/meal/${mealId}`);
 
   return res;
 }
