@@ -19,7 +19,7 @@ const fontSizes = {
   medium: calcRem(SIZE.TEXT.MEDIUM),
   large: calcRem(SIZE.TEXT.LARGE),
   xLarge: calcRem(SIZE.TEXT.X_LARGE),
-  titleSize: calcRem(SIZE.TEXT.TITLE),
+  graph: SIZE.TEXT.SMALL,
 };
 
 const background = {
@@ -28,12 +28,14 @@ const background = {
   modal: greyScaleColors.opaqueGrey,
   innerModal: greyScaleColors.fadeWhite,
   input: greyScaleColors.white,
+  graph: greyScaleColors.lightGrey,
+  graphData: pinkColors.fadePink,
   comment: greyScaleColors.lightGrey,
 };
 
 const text = {
-  main: pinkColors.lightPink,
-  sub: mintColors.mainMint,
+  main: greyScaleColors.white,
+  sub: mintColors.darkMint,
   button: greyScaleColors.white,
   input: greyScaleColors.black,
 };
@@ -42,9 +44,15 @@ const point = {
   main: pinkColors.mainPink,
 };
 
+const lineGraph = {
+  clicked: pinkColors.fadePink,
+  unclicked: greyScaleColors.fadeGrey,
+};
+
 const shadow = {
-  main: "0.3rem 0.3rem 1rem " + greyScaleColors.darkGrey,
-  sub: "0.3rem 0.3rem 1rem " + greyScaleColors.lightGrey,
+  main: "0 0.3rem 0.5rem " + greyScaleColors.mediumGrey,
+  sub: "0 0.3rem 0.5rem " + greyScaleColors.darkGrey,
+  range: "inset 0.1rem 0.1rem 0.3rem" + greyScaleColors.darkGrey,
 };
 
 const theme = {
@@ -53,6 +61,7 @@ const theme = {
   background,
   text,
   point,
+  lineGraph,
   shadow,
 };
 

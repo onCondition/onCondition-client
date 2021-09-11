@@ -46,7 +46,7 @@ function Login() {
   }
 
   const handleLogin = function () {
-    history.push("/myCondition");
+    history.push("/condition");
   };
 
   useEffect(async () => {

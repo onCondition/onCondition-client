@@ -10,13 +10,6 @@ import { getActivities, editActivityById } from "../api/activity";
 const CONTENT_BOARD_PIXEL_WIDTH = 400;
 const CONTENT_BOARD_PIXEL_HEIGHT = 150;
 
-const Title = styled.p`
-  margin: 10px 0px 10px 30px;
-  color: ${({ theme }) => theme.background.sub};
-  text-align: left;
-  font-size: 50px;
-`;
-
 const Container = styled.div`
   display: flex;
   flex-flow: row-reverse wrap;
@@ -99,7 +92,7 @@ function Activity() {
 
   return (
     <div>
-      <Title>운동</Title>
+      <h1>운동</h1>
       <Container>
         <div className="viewer">
           <ContentBoard

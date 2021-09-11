@@ -11,7 +11,7 @@ import Button from "../components/Button";
 import DetailWrapper from "../components/DetailWrapper";
 import ButtonWrapper from "../components/ButtonsWrapper";
 
-import { getActivityById, editActivityById, deleteActivityById } from "../utils/activity";
+import { getActivityById, editActivityById, deleteActivityById } from "../api/activity";
 import { ERROR } from "../constants/messages";
 import {
   CANCEL, EDIT, DELETE, SAVE,
