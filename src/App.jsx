@@ -37,9 +37,9 @@ function App() {
       if (!user) {
         dispatch(logout());
       } else {
-        const { id, categories } = getUserInfos();
+        const { id, customCategories } = getUserInfos();
 
-        dispatch(setUserInfos({ id, categories }));
+        dispatch(setUserInfos({ id, customCategories }));
       }
 
       setIsLoaded(true);

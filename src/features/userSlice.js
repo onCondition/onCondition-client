@@ -4,7 +4,7 @@ import { storeUserInfos, removeUserInfos } from "../helpers/userInfo";
 
 const initialState = {
   id: "",
-  categories: [],
+  customCategories: [],
   isLoading: false,
 };
 
@@ -15,14 +15,14 @@ const login = createAsyncThunk("user/login",
         accessToken,
         refreshToken,
         id,
-        categories,
+        customCategories,
       } = await postLogin(idToken);
 
       storeUserInfos({
         accessToken,
         refreshToken,
         id,
-        categories,
+        customCategories,
       });
 
       const res = await postGoogleToken(googleToken);
@@ -31,7 +31,7 @@ const login = createAsyncThunk("user/login",
         return Promise.reject(res.message);
       }
 
-      return { id, categories };
+      return { id, customCategories };
     } catch (err) {
       return Promise.reject(err);
     }
@@ -44,31 +44,31 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUserInfos(state, { payload }) {
-      const { id, categories } = payload;
+      const { id, customCategories } = payload;
 
-      if (id && categories) {
+      if (id && customCategories) {
         state.id = id;
-        state.categories = categories;
+        state.customCategories = customCategories;
       } else {
         state.id = null;
-        state.categories = [];
+        state.customCategories = [];
       }
     },
   },
   extraReducers: {
     [login.fulfilled]: (state, { payload }) => {
-      const { id, categories } = payload;
+      const { id, customCategories } = payload;
 
       state.id = id;
-      state.categories = categories;
+      state.customCategories = customCategories;
     },
     [login.rejected]: (state) => {
       state.id = "";
-      state.categories = [];
+      state.customCategories = [];
     },
     [logout.fulfilled]: (state) => {
       state.id = null;
-      state.categories = [];
+      state.customCategories = [];
     },
   },
 });

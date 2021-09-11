@@ -9,11 +9,11 @@ async function postLogin(idToken) {
       { headers: { token: idToken } });
 
     const {
-      accessToken, refreshToken, id, categories,
+      accessToken, refreshToken, id, customCategories,
     } = res.data;
 
     return {
-      accessToken, refreshToken, id, categories,
+      accessToken, refreshToken, id, customCategories,
     };
   } catch (err) {
     throw new Error(ERROR.LOGIN_FAIL);

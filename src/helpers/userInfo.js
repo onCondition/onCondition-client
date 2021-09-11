@@ -14,12 +14,12 @@ async function updateAccessToken() {
 }
 
 function storeUserInfos({
-  accessToken, refreshToken, id, categories,
+  accessToken, refreshToken, id, customCategories,
 }) {
   Cookie.set(REFRESH_TOKEN, refreshToken);
   localStorage.setItem(ACCESS_TOKEN, accessToken);
   localStorage.setItem(ID, id);
-  localStorage.setItem(CATEGORIES, JSON.stringify(categories));
+  localStorage.setItem(CATEGORIES, JSON.stringify(customCategories));
 }
 
 function removeUserInfos() {
@@ -34,7 +34,7 @@ function getUserInfos() {
     refreshToken: Cookie.get(REFRESH_TOKEN),
     accessToken: localStorage.getItem(ACCESS_TOKEN),
     id: localStorage.getItem(ID),
-    categories: JSON.stringify(localStorage.getItem(CATEGORIES)),
+    customCategories: JSON.stringify(localStorage.getItem(CATEGORIES)),
   };
 }
 
