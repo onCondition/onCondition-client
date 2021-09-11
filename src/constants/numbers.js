@@ -14,9 +14,12 @@ const TEXT = {
   TITLE: 100,
 };
 
+const PAGE_PER_CONTENT = 7;
+
 const SIZE = {
   TEXT,
   GAP,
+  PAGE_PER_CONTENT,
 };
 
 export default SIZE;

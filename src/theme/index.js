@@ -28,6 +28,7 @@ const background = {
   modal: greyScaleColors.opaqueGrey,
   innerModal: greyScaleColors.fadeWhite,
   input: greyScaleColors.white,
+  point: pinkColors.mainPink,
 };
 
 const text = {
