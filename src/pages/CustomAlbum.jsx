@@ -8,13 +8,6 @@ import { getAlbums, postAlbum } from "../api/customAlbum";
 
 const LENGTH = 7;
 
-const Title = styled.p`
-  margin: 10px 0px 10px 30px;
-  color: ${({ theme }) => theme.background.sub};
-  text-align: left;
-  font-size: 50px;
-`;
-
 const Container = styled.div`
   display: flex;
   flex-flow: row-reverse wrap;
@@ -163,7 +156,7 @@ function CustomAlbum() {
 
   return (
     <div>
-      <Title>{category}</Title>
+      <h1>{category}</h1>
       <Container>
         <div className="viewer">
           <ContentForm
