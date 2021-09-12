@@ -11,7 +11,6 @@ const Button = styled.button`
   margin: -2% 3% 6% 3%;
   padding: 3% 7%;
   border: none;
-  border-radius: 30px;
   background-color: ${({ theme }) => theme.background.main};
   color: white;
   cursor: pointer;
@@ -38,21 +37,21 @@ const PendingFilter = styled.div`
 function PendingCard({
   profileUrl,
   name,
-  onAceeptButtonClick,
+  onAcceptButtonClick,
   onDenyButtonClick,
   isSender,
 }) {
   return (
     <CardContainer color={theme.background.main}>
       <ProfileImageWrapper>
-        <img src={profileUrl} />
+        <img src={profileUrl} alt="profile" />
       </ProfileImageWrapper>
       <p>{name}</p>
       <PendingFilter>
         <p>{isSender ? "친구 요청" : "친구 요청 중"}</p>
         {isSender
           && <div>
-            <Button onClick={onAceeptButtonClick}>수락</Button>
+            <Button onClick={onAcceptButtonClick}>수락</Button>
             <Button onClick={onDenyButtonClick}>거절</Button>
           </div>
         }
@@ -64,7 +63,7 @@ function PendingCard({
 PendingCard.propTypes = {
   profileUrl: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  onAceeptButtonClick: PropTypes.func,
+  onAcceptButtonClick: PropTypes.func,
   onDenyButtonClick: PropTypes.func,
   isSender: PropTypes.bool,
 };

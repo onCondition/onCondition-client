@@ -12,7 +12,7 @@ const CardWrapper = styled.div`
   height: 420px;
   border-radius: 30px;
   color: ${({ theme }) => theme.text.sub};
-  font-size: ${( { theme }) => theme.fontSizes.small};
+  font-size: ${({ theme }) => theme.fontSizes.small};
 `;
 
 const ContentWrapper = styled.div`
@@ -38,7 +38,7 @@ function CardContainer({ color, children }) {
 }
 
 CardContainer.propTypes = {
-  color: PropTypes.oneOf(theme.background),
+  color: PropTypes.oneOf([theme.background.main, theme.background.sub]),
   children: PropTypes.arrayOf(PropTypes.element),
 };
 

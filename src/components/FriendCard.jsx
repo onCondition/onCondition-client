@@ -15,7 +15,7 @@ function FriendCard({
   return (
     <CardContainer color={theme.background.main}>
       <ProfileImageWrapper>
-        <img src={profileUrl} />
+        <img src={profileUrl} alt="profile" />
       </ProfileImageWrapper>
       <p>{name}</p>
       <p>{lastAccessDate}</p>
