@@ -24,10 +24,8 @@ function ContentViewer({
       </div>
       {!isDescription && <ImgWrapper>
         <img src={url} />
-      </ImgWrapper>
-      {hasText && <TextContainer>{text}</TextContainer>}
       </ImgWrapper>}
-      <TextContainer>{text}</TextContainer>
+      {hasText && <TextContainer>{text}</TextContainer>}
     </Wrapper>
   );
 }

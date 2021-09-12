@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import styled from "styled-components";
 
 import ContentViewer from "../components/ContentViewer";
@@ -50,10 +51,11 @@ function Condition() {
   const [dataPerDate, setDataPerDate] = useState(null);
   const [status, setStatus] = useState([]);
   const [heartCount, setHeartCount] = useState(0);
+  const { creator } = useParams();
 
   useEffect(() => {
-    async function loadCondition() {
-      const conditionData = await getCondition();
+    async function loadCondition(creator) {
+      const conditionData = await getCondition(creator);
 
       if (!conditionData) {
         return;
@@ -120,7 +122,7 @@ function Condition() {
       setHeartCount(loadedHeartCount);
     }
 
-    loadCondition();
+    loadCondition(creator);
   }, []);
 
   const handleConvertButtonClick = function () {

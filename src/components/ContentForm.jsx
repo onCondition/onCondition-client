@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -49,6 +50,7 @@ function ContentForm({
   additionalButton,
   defaultValues,
 }) {
+  const user = useSelector((state) => state.user);
   const imageInput = useRef(null);
   const [date, setDate] = useState(defaultValues.date || "");
   const [heartCount, setHeartCount] = useState(defaultValues.heartCount);
@@ -80,7 +82,7 @@ function ContentForm({
     let url = "";
 
     if (image) {
-      url = await getImageUrl(image);
+      url = await getImageUrl(user.id, image);
       setImageUrl(url);
     }
 

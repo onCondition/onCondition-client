@@ -11,8 +11,10 @@ const DetailWrapper = styled.div`
   box-shadow: ${({ theme }) => theme.shadow.main};
 
   .viewer {
+    display: grid;
     width: 680px;
-    text-align: center;
+    justify-items: center;
+    align-items: center;
   }
 
   .comment {

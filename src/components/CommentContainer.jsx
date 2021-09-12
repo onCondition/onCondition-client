@@ -32,7 +32,7 @@ function CommentContainer({
   comments, category, ratingId,
 }) {
   const [userComment, setUserComment] = useState({
-    id: "", content: "", isUpdated: false,
+    commentId: "", content: "", isUpdated: false,
   });
   const [targetId, setTargetId] = useState("");
   const [status, setStatus] = useState("");
@@ -43,21 +43,33 @@ function CommentContainer({
     }));
   };
 
-  const handleClickEdit = function ({ id, content }) {
+  const handleClickEdit = function ({ commentId, content }) {
     setUserComment({
-      id, content, isUpdated: false,
+      commentId, content, isUpdated: false,
     });
   };
 
   const resetUserComment = function () {
-    setUserComment({ id: null, content: "", isUpdated: false });
+    setUserComment({ commentId: null, content: "", isUpdated: false });
   };
 
-  const handleClickDelete = function (id) {
-    setTargetId(id);
+  const handleClickDelete = function (commentId) {
+    setTargetId(commentId);
   };
 
   useEffect(() => {
+    async function updateComment(body) {
+      const res = userComment.commentId
+        ? await editCommentById(userComment.commentId, body)
+        : await postComment(body);
+
+      if (!res) {
+        setStatus(ERROR.COMMENT_UPDATE_FAIL);
+      } else {
+        resetUserComment();
+      }
+    }
+
     if (!userComment.isUpdated) {
       setStatus("");
 
@@ -71,19 +83,7 @@ function CommentContainer({
       content: userComment.content,
     };
 
-    async function updateComment() {
-      const res = userComment.id
-        ? await editCommentById(userComment.id, body)
-        : await postComment(body);
-
-      if (!res) {
-        setStatus(ERROR.COMMENT_UPDATE_FAIL);
-      } else {
-        resetUserComment();
-      }
-    }
-
-    updateComment();
+    updateComment(body);
   }, [userComment]);
 
   useEffect(() => {
@@ -112,7 +112,7 @@ function CommentContainer({
       <Status>{status}</Status>
       <CommentForm
         content={userComment.content}
-        buttonText={userComment.id ? EDIT : COMMENT}
+        buttonText={userComment.commentId ? EDIT : COMMENT}
         onSubmit={handleSubmitComment}
         onReset={resetUserComment}
       />
@@ -126,7 +126,7 @@ CommentContainer.propTypes = {
     category: PropTypes.string.isRequired,
     ratingId: PropTypes.string.isRequired,
     creator: PropTypes.shape({
-      uid: PropTypes.string.isRequired,
+      _id: PropTypes.string.isRequired,
       profileUrl: PropTypes.string.isRequired,
     }),
     date: PropTypes.string.isRequired,

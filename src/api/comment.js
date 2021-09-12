@@ -8,16 +8,16 @@ async function postComment(data) {
   }
 }
 
-async function editCommentById(id, data) {
-  const res = await axios.patch(`/api/comments/${id}`, data);
+async function editCommentById(creator, data) {
+  const res = await axios.patch(`/api/comments/${creator}`, data);
 
   if (res) {
     return res;
   }
 }
 
-async function deleteCommentById(id) {
-  const res = await axios.delete(`/api/comments/${id}`);
+async function deleteCommentById(creator) {
+  const res = await axios.delete(`/api/comments/${creator}`);
 
   if (res) {
     return res;

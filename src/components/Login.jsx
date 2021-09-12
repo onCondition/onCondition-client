@@ -34,7 +34,7 @@ const GoogleLogin = styled.img`
 
 function Login() {
   const [errorStatus, setErrorStatus] = useState("");
-  const hasLoggedIn = useSelector((state) => state.user.hasLoggedIn);
+  const user = useSelector((state) => state.user);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -46,11 +46,11 @@ function Login() {
   }
 
   const handleLogin = function () {
-    history.push("/condition");
+    history.push(`/${user.id}`);
   };
 
   useEffect(() => {
-    async function dispatchRedirectResult() {
+    async function dispatchLoginResult() {
       try {
         const { user, credential } = await firebase.auth().getRedirectResult();
 
@@ -68,13 +68,14 @@ function Login() {
         setErrorStatus(ERROR.LOGIN_FAIL);
       }
     }
-
-    if (hasLoggedIn) {
+    if (user.id) {
       handleLogin();
+
+      return;
     }
 
-    dispatchRedirectResult();
-  }, [hasLoggedIn]);
+    dispatchLoginResult();
+  }, [user.id]);
 
   return (
     <Wrapper>

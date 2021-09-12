@@ -1,10 +1,10 @@
 import axios from "./axiosInstance";
 
-async function getImageUrl(image) {
+async function getImageUrl(creator, image) {
   const formData = new FormData();
   formData.append("image", image);
 
-  const res = await axios.post("/api/image",
+  const res = await axios.post(`/api/${creator}/image`,
     formData, {
       headers: {
         "Content-Type": "multipart/form-data",

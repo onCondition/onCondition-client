@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import firebase from "../config/firebase";
 import CommentBar from "./CommentBar";
 import Button from "./Button";
 import { EDIT, DELETE } from "../constants/buttons";
@@ -17,44 +17,37 @@ const Wrapper = styled.div`
 function CommentViewer({
   comments, onClickEdit, onClickDelete,
 }) {
-  const [uid, setUid] = useState(null);
-  const user = firebase.auth().currentUser;
-
-  useEffect(() => {
-    if (user) {
-      setUid(user.uid);
-    }
-  }, [user.uid]);
+  const user = useSelector((state) => state);
 
   return (
     <Wrapper>
       {comments.map(({
-        _id: id, content, creator,
+        _id: commentId, content, creator,
       }) => (
-        uid === creator.uid ? (
+        user.id === creator._id ? (
           <CommentBar
-            key={id}
-            id={id}
+            key={commentId}
+            creator={creator._id}
             profileUrl={creator.profileUrl}
             content={content}
           >
             <Button
               text={EDIT}
-              onClick={() => onClickEdit({ id, content })}
+              onClick={() => onClickEdit({ commentId, content })}
               width={BUTTON_WIDTH}
               height={BUTTON_HEIGHT}
             />
             <Button
               text={DELETE}
-              onClick={() => onClickDelete(id)}
+              onClick={() => onClickDelete(commentId)}
               width={BUTTON_WIDTH}
               height={BUTTON_HEIGHT}
             />
           </CommentBar>
         ) : (
           <CommentBar
-            key={id}
-            id={id}
+            key={commentId}
+            creator={creator._id}
             profileUrl={creator.profileUrl}
             content={content}
           />

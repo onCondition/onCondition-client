@@ -11,15 +11,13 @@ import firebase from "./config/firebase";
 import Error from "./pages/Error";
 import Condition from "./pages/Condition";
 import Meal from "./pages/Meal";
-import MealDetail from "./pages/MealDetail";
 import Activity from "./pages/Activity";
-import ActivityDetail from "./pages/ActivityDetail";
-import CustomAlbum from "./pages/CustomAlbum";
+import Detail from "./pages/Detail";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import PrivateRoute from "./components/PrivateRoute";
-import { setLogin, logout } from "./features/userSlice";
-import { checkTokenExist } from "./utils/tokens";
+import { setUserInfos, logout } from "./features/userSlice";
+import { getUserInfos } from "./helpers/userInfo";
 
 const AppWrapper = styled.div`
   text-align: center;
@@ -39,9 +37,12 @@ function App() {
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         dispatch(logout());
-      } else if (checkTokenExist()) {
-        dispatch(setLogin());
+      } else {
+        const { userId, customCategories } = getUserInfos();
+
+        dispatch(setUserInfos({ userId, customCategories }));
       }
+
       setIsLoaded(true);
     });
   }, []);
@@ -57,30 +58,39 @@ function App() {
             </header>
             <Switch>
               <Route exact path="/">
-                <Redirect to="/condition" />
+                <Redirect to="/login" />
               </Route>
               <Route path="/login">
                 <Login />
               </Route>
-              <PrivateRoute exact path="/condition">
+              <PrivateRoute exact path="/:creator">
                 <Condition />
               </PrivateRoute>
-              <PrivateRoute path="/meal">
+              <PrivateRoute exact path="/:creator/friends/">
+                <p>Friends</p>
+              </PrivateRoute>
+              <PrivateRoute exact path="/:creator/meal">
                 <Meal />
               </PrivateRoute>
-              <PrivateRoute exact path="/activity">
+              <PrivateRoute exact path="/:creator/activity">
                 <Activity />
               </PrivateRoute>
-              <PrivateRoute exact path="/customAlbum/:category">
-                <CustomAlbum />
+              <PrivateRoute exact path="/:creator/sleep">
+                <p>Sleep</p>
               </PrivateRoute>
-              <PrivateRoute exact path="/activity/:id">
-                <ActivityDetail />
+              <PrivateRoute exact path="/:creator/:category/">
+                <p>Custom Category</p>
+              </PrivateRoute>
+              <PrivateRoute exact path="/:creator/friends/:friendId">
+                <p>Friend Detail</p>
               </PrivateRoute>
             </Switch>
-            <PrivateRoute path="/meal/:id">
-              <MealDetail />
-            </PrivateRoute>
+            <Route path="/:creator/:category/:ratingId">
+              <Detail />
+            </Route>
+            <Route path="*">
+              <p>Not Found</p>
+            </Route>
           </>
         ) : (
           <p>waiting...</p>
