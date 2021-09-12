@@ -28,6 +28,7 @@ function App() {
   const { hasError, ...error } = useSelector((state) => state.error);
   const history = useHistory();
   const dispatch = useDispatch();
+  const { userId, customCategories } = getUserInfos();
 
   const handleLogout = function () {
     history.push("/login");
@@ -37,15 +38,13 @@ function App() {
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         dispatch(logout());
-      } else {
-        const { userId, customCategories } = getUserInfos();
-
-        dispatch(setUserInfos({ userId, customCategories }));
       }
 
       setIsLoaded(true);
     });
   }, []);
+
+  dispatch(setUserInfos({ userId, customCategories }));
 
   return (
     <ThemeProvider theme={theme}>
@@ -58,38 +57,38 @@ function App() {
             </header>
             <Switch>
               <Route exact path="/">
-                <Redirect to="/login" />
+                <Redirect to={`/${userId}/condition`} />
               </Route>
               <Route path="/login">
                 <Login />
               </Route>
-              <PrivateRoute exact path="/:creator">
+              <PrivateRoute path="/:creator/condition">
                 <Condition />
               </PrivateRoute>
-              <PrivateRoute exact path="/:creator/friends/">
+              <PrivateRoute path="/:creator/friends">
                 <p>Friends</p>
               </PrivateRoute>
-              <PrivateRoute exact path="/:creator/meal">
+              <PrivateRoute path="/:creator/meal">
                 <Meal />
               </PrivateRoute>
-              <PrivateRoute exact path="/:creator/activity">
+              <PrivateRoute path="/:creator/activity">
                 <Activity />
               </PrivateRoute>
-              <PrivateRoute exact path="/:creator/sleep">
+              <PrivateRoute path="/:creator/sleep">
                 <p>Sleep</p>
               </PrivateRoute>
-              <PrivateRoute exact path="/:creator/:category/">
+              <PrivateRoute path="/:creator/:category">
                 <p>Custom Category</p>
               </PrivateRoute>
-              <PrivateRoute exact path="/:creator/friends/:friendId">
+              <PrivateRoute path="/:creator/friends/:friendId">
                 <p>Friend Detail</p>
               </PrivateRoute>
+              <Route path="*">
+                <p>Not Found</p>
+              </Route>
             </Switch>
             <Route path="/:creator/:category/:ratingId">
               <Detail />
-            </Route>
-            <Route path="*">
-              <p>Not Found</p>
             </Route>
           </>
         ) : (
