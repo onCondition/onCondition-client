@@ -17,24 +17,21 @@ import Button from "../components/Button";
 import CircleButton from "../components/CircleButton";
 import theme from "../theme";
 
-import { formatCategory } from "../helpers/userInfo";
-import api from "../api/category";
+import getApi from "../api/category";
 import { ERROR } from "../constants/messages";
 import {
   CANCEL, EDIT, DELETE, SAVE,
 } from "../constants/buttons";
 
 function Detail() {
-  const { creator, category: categoryName, ratingId } = useParams();
+  const history = useHistory();
+  const { creator, category, ratingId } = useParams();
   const [data, setData] = useState(null);
   const [comments, setComments] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [hasModal, setHasModal] = useState(false);
-  const history = useHistory();
-
-  const category = formatCategory(categoryName);
-  const { getById, editById, deleteById } = api[category];
-  const hasPicture = categoryName === "meal" || categoryName.startsWith("customAlbum");
+  const { getById, editById, deleteById } = getApi(category);
+  const [hasPicture, setHasPicture] = useState(false);
 
   useEffect(() => {
     async function loadById(ratingId) {
@@ -45,6 +42,7 @@ function Detail() {
       }
 
       setData({
+        category: loadedData.category,
         creator: loadedData.creator,
         date: loadedData.date,
         heartCount: loadedData.rating?.heartCount || 0,
@@ -53,7 +51,7 @@ function Detail() {
         type: loadedData.type,
         duration: loadedData.duration,
       });
-
+      setHasPicture(!!loadedData.url);
       setComments(loadedData.comments);
     }
 

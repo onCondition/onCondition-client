@@ -7,7 +7,7 @@ import List from "../components/List";
 import { PrevButton, NextButton } from "../components/PageButton";
 import ContentForm from "../components/ContentForm";
 import HeartCounter from "../components/HeartCounter";
-import api from "../api/category";
+import getApi from "../api/category";
 import theme from "../theme";
 
 const Container = styled.div`
@@ -33,7 +33,7 @@ function Meal() {
   const [isReloadRequired, setIsReloadRequired] = useState(true);
   const [prevPage, setPrevPage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
-  const { get, post } = api.meal;
+  const { get, post } = getApi("meal");
 
   async function loadMeals(page = 1) {
     const result = await get(creator, page);

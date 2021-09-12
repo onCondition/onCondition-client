@@ -60,11 +60,18 @@ function generateApiInstance(category) {
   };
 }
 
-const api = {
+const defaults = {
   meal: generateApiInstance("meal"),
   activity: generateApiInstance("activity"),
   sleep: generateApiInstance("sleep"),
-  custom: generateApiInstance,
 };
 
-export default api;
+function getApi(category) {
+  if (Object.keys(defaults).includes(category)) {
+    return defaults[category];
+  }
+
+  return generateApiInstance(category);
+}
+
+export default getApi;

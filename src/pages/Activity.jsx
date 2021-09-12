@@ -6,7 +6,7 @@ import { PrevButton, NextButton } from "../components/PageButton";
 import RateForm from "../components/RateForm";
 import ContentBoard from "../components/ContentBoard";
 import ActivityBar from "../components/ActivityBar";
-import api from "../api/category";
+import getApi from "../api/category";
 
 const CONTENT_BOARD_PIXEL_WIDTH = 400;
 const CONTENT_BOARD_PIXEL_HEIGHT = 150;
@@ -41,7 +41,7 @@ function Activity() {
   const [prevPage, setPrevPage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
   const [selectedActivity, setSelectedActivity] = useState(null);
-  const { get, editById } = api.activity;
+  const { get, editById } = getApi("activity");
 
   async function loadActivities(page = currentPage) {
     const result = await get(creator, page);
