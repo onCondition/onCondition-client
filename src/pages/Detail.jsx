@@ -25,17 +25,17 @@ import {
 
 function Detail() {
   const history = useHistory();
-  const { creator, category, ratingId } = useParams();
+  const { creatorId, category, ratingId } = useParams();
+  const { getById, editById, deleteById } = getApi(category);
   const [data, setData] = useState(null);
   const [comments, setComments] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [hasModal, setHasModal] = useState(false);
-  const { getById, editById, deleteById } = getApi(category);
   const [hasPicture, setHasPicture] = useState(false);
 
   useEffect(() => {
-    async function loadById(ratingId) {
-      const loadedData = await getById(ratingId);
+    async function loadById() {
+      const loadedData = await getById(creatorId, ratingId);
 
       if (!loadedData) {
         return;
@@ -43,7 +43,6 @@ function Detail() {
 
       setData({
         category: loadedData.category,
-        creator: loadedData.creator,
         date: loadedData.date,
         heartCount: loadedData.rating?.heartCount || 0,
         text: loadedData.rating?.text || "",
@@ -61,7 +60,7 @@ function Detail() {
   const handleFormSubmit = async function (values) {
     const { date, heartCount, text } = values;
 
-    const result = await editById(creator, ratingId, {
+    const result = await editById(creatorId, ratingId, {
       date,
       heartCount,
       text,
@@ -75,11 +74,11 @@ function Detail() {
   };
 
   const handleRedirect = function () {
-    history.push(`/${creator}/${category}`);
+    history.push(`/${creatorId}/${category}`);
   };
 
   const handleDeleteButtonClick = async function () {
-    const result = await deleteById(creator, ratingId);
+    const result = await deleteById(creatorId, ratingId);
 
     if (result) {
       handleRedirect();

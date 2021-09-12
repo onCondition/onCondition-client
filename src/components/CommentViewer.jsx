@@ -27,7 +27,7 @@ function CommentViewer({
         user.id === creator._id ? (
           <CommentBar
             key={commentId}
-            creator={creator._id}
+            name={creator.name}
             profileUrl={creator.profileUrl}
             content={content}
           >
@@ -47,7 +47,7 @@ function CommentViewer({
         ) : (
           <CommentBar
             key={commentId}
-            creator={creator._id}
+            name={creator.name}
             profileUrl={creator.profileUrl}
             content={content}
           />
@@ -62,7 +62,11 @@ CommentViewer.propTypes = {
     _id: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     ratingId: PropTypes.string.isRequired,
-    creator: PropTypes.string.isRequired,
+    creator: PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      profileUrl: PropTypes.string.isRequired,
+    }),
     date: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
   })),

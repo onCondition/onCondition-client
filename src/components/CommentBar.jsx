@@ -35,7 +35,7 @@ const ButtonWrapper = styled.div`
 
 function CommentBar({
   profileUrl,
-  creator,
+  name,
   content,
   children,
 }) {
@@ -43,7 +43,7 @@ function CommentBar({
     <GridColumn>
       <Image
         src={profileUrl}
-        alt={creator}
+        alt={name}
       />
       <Comment>{content}</Comment>
       <ButtonWrapper>
@@ -55,7 +55,7 @@ function CommentBar({
 
 CommentBar.propTypes = {
   profileUrl: PropTypes.string.isRequired,
-  creator: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   children: PropTypes.element,
 };

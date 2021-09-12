@@ -34,7 +34,7 @@ const Container = styled.div`
 `;
 
 function Activity() {
-  const { creator } = useParams();
+  const { creatorId } = useParams();
   const [activities, setActivities] = useState([]);
   const [stepCount, setStepCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -44,7 +44,7 @@ function Activity() {
   const { get, editById } = getApi("activity");
 
   async function loadActivities(page = currentPage) {
-    const result = await get(creator, page);
+    const result = await get(creatorId, page);
 
     if (result) {
       const { data, prevPage, nextPage } = result;
@@ -68,7 +68,7 @@ function Activity() {
   const handleSubmitForm = async function ({
     date, heartCount, type, text,
   }) {
-    const res = await editById(creator, selectedActivity.ratingId, {
+    const res = await editById(creatorId, selectedActivity.ratingId, {
       date, type, heartCount, text,
     });
 

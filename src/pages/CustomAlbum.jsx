@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import ContentForm from "../components/ContentForm";
 import ContentSpectator from "../components/ContentSpectator";
-import { getAlbums, postAlbum } from "../api/customAlbum";
+import getApi from "../api/category";
 
 const LENGTH = 7;
 
@@ -21,7 +21,8 @@ const Container = styled.div`
 `;
 
 function CustomAlbum() {
-  const { category } = useParams();
+  const { creatorId, category } = useParams();
+  const { get, post } = getApi(category);
   const [albums, setAlbums] = useState({
     prevBuffer: [],
     current: [],
@@ -33,14 +34,14 @@ function CustomAlbum() {
   const handleSubmitForm = async function ({
     date, heartCount, url, text,
   }) {
-    await postAlbum(category, {
+    await post(creatorId, {
       date, url, heartCount, text,
     });
   };
 
   useEffect(() => {
     async function fetchAlbums() {
-      const result = await getAlbums(category, 1);
+      const result = await get(creatorId, 1);
 
       if (!result) {
         return;
@@ -60,7 +61,7 @@ function CustomAlbum() {
 
   useEffect(() => {
     async function fetchBuffer() {
-      const result = await getAlbums(category, albums.prevPage);
+      const result = await get(creatorId, albums.prevPage);
 
       if (!result) {
         return;
@@ -87,7 +88,7 @@ function CustomAlbum() {
 
   useEffect(() => {
     async function fetchBuffer() {
-      const result = await getAlbums(category, albums.nextPage);
+      const result = await get(creatorId, albums.nextPage);
 
       if (!result) {
         return;
@@ -168,6 +169,8 @@ function CustomAlbum() {
         </div>
         <div>
           <ContentSpectator
+            creatorId={creatorId}
+            category={category}
             contents={albums.current || []}
             onWheel={handleWheel}
           />

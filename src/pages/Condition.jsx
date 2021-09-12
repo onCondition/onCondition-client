@@ -51,11 +51,11 @@ function Condition() {
   const [dataPerDate, setDataPerDate] = useState(null);
   const [status, setStatus] = useState([]);
   const [heartCount, setHeartCount] = useState(0);
-  const { creator } = useParams();
+  const { creatorId } = useParams();
 
   useEffect(() => {
-    async function loadCondition(creator) {
-      const conditionData = await getCondition(creator);
+    async function loadCondition(creatorId) {
+      const conditionData = await getCondition(creatorId);
 
       if (!conditionData) {
         return;
@@ -122,7 +122,7 @@ function Condition() {
       setHeartCount(loadedHeartCount);
     }
 
-    loadCondition(creator);
+    loadCondition(creatorId);
   }, []);
 
   const handleConvertButtonClick = function () {

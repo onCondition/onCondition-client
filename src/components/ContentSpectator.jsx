@@ -69,7 +69,9 @@ function calcRange(deltaY) {
   return CONTENT_PER_PAGE;
 }
 
-function ContentSpectator({ contents, onWheel }) {
+function ContentSpectator({
+  creatorId, category, contents, onWheel,
+}) {
   const scrollWrapper = useRef(null);
 
   const handleWheel = function ({ deltaY }) {
@@ -85,7 +87,7 @@ function ContentSpectator({ contents, onWheel }) {
     <ContentSpectatorWrapper ref={scrollWrapper} onWheel={debouncedHandleWheel}>
       {contents.map((content, index) => (
         <LinkWrapper
-          to={`/album/${content._id}`}
+          to={`/${creatorId}/${category}/${content._id}`}
           key={content._id + index}
           $marginLeft={getMarginByIndex(index)}
         >
@@ -104,6 +106,8 @@ function ContentSpectator({ contents, onWheel }) {
 }
 
 ContentSpectator.propTypes = {
+  creatorId: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
   contents: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,

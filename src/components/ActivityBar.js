@@ -16,7 +16,7 @@ const RatingOpener = styled.span`
 `;
 
 function ActivityBar({ activity, onClickRating }) {
-  const { creator } = useParams();
+  const { creatorId } = useParams();
   const {
     _id: ratingId, type, startTime, duration, rating,
   } = activity;
@@ -31,7 +31,7 @@ function ActivityBar({ activity, onClickRating }) {
   };
 
   return (
-    <Link to={`/${creator}/activity/${ratingId}`} key={ratingId} onClick={handleClickBar}>
+    <Link to={`/${creatorId}/activity/${ratingId}`} key={ratingId} onClick={handleClickBar}>
       <List color={theme.background.main} key={ratingId}>
         <div>{type}</div>
         <div>{getKoreanTimeString(startTime)}</div>

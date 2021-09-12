@@ -6,8 +6,8 @@ function joinUrl(...args) {
   return args.join("/");
 }
 
-async function get(category, creator, page) {
-  const res = await axios.get(joinUrl(BASE, creator, category), {
+async function get(category, creatorId, page) {
+  const res = await axios.get(joinUrl(BASE, creatorId, category), {
     headers: {
       page,
     },
@@ -20,32 +20,32 @@ async function get(category, creator, page) {
   }
 }
 
-async function post(category, creator, data) {
-  const res = await axios.post(joinUrl(BASE, creator, category), data);
+async function post(category, creatorId, data) {
+  const res = await axios.post(joinUrl(BASE, creatorId, category), data);
 
   if (res) {
     return res.data;
   }
 }
 
-async function getById(category, ratingId) {
-  const res = await axios.get(joinUrl(BASE, category, ratingId));
+async function getById(category, creatorId, ratingId) {
+  const res = await axios.get(joinUrl(BASE, creatorId, category, ratingId));
 
   if (res) {
     return res.data;
   }
 }
 
-async function editById(category, creator, ratingId, data) {
+async function editById(category, creatorId, ratingId, data) {
   const res = await axios.patch(
-    joinUrl(BASE, creator, category, ratingId)
+    joinUrl(BASE, creatorId, category, ratingId)
     , data);
 
   return res;
 }
 
-async function deleteById(category, creator, ratingId) {
-  const res = await axios.delete(joinUrl(BASE, creator, category, ratingId));
+async function deleteById(category, creatorId, ratingId) {
+  const res = await axios.delete(joinUrl(BASE, creatorId, category, ratingId));
 
   return res;
 }
