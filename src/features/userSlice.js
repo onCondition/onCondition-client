@@ -25,7 +25,7 @@ const login = createAsyncThunk("user/login",
         customCategories,
       });
 
-      const res = await postGoogleToken(googleToken);
+      const res = await postGoogleToken(id, googleToken);
 
       if (res.status) {
         return Promise.reject(res.message);
