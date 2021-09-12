@@ -4,19 +4,14 @@ import styled from "styled-components";
 
 import CommentViewer from "./CommentViewer";
 import CommentForm from "./CommentForm";
-import {
-  postComment,
-  editCommentById,
-  deleteCommentById,
-} from "../api/comment";
+import getApi from "../api/category";
 import { COMMENT, EDIT } from "../constants/buttons";
 import { ERROR } from "../constants/messages";
 
 const CommentContainerWrapper = styled.div`
   width: 500px;
-  height: 100%;
   display: grid;
-  margin: auto;
+  margin: 25px;
   grid-template-rows: 6fr 1fr 3fr;
   padding: 10px 5px 5px 5px;
   border-radius: 30px;
@@ -31,6 +26,7 @@ const Status = styled.div`
 function CommentContainer({
   creatorId, comments, category, ratingId,
 }) {
+  const { postComment, editCommentById, deleteCommentById } = getApi(category);
   const [userComment, setUserComment] = useState({
     commentId: "", content: "", isUpdated: false,
   });
@@ -60,8 +56,10 @@ function CommentContainer({
   useEffect(() => {
     async function updateComment(body) {
       const res = userComment.commentId
-        ? await editCommentById(userComment.commentId, body)
-        : await postComment(body);
+        ? await editCommentById(
+          creatorId, ratingId, userComment.commentId, body,
+        )
+        : await postComment(creatorId, ratingId, body);
 
       if (!res) {
         setStatus(ERROR.COMMENT_UPDATE_FAIL);
@@ -88,7 +86,7 @@ function CommentContainer({
 
   useEffect(() => {
     async function deleteComment() {
-      const res = await deleteCommentById(targetId);
+      const res = await deleteCommentById(creatorId, ratingId, targetId);
 
       if (!res) {
         setStatus(ERROR.COMMENT_DELETE_FAIL);

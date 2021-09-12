@@ -38,8 +38,9 @@ async function getById(category, creatorId, ratingId) {
 
 async function editById(category, creatorId, ratingId, data) {
   const res = await axios.patch(
-    joinUrl(BASE, creatorId, category, ratingId)
-    , data);
+    joinUrl(BASE, creatorId, category, ratingId),
+    data,
+  );
 
   return res;
 }
@@ -50,28 +51,49 @@ async function deleteById(category, creatorId, ratingId) {
   return res;
 }
 
-function generateApiInstance(category) {
+async function postComment(category, creatorId, ratingId, data) {
+  const res = await axios.post(
+    joinUrl(BASE, creatorId, category, ratingId, "comment"),
+    data,
+  );
+
+  if (res) {
+    return res;
+  }
+}
+
+async function editCommentById(category, creatorId, ratingId, commentId, data) {
+  const res = await axios.patch(
+    joinUrl(BASE, creatorId, category, ratingId, "comment", commentId),
+    data,
+  );
+
+  if (res) {
+    return res;
+  }
+}
+
+async function deleteCommentById(category, creatorId, ratingId, commentId) {
+  const res = await axios.delete(
+    joinUrl(BASE, creatorId, category, ratingId, "comment", commentId),
+  );
+
+  if (res) {
+    return res;
+  }
+}
+
+function getApi(category) {
   return {
     get: get.bind(null, category),
     post: post.bind(null, category),
     getById: getById.bind(null, category),
     editById: editById.bind(null, category),
     deleteById: deleteById.bind(null, category),
+    postComment: postComment.bind(null, category),
+    editCommentById: editCommentById.bind(null, category),
+    deleteCommentById: deleteCommentById.bind(null, category),
   };
-}
-
-const defaults = {
-  meal: generateApiInstance("meal"),
-  activity: generateApiInstance("activity"),
-  sleep: generateApiInstance("sleep"),
-};
-
-function getApi(category) {
-  if (Object.keys(defaults).includes(category)) {
-    return defaults[category];
-  }
-
-  return generateApiInstance(category);
 }
 
 export default getApi;

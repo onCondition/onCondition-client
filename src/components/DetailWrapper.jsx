@@ -18,9 +18,8 @@ const DetailWrapper = styled.div`
   }
 
   .comment {
-    margin-right: 20px;
-    flex-basis: 200px;
-    flex-grow: 1;
+    display: flex;
+    margin: auto;
   }
 `;
 
