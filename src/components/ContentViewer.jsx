@@ -13,10 +13,11 @@ function ContentViewer({
   heartCount,
   url,
   text,
+  hasText,
   isDescription,
 }) {
   return (
-    <Wrapper color={color}>
+    <Wrapper color={color} isShrink={!hasText}>
       <div>
         {date + " "}
         <HeartCounter count={heartCount} />
@@ -24,7 +25,7 @@ function ContentViewer({
       {!isDescription && <ImgWrapper>
         <img src={url} />
       </ImgWrapper>}
-      <TextContainer>{text}</TextContainer>
+      {hasText && <TextContainer>{text}</TextContainer>}
     </Wrapper>
   );
 }
@@ -35,6 +36,7 @@ ContentViewer.propTypes = {
   heartCount: PropTypes.number,
   url: PropTypes.string,
   text: PropTypes.string,
+  hasText: PropTypes.bool,
   isDescription: PropTypes.bool,
 };
 
@@ -43,6 +45,7 @@ ContentViewer.defaultProps = {
   heartCount: 0,
   url: "/img/add-picture.png",
   text: "",
+  hasText: true,
   isDescription: false,
 };
 

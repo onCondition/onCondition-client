@@ -13,9 +13,12 @@ const TEXT = {
   X_LARGE: 52,
 };
 
+const CONTENT_PER_PAGE = 7;
+
 const SIZE = {
   TEXT,
   GAP,
+  CONTENT_PER_PAGE,
 };
 
 export default SIZE;

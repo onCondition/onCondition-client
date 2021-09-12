@@ -31,6 +31,7 @@ const background = {
   graph: greyScaleColors.lightGrey,
   graphData: pinkColors.fadePink,
   comment: greyScaleColors.lightGrey,
+  point: pinkColors.mainPink,
 };
 
 const text = {

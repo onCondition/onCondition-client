@@ -57,7 +57,19 @@ function CommentContainer({
     setTargetId(commentId);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
+    async function updateComment(body) {
+      const res = userComment.commentId
+        ? await editCommentById(userComment.commentId, body)
+        : await postComment(body);
+
+      if (!res) {
+        setStatus(ERROR.COMMENT_UPDATE_FAIL);
+      } else {
+        resetUserComment();
+      }
+    }
+
     if (!userComment.isUpdated) {
       setStatus("");
 
@@ -70,27 +82,24 @@ function CommentContainer({
       date: new Date(),
       content: userComment.content,
     };
-    const res = userComment.commentId
-      ? await editCommentById(userComment.commentId, body)
-      : await postComment(body);
 
-    if (!res) {
-      setStatus(ERROR.COMMENT_UPDATE_FAIL);
-    } else {
-      resetUserComment();
-    }
+    updateComment(body);
   }, [userComment]);
 
-  useEffect(async () => {
+  useEffect(() => {
+    async function deleteComment() {
+      const res = await deleteCommentById(targetId);
+
+      if (!res) {
+        setStatus(ERROR.COMMENT_DELETE_FAIL);
+      }
+    }
+
     if (!targetId) {
       return;
     }
 
-    const res = await deleteCommentById(targetId);
-
-    if (!res) {
-      setStatus(ERROR.COMMENT_DELETE_FAIL);
-    }
+    deleteComment();
   }, [targetId]);
 
   return (

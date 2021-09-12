@@ -49,26 +49,25 @@ function Login() {
     history.push(`/${id}`);
   };
 
-  async function dispatchLoginResult() {
-    try {
-      const { user, credential } = await firebase.auth().getRedirectResult();
-
-      if (!user) {
-        return;
-      }
-
-      const idToken = await user.getIdToken(true);
-      const { accessToken } = credential;
-      const refreshToken = user.refreshToken;
-      const googleToken = { accessToken, refreshToken };
-
-      dispatch(login({ idToken, googleToken }));
-    } catch {
-      setErrorStatus(ERROR.LOGIN_FAIL);
-    }
-  }
-
   useEffect(() => {
+    async function dispatchLoginResult() {
+      try {
+        const { user, credential } = await firebase.auth().getRedirectResult();
+
+        if (!user) {
+          return;
+        }
+
+        const idToken = await user.getIdToken(true);
+        const { accessToken } = credential;
+        const refreshToken = user.refreshToken;
+        const googleToken = { accessToken, refreshToken };
+
+        dispatch(login({ idToken, googleToken }));
+      } catch {
+        setErrorStatus(ERROR.LOGIN_FAIL);
+      }
+    }
     if (id) {
       handleLogin();
 
