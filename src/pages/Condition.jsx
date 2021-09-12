@@ -61,22 +61,9 @@ function Condition() {
         return;
       }
 
-      const {
-        activityData,
-        mealData,
-        sleepData,
-        albumData,
-        gridData,
-      } = conditionData;
-
-      const loadedCategories = ["운동", "식사", "수면"];
-      const loadedDataPerCategory = [activityData, mealData, sleepData];
+      const loadedCategories = Object.keys(conditionData);
+      const loadedDataPerCategory = Object.values(conditionData);
       const loadedDataPerDate = {};
-
-      [...albumData, ...gridData].forEach(({ _id: category, data }) => {
-        loadedCategories.push(category);
-        loadedDataPerCategory.push(data);
-      });
 
       loadedDataPerCategory.forEach((data, i) => {
         data.forEach(({ _id: date, average }) => {
