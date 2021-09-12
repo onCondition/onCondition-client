@@ -19,7 +19,6 @@ function CommentViewer({
 }) {
   const user = useSelector((state) => state.user);
   const isCreator = user.id === creatorId;
-  console.log(user.id, creatorId);
 
   return (
     <Wrapper>
