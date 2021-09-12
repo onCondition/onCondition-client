@@ -7,7 +7,7 @@ import List from "../components/List";
 import { PrevButton, NextButton } from "../components/PageButton";
 import ContentForm from "../components/ContentForm";
 import HeartCounter from "../components/HeartCounter";
-import api from "../api/category";
+import getApi from "../api/category";
 import theme from "../theme";
 
 const Container = styled.div`
@@ -28,15 +28,15 @@ const Container = styled.div`
 `;
 
 function Meal() {
-  const { creator } = useParams();
+  const { creatorId } = useParams();
   const [meals, setMeals] = useState([]);
   const [isReloadRequired, setIsReloadRequired] = useState(true);
   const [prevPage, setPrevPage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
-  const { get, post } = api.meal;
+  const { get, post } = getApi("meal");
 
   async function loadMeals(page = 1) {
-    const result = await get(creator, page);
+    const result = await get(creatorId, page);
 
     if (!result) {
       return;
@@ -59,7 +59,7 @@ function Meal() {
   const handleSubmitForm = async function ({
     date, heartCount, url, text,
   }) {
-    const newMeal = await post(creator, {
+    const newMeal = await post(creatorId, {
       date, url, heartCount, text,
     });
 
@@ -78,7 +78,7 @@ function Meal() {
 
   const mealBars = (meals.length) ? meals.map((meal) => {
     return (
-      <Link to={`/${creator}/meal/${meal._id}`} key={meal._id}>
+      <Link to={`/${creatorId}/meal/${meal._id}`} key={meal._id}>
         <List color={theme.background.main} key={meal.id}>
           {meal.url
             ? <img src={meal.url} />

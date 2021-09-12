@@ -17,35 +17,32 @@ import Button from "../components/Button";
 import CircleButton from "../components/CircleButton";
 import theme from "../theme";
 
-import { formatCategory } from "../helpers/userInfo";
-import api from "../api/category";
+import getApi from "../api/category";
 import { ERROR } from "../constants/messages";
 import {
   CANCEL, EDIT, DELETE, SAVE,
 } from "../constants/buttons";
 
 function Detail() {
-  const { creator, category: categoryName, ratingId } = useParams();
+  const history = useHistory();
+  const { creatorId, category, ratingId } = useParams();
+  const { getById, editById, deleteById } = getApi(category);
   const [data, setData] = useState(null);
   const [comments, setComments] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [hasModal, setHasModal] = useState(false);
-  const history = useHistory();
-
-  const category = formatCategory(categoryName);
-  const { getById, editById, deleteById } = api[category];
-  const hasPicture = categoryName === "meal" || categoryName.startsWith("customAlbum");
+  const [hasPicture, setHasPicture] = useState(false);
 
   useEffect(() => {
-    async function loadById(ratingId) {
-      const loadedData = await getById(ratingId);
+    async function loadById() {
+      const loadedData = await getById(creatorId, ratingId);
 
       if (!loadedData) {
         return;
       }
 
       setData({
-        creator: loadedData.creator,
+        category: loadedData.category,
         date: loadedData.date,
         heartCount: loadedData.rating?.heartCount || 0,
         text: loadedData.rating?.text || "",
@@ -53,7 +50,7 @@ function Detail() {
         type: loadedData.type,
         duration: loadedData.duration,
       });
-
+      setHasPicture(!!loadedData.url);
       setComments(loadedData.comments);
     }
 
@@ -63,7 +60,7 @@ function Detail() {
   const handleFormSubmit = async function (values) {
     const { date, heartCount, text } = values;
 
-    const result = await editById(creator, ratingId, {
+    const result = await editById(creatorId, ratingId, {
       date,
       heartCount,
       text,
@@ -77,11 +74,11 @@ function Detail() {
   };
 
   const handleRedirect = function () {
-    history.push(`/${creator}/${category}`);
+    history.push(`/${creatorId}/${category}`);
   };
 
   const handleDeleteButtonClick = async function () {
-    const result = await deleteById(creator, ratingId);
+    const result = await deleteById(creatorId, ratingId);
 
     if (result) {
       handleRedirect();
@@ -184,6 +181,7 @@ function Detail() {
         </div>
         <div className="comment">
           <CommentContainer
+            creatorId={creatorId}
             comments={comments}
             category={category}
             ratingId={ratingId}
