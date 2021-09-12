@@ -40,6 +40,7 @@ function PendingCard({
   name,
   onAceeptButtonClick,
   onDenyButtonClick,
+  isSender,
 }) {
   return (
     <CardContainer color={theme.background.main}>
@@ -48,11 +49,13 @@ function PendingCard({
       </ProfileImageWrapper>
       <p>{name}</p>
       <PendingFilter>
-        <p>친구 요청</p>
-        <div>
-          <Button onClick={onAceeptButtonClick}>수락</Button>
-          <Button onClick={onDenyButtonClick}>거절</Button>
-        </div>
+        <p>{isSender ? "친구 요청" : "친구 요청 중"}</p>
+        {isSender
+          && <div>
+            <Button onClick={onAceeptButtonClick}>수락</Button>
+            <Button onClick={onDenyButtonClick}>거절</Button>
+          </div>
+        }
       </PendingFilter>
     </CardContainer>
   );
@@ -63,6 +66,7 @@ PendingCard.propTypes = {
   name: PropTypes.string.isRequired,
   onAceeptButtonClick: PropTypes.func,
   onDenyButtonClick: PropTypes.func,
+  isSender: PropTypes.bool,
 };
 
 export default PendingCard;
