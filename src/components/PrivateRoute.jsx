@@ -4,11 +4,11 @@ import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 function PrivateRoute({ children, ...rest }) {
-  const { id } = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
 
   return (
     <Route {...rest}>
-      {id
+      {user.id
         ? children
         : <Redirect to="/login" />}
     </Route>

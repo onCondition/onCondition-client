@@ -14,24 +14,24 @@ const login = createAsyncThunk("user/login",
       const {
         accessToken,
         refreshToken,
-        id,
+        userId,
         customCategories,
       } = await postLogin(idToken);
 
       storeUserInfos({
         accessToken,
         refreshToken,
-        id,
+        userId,
         customCategories,
       });
 
-      const res = await postGoogleToken(id, googleToken);
+      const res = await postGoogleToken(userId, googleToken);
 
       if (res.status) {
         return Promise.reject(res.message);
       }
 
-      return { id, customCategories };
+      return { userId, customCategories };
     } catch (err) {
       return Promise.reject(err);
     }
@@ -44,10 +44,10 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUserInfos(state, { payload }) {
-      const { id, customCategories } = payload;
+      const { userId, customCategories } = payload;
 
-      if (id && customCategories) {
-        state.id = id;
+      if (userId && customCategories) {
+        state.id = userId;
         state.customCategories = customCategories;
       } else {
         state.id = null;
@@ -57,9 +57,9 @@ const userSlice = createSlice({
   },
   extraReducers: {
     [login.fulfilled]: (state, { payload }) => {
-      const { id, customCategories } = payload;
+      const { userId, customCategories } = payload;
 
-      state.id = id;
+      state.id = userId;
       state.customCategories = customCategories;
     },
     [login.rejected]: (state) => {

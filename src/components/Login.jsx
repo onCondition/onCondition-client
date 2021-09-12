@@ -34,7 +34,7 @@ const GoogleLogin = styled.img`
 
 function Login() {
   const [errorStatus, setErrorStatus] = useState("");
-  const { id } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -46,7 +46,7 @@ function Login() {
   }
 
   const handleLogin = function () {
-    history.push(`/${id}`);
+    history.push(`/${user.id}`);
   };
 
   useEffect(() => {
@@ -68,14 +68,14 @@ function Login() {
         setErrorStatus(ERROR.LOGIN_FAIL);
       }
     }
-    if (id) {
+    if (user.id) {
       handleLogin();
 
       return;
     }
 
     dispatchLoginResult();
-  }, [id]);
+  }, [user.id]);
 
   return (
     <Wrapper>

@@ -28,7 +28,7 @@ const Container = styled.div`
 `;
 
 function Meal() {
-  const { id } = useParams();
+  const { creator } = useParams();
   const [meals, setMeals] = useState([]);
   const [isReloadRequired, setIsReloadRequired] = useState(true);
   const [prevPage, setPrevPage] = useState(null);
@@ -36,7 +36,7 @@ function Meal() {
   const { get, post } = api.meal;
 
   async function loadMeals(page = 1) {
-    const result = await get(id, page);
+    const result = await get(creator, page);
 
     if (!result) {
       return;
@@ -59,7 +59,7 @@ function Meal() {
   const handleSubmitForm = async function ({
     date, heartCount, url, text,
   }) {
-    const newMeal = await post(id, {
+    const newMeal = await post(creator, {
       date, url, heartCount, text,
     });
 
@@ -78,7 +78,7 @@ function Meal() {
 
   const mealBars = (meals.length) ? meals.map((meal) => {
     return (
-      <Link to={`/${id}/meal/${meal._id}`} key={meal._id}>
+      <Link to={`/${creator}/meal/${meal._id}`} key={meal._id}>
         <List color={theme.background.main} key={meal.id}>
           {meal.url
             ? <img src={meal.url} />

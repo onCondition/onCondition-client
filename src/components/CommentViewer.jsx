@@ -17,23 +17,23 @@ const Wrapper = styled.div`
 function CommentViewer({
   comments, onClickEdit, onClickDelete,
 }) {
-  const { id } = useSelector((state) => state.user);
+  const user = useSelector((state) => state);
 
   return (
     <Wrapper>
       {comments.map(({
         _id: commentId, content, creator,
       }) => (
-        id === creator._id ? (
+        user.id === creator._id ? (
           <CommentBar
             key={commentId}
-            id={commentId}
+            creator={creator._id}
             profileUrl={creator.profileUrl}
             content={content}
           >
             <Button
               text={EDIT}
-              onClick={() => onClickEdit({ id, content })}
+              onClick={() => onClickEdit({ commentId, content })}
               width={BUTTON_WIDTH}
               height={BUTTON_HEIGHT}
             />
@@ -46,8 +46,8 @@ function CommentViewer({
           </CommentBar>
         ) : (
           <CommentBar
-            key={id}
-            id={id}
+            key={commentId}
+            creator={creator._id}
             profileUrl={creator.profileUrl}
             content={content}
           />

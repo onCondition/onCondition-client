@@ -50,7 +50,7 @@ function ContentForm({
   additionalButton,
   defaultValues,
 }) {
-  const { id } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   const imageInput = useRef(null);
   const [date, setDate] = useState(defaultValues.date || "");
   const [heartCount, setHeartCount] = useState(defaultValues.heartCount);
@@ -82,7 +82,7 @@ function ContentForm({
     let url = "";
 
     if (image) {
-      url = await getImageUrl(id, image);
+      url = await getImageUrl(user.id, image);
       setImageUrl(url);
     }
 

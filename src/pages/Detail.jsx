@@ -25,7 +25,7 @@ import {
 } from "../constants/buttons";
 
 function Detail() {
-  const { id, category: categoryName, ratingId } = useParams();
+  const { creator, category: categoryName, ratingId } = useParams();
   const [data, setData] = useState(null);
   const [comments, setComments] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -63,7 +63,7 @@ function Detail() {
   const handleFormSubmit = async function (values) {
     const { date, heartCount, text } = values;
 
-    const result = await editById(id, ratingId, {
+    const result = await editById(creator, ratingId, {
       date,
       heartCount,
       text,
@@ -77,11 +77,11 @@ function Detail() {
   };
 
   const handleRedirect = function () {
-    history.push(`/${id}/${category}`);
+    history.push(`/${creator}/${category}`);
   };
 
   const handleDeleteButtonClick = async function () {
-    const result = await deleteById(id, ratingId);
+    const result = await deleteById(creator, ratingId);
 
     if (result) {
       handleRedirect();

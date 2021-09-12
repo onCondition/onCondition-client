@@ -38,9 +38,9 @@ function App() {
       if (!user) {
         dispatch(logout());
       } else {
-        const { id, customCategories } = getUserInfos();
+        const { userId, customCategories } = getUserInfos();
 
-        dispatch(setUserInfos({ id, customCategories }));
+        dispatch(setUserInfos({ userId, customCategories }));
       }
 
       setIsLoaded(true);
@@ -63,29 +63,29 @@ function App() {
               <Route path="/login">
                 <Login />
               </Route>
-              <PrivateRoute exact path="/:id">
+              <PrivateRoute exact path="/:creator">
                 <Condition />
               </PrivateRoute>
-              <PrivateRoute exact path="/:id/friends/">
+              <PrivateRoute exact path="/:creator/friends/">
                 <p>Friends</p>
               </PrivateRoute>
-              <PrivateRoute exact path="/:id/meal">
+              <PrivateRoute exact path="/:creator/meal">
                 <Meal />
               </PrivateRoute>
-              <PrivateRoute exact path="/:id/activity">
+              <PrivateRoute exact path="/:creator/activity">
                 <Activity />
               </PrivateRoute>
-              <PrivateRoute exact path="/:id/sleep">
+              <PrivateRoute exact path="/:creator/sleep">
                 <p>Sleep</p>
               </PrivateRoute>
-              <PrivateRoute exact path="/:id/:category/">
+              <PrivateRoute exact path="/:creator/:category/">
                 <p>Custom Category</p>
               </PrivateRoute>
-              <PrivateRoute exact path="/:id/friends/:friendId">
+              <PrivateRoute exact path="/:creator/friends/:friendId">
                 <p>Friend Detail</p>
               </PrivateRoute>
             </Switch>
-            <Route path="/:id/:category/:ratingId">
+            <Route path="/:creator/:category/:ratingId">
               <Detail />
             </Route>
             <Route path="*">
