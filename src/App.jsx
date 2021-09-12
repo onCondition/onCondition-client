@@ -12,6 +12,7 @@ import Error from "./pages/Error";
 import Condition from "./pages/Condition";
 import Meal from "./pages/Meal";
 import Activity from "./pages/Activity";
+import CustomAlbum from "./pages/CustomAlbum";
 import Detail from "./pages/Detail";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
@@ -62,32 +63,32 @@ function App() {
               <Route path="/login">
                 <Login />
               </Route>
-              <PrivateRoute path="/:creator/condition">
+              <PrivateRoute path="/:creatorId/condition">
                 <Condition />
               </PrivateRoute>
-              <PrivateRoute path="/:creator/friends">
+              <PrivateRoute path="/:creatorId/friends">
                 <p>Friends</p>
               </PrivateRoute>
-              <PrivateRoute path="/:creator/meal">
+              <PrivateRoute path="/:creatorId/meal">
                 <Meal />
               </PrivateRoute>
-              <PrivateRoute path="/:creator/activity">
+              <PrivateRoute path="/:creatorId/activity">
                 <Activity />
               </PrivateRoute>
-              <PrivateRoute path="/:creator/sleep">
+              <PrivateRoute path="/:creatorId/sleep">
                 <p>Sleep</p>
               </PrivateRoute>
-              <PrivateRoute path="/:creator/:category">
-                <p>Custom Category</p>
+              <PrivateRoute path="/:creatorId/:category">
+                <CustomAlbum />
               </PrivateRoute>
-              <PrivateRoute path="/:creator/friends/:friendId">
+              <PrivateRoute path="/:creatorId/friends/:friendId">
                 <p>Friend Detail</p>
               </PrivateRoute>
               <Route path="*">
                 <p>Not Found</p>
               </Route>
             </Switch>
-            <Route path="/:creator/:category/:ratingId">
+            <Route path="/:creatorId/:category/:ratingId">
               <Detail />
             </Route>
           </>
