@@ -26,9 +26,8 @@ function ContentViewer({
         <ImgWrapper>
           <img src={url} />
         </ImgWrapper>
-        {hasText && <TextContainer>{text}</TextContainer>}
-      </div>
-      }
+      </div>}
+      {hasText && <TextContainer>{text}</TextContainer>}
       <TextContainer>{text}</TextContainer>
     </Wrapper>
   );
