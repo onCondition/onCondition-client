@@ -16,7 +16,7 @@ import Detail from "./pages/Detail";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import PrivateRoute from "./components/PrivateRoute";
-import { setUserInfos,logout } from "./features/userSlice";
+import { setUserInfos, logout } from "./features/userSlice";
 import { getUserInfos } from "./helpers/userInfo";
 
 const AppWrapper = styled.div`
