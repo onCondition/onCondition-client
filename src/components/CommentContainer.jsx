@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
@@ -24,81 +24,65 @@ const Status = styled.div`
 `;
 
 function CommentContainer({
-  creatorId, comments, category, ratingId,
+  creatorId, comments, category, ratingId, onUpdate,
 }) {
   const { postComment, editCommentById, deleteCommentById } = getApi(category);
   const [userComment, setUserComment] = useState({
-    commentId: "", content: "", isUpdated: false,
+    id: "", content: "", isUpdated: false,
   });
-  const [targetId, setTargetId] = useState("");
   const [status, setStatus] = useState("");
 
-  const handleSubmitComment = function (newComment) {
-    setUserComment((prev) => ({
-      ...prev, content: newComment, isUpdated: true,
-    }));
-  };
-
-  const handleClickEdit = function ({ commentId, content }) {
-    setUserComment({
-      commentId, content, isUpdated: false,
-    });
-  };
-
   const resetUserComment = function () {
-    setUserComment({ commentId: null, content: "", isUpdated: false });
+    setUserComment({ id: null, content: "", isUpdated: false });
   };
 
-  const handleClickDelete = function (commentId) {
-    setTargetId(commentId);
-  };
+  const handleSubmit = async function (content) {
+    if (userComment.isUpdated) {
+      const body = {
+        category,
+        ratingId,
+        date: new Date(),
+        content,
+      };
 
-  useEffect(() => {
-    async function updateComment(body) {
-      const res = userComment.commentId
-        ? await editCommentById(
-          creatorId, ratingId, userComment.commentId, body,
-        )
-        : await postComment(creatorId, ratingId, body);
+      const res = await editCommentById(
+        creatorId, ratingId, userComment.id, body,
+      );
 
       if (!res) {
         setStatus(ERROR.COMMENT_UPDATE_FAIL);
-      } else {
-        resetUserComment();
       }
-    }
+    } else {
+      const body = {
+        date: new Date(),
+        content,
+      };
 
-    if (!userComment.isUpdated) {
-      setStatus("");
-
-      return;
-    }
-
-    const body = {
-      category,
-      ratingId,
-      date: new Date(),
-      content: userComment.content,
-    };
-
-    updateComment(body);
-  }, [userComment]);
-
-  useEffect(() => {
-    async function deleteComment() {
-      const res = await deleteCommentById(creatorId, ratingId, targetId);
+      const res = await postComment(creatorId, ratingId, body);
 
       if (!res) {
-        setStatus(ERROR.COMMENT_DELETE_FAIL);
+        setStatus(ERROR.COMMENT_UPDATE_FAIL);
       }
     }
 
-    if (!targetId) {
-      return;
+    resetUserComment();
+    onUpdate();
+  };
+
+  const handleClickEdit = function ({ commentId, content }) {
+    setUserComment({ id: commentId, content, isUpdated: true });
+  };
+
+  const handleClickDelete = async function (commentId) {
+    const res = await deleteCommentById(creatorId, ratingId, commentId);
+
+    if (!res) {
+      setStatus(ERROR.COMMENT_DELETE_FAIL);
     }
 
-    deleteComment();
-  }, [targetId]);
+    resetUserComment();
+    onUpdate();
+  };
 
   return (
     <CommentContainerWrapper>
@@ -111,8 +95,8 @@ function CommentContainer({
       <Status>{status}</Status>
       <CommentForm
         content={userComment.content}
-        buttonText={userComment.commentId ? EDIT : COMMENT}
-        onSubmit={handleSubmitComment}
+        buttonText={userComment.id ? EDIT : COMMENT}
+        onSubmit={handleSubmit}
         onReset={resetUserComment}
       />
     </CommentContainerWrapper>
@@ -134,6 +118,7 @@ CommentContainer.propTypes = {
   creatorId: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   ratingId: PropTypes.string.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default CommentContainer;

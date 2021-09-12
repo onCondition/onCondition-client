@@ -32,6 +32,7 @@ function Detail() {
   const [isEditing, setIsEditing] = useState(false);
   const [hasModal, setHasModal] = useState(false);
   const [hasPicture, setHasPicture] = useState(false);
+  const [isReloadRequired, setIsReloadRequired] = useState(false);
 
   useEffect(() => {
     async function loadById() {
@@ -55,7 +56,8 @@ function Detail() {
     }
 
     loadById(ratingId);
-  }, [ratingId]);
+    setIsReloadRequired(false);
+  }, [ratingId, isReloadRequired]);
 
   const handleFormSubmit = async function (values) {
     const { date, heartCount, text } = values;
@@ -91,6 +93,10 @@ function Detail() {
 
   const handleDeletePreConfirm = function () {
     setHasModal(true);
+  };
+
+  const handleCommentUpdate = function () {
+    setIsReloadRequired(true);
   };
 
   const cancelButton = (
@@ -185,6 +191,7 @@ function Detail() {
             comments={comments}
             category={category}
             ratingId={ratingId}
+            onUpdate={handleCommentUpdate}
           />
         </div>
       </DetailWrapper>
