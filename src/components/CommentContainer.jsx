@@ -29,7 +29,7 @@ const Status = styled.div`
 `;
 
 function CommentContainer({
-  comments, category, ratingId,
+  creatorId, comments, category, ratingId,
 }) {
   const [userComment, setUserComment] = useState({
     commentId: "", content: "", isUpdated: false,
@@ -105,6 +105,7 @@ function CommentContainer({
   return (
     <CommentContainerWrapper>
       <CommentViewer
+        creatorId={creatorId}
         comments={comments}
         onClickEdit={handleClickEdit}
         onClickDelete={handleClickDelete}
@@ -132,6 +133,7 @@ CommentContainer.propTypes = {
     date: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
   })),
+  creatorId: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   ratingId: PropTypes.string.isRequired,
 };

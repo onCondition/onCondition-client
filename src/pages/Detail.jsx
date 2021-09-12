@@ -181,6 +181,7 @@ function Detail() {
         </div>
         <div className="comment">
           <CommentContainer
+            creatorId={creatorId}
             comments={comments}
             category={category}
             ratingId={ratingId}

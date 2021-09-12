@@ -15,49 +15,44 @@ const Wrapper = styled.div`
 `;
 
 function CommentViewer({
-  comments, onClickEdit, onClickDelete,
+  creatorId, comments, onClickEdit, onClickDelete,
 }) {
   const user = useSelector((state) => state);
 
   return (
     <Wrapper>
-      {comments.map(({
-        _id: commentId, content, creator,
-      }) => (
-        user.id === creator._id ? (
-          <CommentBar
-            key={commentId}
-            name={creator.name}
-            profileUrl={creator.profileUrl}
-            content={content}
-          >
-            <Button
-              text={EDIT}
-              onClick={() => onClickEdit({ commentId, content })}
-              width={BUTTON_WIDTH}
-              height={BUTTON_HEIGHT}
-            />
-            <Button
-              text={DELETE}
-              onClick={() => onClickDelete(commentId)}
-              width={BUTTON_WIDTH}
-              height={BUTTON_HEIGHT}
-            />
-          </CommentBar>
-        ) : (
-          <CommentBar
-            key={commentId}
-            name={creator.name}
-            profileUrl={creator.profileUrl}
-            content={content}
-          />
-        )
+      {comments.map((comment) => (
+        <CommentBar
+          key={comment._id}
+          name={comment.creator.name}
+          profileUrl={comment.creator.profileUrl}
+          content={comment.content}
+        >
+          {(user.id === comment.creator._id || user.id === creatorId) && (
+            <div>
+              <Button
+                text={EDIT}
+                onClick={() => onClickEdit({
+                  commentId: comment.id, content: comment.content,
+                })}
+                width={BUTTON_WIDTH}
+                height={BUTTON_HEIGHT}
+              />
+              <Button
+                text={DELETE}
+                onClick={() => onClickDelete(comment.id)}
+                width={BUTTON_WIDTH}
+                height={BUTTON_HEIGHT}
+              />
+            </div>)}
+        </CommentBar>
       ))}
     </Wrapper>
   );
 }
 
 CommentViewer.propTypes = {
+  creatorId: PropTypes.string.isRequired,
   comments: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
