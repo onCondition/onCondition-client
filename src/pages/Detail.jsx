@@ -32,32 +32,30 @@ function Detail() {
   const [isEditing, setIsEditing] = useState(false);
   const [hasModal, setHasModal] = useState(false);
   const [hasPicture, setHasPicture] = useState(false);
-  const [isReloadRequired, setIsReloadRequired] = useState(false);
 
-  useEffect(() => {
-    async function loadById() {
-      const loadedData = await getById(creatorId, ratingId);
+  async function loadById() {
+    const loadedData = await getById(creatorId, ratingId);
 
-      if (!loadedData) {
-        return;
-      }
-
-      setData({
-        category: loadedData.category,
-        date: loadedData.date,
-        heartCount: loadedData.rating?.heartCount || 0,
-        text: loadedData.rating?.text || "",
-        url: loadedData.url,
-        type: loadedData.type,
-        duration: loadedData.duration,
-      });
-      setHasPicture(!!loadedData.url);
-      setComments(loadedData.comments);
+    if (!loadedData) {
+      return;
     }
 
-    loadById(ratingId);
-    setIsReloadRequired(false);
-  }, [ratingId, isReloadRequired]);
+    setData({
+      category: loadedData.category,
+      date: loadedData.date,
+      heartCount: loadedData.rating?.heartCount || 0,
+      text: loadedData.rating?.text || "",
+      url: loadedData.url,
+      type: loadedData.type,
+      duration: loadedData.duration,
+    });
+    setHasPicture(!!loadedData.url);
+    setComments(loadedData.comments);
+  }
+
+  useEffect(() => {
+    loadById();
+  }, [creatorId, ratingId]);
 
   const handleFormSubmit = async function (values) {
     const { date, heartCount, text } = values;
@@ -96,7 +94,7 @@ function Detail() {
   };
 
   const handleCommentUpdate = function () {
-    setIsReloadRequired(true);
+    loadById();
   };
 
   const cancelButton = (
