@@ -16,7 +16,7 @@ import Button from "../components/Button";
 import CircleButton from "../components/CircleButton";
 import theme from "../theme";
 
-import { getById, deleteById } from "../api/friends";
+import { getById, deleteById } from "../api/friend";
 
 const Layout = styled.div`
   display: grid;
