@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Route, Switch, Redirect, useHistory,
-} from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "./theme";
@@ -16,25 +14,24 @@ import CustomAlbum from "./pages/CustomAlbum";
 import Friend from "./pages/Friend";
 import Detail from "./pages/Detail";
 import Login from "./components/Login";
-import Logout from "./components/Logout";
 import PrivateRoute from "./components/PrivateRoute";
 import { setUserInfos, logout } from "./features/userSlice";
 import { getUserInfos } from "./helpers/userInfo";
+import MenuBar from "./components/MenuBar";
 
 const AppWrapper = styled.div`
-  text-align: center;
+  height: 100%;
+`;
+
+const PageWrapper = styled.div`
+  margin-left: 300px;
 `;
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const { hasError, ...error } = useSelector((state) => state.error);
-  const history = useHistory();
   const dispatch = useDispatch();
   const { userId, customCategories } = getUserInfos();
-
-  const handleLogout = function () {
-    history.push("/login");
-  };
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -54,44 +51,44 @@ function App() {
       <AppWrapper>
         {isLoaded ? (
           <>
-            <header>
-              <Logout onLogout={handleLogout} />
-            </header>
-            <Switch>
-              <Route exact path="/">
-                <Redirect to={`/${userId}/condition`} />
+            <MenuBar />
+            <PageWrapper>
+              <Switch>
+                <Route exact path="/">
+                  <Redirect to={`/${userId}/condition`} />
+                </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <PrivateRoute path="/:creatorId/condition">
+                  <Condition />
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/friend">
+                  <p>Friends</p>
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/meal">
+                  <Meal />
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/activity">
+                  <Activity />
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/sleep">
+                  <p>Sleep</p>
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/:category">
+                  <CustomAlbum />
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/friend/:friendId">
+                  <p>Friend Detail</p>
+                </PrivateRoute>
+                <Route path="*">
+                  <p>Not Found</p>
+                </Route>
+              </Switch>
+              <Route path="/:creatorId/:category/:ratingId">
+                <Detail />
               </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <PrivateRoute path="/:creatorId/condition">
-                <Condition />
-              </PrivateRoute>
-              <PrivateRoute path="/:creatorId/friend">
-                <Friend />
-              </PrivateRoute>
-              <PrivateRoute path="/:creatorId/meal">
-                <Meal />
-              </PrivateRoute>
-              <PrivateRoute path="/:creatorId/activity">
-                <Activity />
-              </PrivateRoute>
-              <PrivateRoute path="/:creatorId/sleep">
-                <p>Sleep</p>
-              </PrivateRoute>
-              <PrivateRoute path="/:creatorId/:category">
-                <CustomAlbum />
-              </PrivateRoute>
-              <PrivateRoute path="/:creatorId/friend/:friendId">
-                <p>Friend Detail</p>
-              </PrivateRoute>
-              <Route path="*">
-                <p>Not Found</p>
-              </Route>
-            </Switch>
-            <Route path="/:creatorId/:category/:ratingId">
-              <Detail />
-            </Route>
+            </PageWrapper>
           </>
         ) : (
           <p>waiting...</p>
