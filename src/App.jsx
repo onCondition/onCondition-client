@@ -10,7 +10,7 @@ import Error from "./pages/Error";
 import Condition from "./pages/Condition";
 import Meal from "./pages/Meal";
 import Activity from "./pages/Activity";
-import CustomAlbum from "./pages/CustomAlbum";
+import CustomCategory from "./pages/CustomCategory";
 import Friend from "./pages/Friend";
 import Detail from "./pages/Detail";
 import Login from "./components/Login";
@@ -25,6 +25,7 @@ const AppWrapper = styled.div`
 
 const PageWrapper = styled.div`
   margin-left: 300px;
+  text-align: center;
 `;
 
 function App() {
@@ -76,7 +77,7 @@ function App() {
                   <p>Sleep</p>
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/:category">
-                  <CustomAlbum />
+                  <CustomCategory />
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/friend/:friendId">
                   <p>Friend Detail</p>
