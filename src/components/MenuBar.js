@@ -7,9 +7,9 @@ import firebase from "../config/firebase";
 import Logout from "./Logout";
 
 const MenuWrapper = styled.div`
-  width: 30%;
-  min-width: 150px;
-  max-width: 300px;
+  position: fixed;
+  width: 300px;
+  margin-top: -10px;
   height: 100%;
   background-color: ${({ theme }) => theme.background.sub};
   font-size: ${({ theme }) => theme.fontSizes.small};

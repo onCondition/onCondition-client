@@ -19,8 +19,11 @@ import { getUserInfos } from "./helpers/userInfo";
 import MenuBar from "./components/MenuBar";
 
 const AppWrapper = styled.div`
-  display: flex;
-  height: 100vh;
+  height: 100%;
+`;
+
+const PageWrapper = styled.div`
+  margin-left: 300px;
 `;
 
 function App() {
@@ -48,41 +51,43 @@ function App() {
         {isLoaded ? (
           <>
             <MenuBar />
-            <Switch>
-              <Route exact path="/">
-                <Redirect to={`/${userId}/condition`} />
+            <PageWrapper>
+              <Switch>
+                <Route exact path="/">
+                  <Redirect to={`/${userId}/condition`} />
+                </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <PrivateRoute path="/:creatorId/condition">
+                  <Condition />
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/friends">
+                  <p>Friends</p>
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/meal">
+                  <Meal />
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/activity">
+                  <Activity />
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/sleep">
+                  <p>Sleep</p>
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/:category">
+                  <CustomAlbum />
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/friends/:friendId">
+                  <p>Friend Detail</p>
+                </PrivateRoute>
+                <Route path="*">
+                  <p>Not Found</p>
+                </Route>
+              </Switch>
+              <Route path="/:creatorId/:category/:ratingId">
+                <Detail />
               </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <PrivateRoute path="/:creatorId/condition">
-                <Condition />
-              </PrivateRoute>
-              <PrivateRoute path="/:creatorId/friends">
-                <p>Friends</p>
-              </PrivateRoute>
-              <PrivateRoute path="/:creatorId/meal">
-                <Meal />
-              </PrivateRoute>
-              <PrivateRoute path="/:creatorId/activity">
-                <Activity />
-              </PrivateRoute>
-              <PrivateRoute path="/:creatorId/sleep">
-                <p>Sleep</p>
-              </PrivateRoute>
-              <PrivateRoute path="/:creatorId/:category">
-                <CustomAlbum />
-              </PrivateRoute>
-              <PrivateRoute path="/:creatorId/friends/:friendId">
-                <p>Friend Detail</p>
-              </PrivateRoute>
-              <Route path="*">
-                <p>Not Found</p>
-              </Route>
-            </Switch>
-            <Route path="/:creatorId/:category/:ratingId">
-              <Detail />
-            </Route>
+            </PageWrapper>
           </>
         ) : (
           <p>waiting...</p>
