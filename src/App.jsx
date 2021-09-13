@@ -64,7 +64,7 @@ function App() {
                   <Condition />
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/friend">
-                  <p>Friends</p>
+                  <Friend />
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/meal">
                   <Meal />
