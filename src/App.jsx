@@ -11,6 +11,7 @@ import Condition from "./pages/Condition";
 import Meal from "./pages/Meal";
 import Activity from "./pages/Activity";
 import CustomAlbum from "./pages/CustomAlbum";
+import Friend from "./pages/Friend";
 import Detail from "./pages/Detail";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
@@ -62,7 +63,7 @@ function App() {
                 <PrivateRoute path="/:creatorId/condition">
                   <Condition />
                 </PrivateRoute>
-                <PrivateRoute path="/:creatorId/friends">
+                <PrivateRoute path="/:creatorId/friend">
                   <p>Friends</p>
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/meal">
@@ -77,7 +78,7 @@ function App() {
                 <PrivateRoute path="/:creatorId/:category">
                   <CustomAlbum />
                 </PrivateRoute>
-                <PrivateRoute path="/:creatorId/friends/:friendId">
+                <PrivateRoute path="/:creatorId/friend/:friendId">
                   <p>Friend Detail</p>
                 </PrivateRoute>
                 <Route path="*">
