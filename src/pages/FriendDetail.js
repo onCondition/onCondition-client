@@ -8,10 +8,8 @@ import ModalWrapper from "../components/ModalWrapper";
 import DetailWrapper from "../components/DetailWrapper";
 
 import FriendCard from "../components/FriendCard";
-import CardContainer from "../components/CardContainer";
 import ContentBar from "../components/ContentBar";
 
-import HeartCounter from "../components/HeartCounter";
 import Button from "../components/Button";
 import CircleButton from "../components/CircleButton";
 import theme from "../theme";
@@ -46,15 +44,12 @@ const RecordsWrapper = styled.div`
 function FriendDetail() {
   const history = useHistory();
   const { creatorId, friendId } = useParams();
-  const [records, setRecords] = useState([]);
+  const [records, setRecords] = useState(null);
   const [info, setInfo] = useState({
     name: "",
-    scores: null,
+    scores: {},
     lastAccessDate: "",
     profileUrl: "",
-    score: 0,
-    scoreCategories: [],
-    scoreValues: [],
   });
   const [isBackSide, setIsBackSide] = useState(false);
   const [hasModal, setHasModal] = useState(false);
@@ -71,21 +66,9 @@ function FriendDetail() {
         data: records, scores, lastAccessDate, name, profileUrl,
       } = data;
 
-      const scoreCategories = Object.keys(records);
-      const scoreValues = scoreCategories.map((key) => scoreCategories[key]);
-      const score = scoreValues.length
-        ? scoreValues.reduce((sum, el) => sum + el) / scoreValues.length
-        : 0;
-
       setRecords(records);
       setInfo({
-        scores,
-        lastAccessDate,
-        name,
-        profileUrl,
-        score,
-        scoreCategories,
-        scoreValues,
+        scores, lastAccessDate, name, profileUrl,
       });
     }
 
@@ -123,6 +106,10 @@ function FriendDetail() {
     />
   );
 
+  if (!records) {
+    return <p>Loading...</p>;
+  }
+
   const recordBars = records.map((record) => <ContentBar
     key={record._id}
     creatorId={friendId}
@@ -131,9 +118,49 @@ function FriendDetail() {
     color={theme.background.sub}
   />);
 
-  if (!records) {
-    return <p>Loading...</p>;
-  }
+  const radarOptions = {
+    datasets: {
+      radar: {
+        borderColor: theme.background.sub,
+        backgroundColor: theme.background.graphData,
+      },
+    },
+    scales: {
+      r: {
+        min: 0,
+        max: 10,
+        grid: {
+          color: theme.background.main,
+        },
+        ticks: {
+          display: false,
+          stepSize: 2,
+        },
+        pointLabels: {
+          color: theme.text.sub,
+          font: {
+            size: theme.fontSizes.graph,
+          },
+        },
+      },
+    },
+    animation: {
+      duration: 0,
+    },
+    plugins: {
+      legend: { display: false },
+    },
+  };
+
+  const data = { labels: Object.keys(info.scores),
+    datasets: [{ data: Object.values(info.scores) }] };
+
+  const graph = <div className="graph">
+    <Radar
+      data={data}
+      options={radarOptions}
+    />
+  </div>;
 
   return (
     <ModalWrapper>
@@ -149,21 +176,22 @@ function FriendDetail() {
       <DetailWrapper>
         <Layout>
           <div className="card-area">
-            <div className="card" onClick={handleCardClick}>
-              {isBackSide ? <CardContainer color={theme.background.sub}>
-                <Radar
-                  data={info.scoreValues}
-                  options={info.scoreCategories}
-                />
-                <p>{info.name}</p>
-                <p>{info.lastAccessDate}</p>
-                <HeartCounter count={info.score} />
-              </CardContainer>
+            <div className="card">
+              {isBackSide ? <FriendCard
+                profileUrl={info.profileUrl}
+                color={theme.background.sub}
+                graph={graph}
+                name={info.name}
+                lastAccessDate={info.lastAccessDate}
+                scores={info.scores}
+                onClick={handleCardClick}
+              />
                 : <FriendCard
                   profileUrl={info.profileUrl}
                   name={info.name}
                   lastAccessDate={info.lastAccessDate}
-                  score={info.score}
+                  scores={info.scores}
+                  onClick={handleCardClick}
                 />}
             </div>
             {deleteButton}
