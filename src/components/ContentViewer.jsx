@@ -22,11 +22,12 @@ function ContentViewer({
         {date + " "}
         <HeartCounter count={heartCount} />
       </div>
-      {!isDescription && <ImgWrapper>
-        <img src={url} />
-      </ImgWrapper>
+      {!isDescription && <div>
+        <ImgWrapper>
+          <img src={url} />
+        </ImgWrapper>
+      </div>}
       {hasText && <TextContainer>{text}</TextContainer>}
-      </ImgWrapper>}
       <TextContainer>{text}</TextContainer>
     </Wrapper>
   );
