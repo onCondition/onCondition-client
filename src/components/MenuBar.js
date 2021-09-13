@@ -40,8 +40,11 @@ function MenuBar() {
   const [ clickedMenu, setClickedMenu ] = useState("condition");
   const { id: userId, customCategories } = useSelector((state) => state.user);
 
-  const customCategoryNames = customCategories.map(({ category }) => category);
+  const customCategoryNames = user
+    ? customCategories.map(({ category }) => category)
+    : [];
   const categories = defaultCategories.concat(customCategoryNames, ["friend"]);
+  const name = user ? user.displayName : "guest";
 
   const handleMenuClick = function (clickedMenu) {
     history.push(`/${userId}/${clickedMenu}`);
@@ -64,7 +67,7 @@ function MenuBar() {
 
   return (
     <MenuWrapper>
-      <p className="name">{user.displayName}</p>
+      <p className="name">{name}</p>
       {categoryButtons}
       <Logout onLogout={handleLogout} />
     </MenuWrapper>
