@@ -1,75 +1,67 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import firebase from "../config/firebase";
 import CommentBar from "./CommentBar";
 import Button from "./Button";
 import { EDIT, DELETE } from "../constants/buttons";
 
-const BUTTON_WIDTH = "60px";
-const BUTTON_HEIGHT = "30px";
+const BUTTON_WIDTH = 80;
+const BUTTON_HEIGHT = 30;
 
 const Wrapper = styled.div`
   overflow: scroll;
 `;
 
 function CommentViewer({
-  comments, onClickEdit, onClickDelete,
+  creatorId, comments, onClickEdit, onClickDelete,
 }) {
-  const [uid, setUid] = useState(null);
-  const user = firebase.auth().currentUser;
-
-  useEffect(() => {
-    if (user) {
-      setUid(user.uid);
-    }
-  }, [user.uid]);
+  const user = useSelector((state) => state.user);
+  const isCreator = user.id === creatorId;
 
   return (
     <Wrapper>
-      {comments.map(({
-        _id: id, content, creator,
-      }) => (
-        uid === creator.uid ? (
-          <CommentBar
-            key={id}
-            id={id}
-            profileUrl={creator.profileUrl}
-            content={content}
-          >
-            <Button
+      {comments.map((comment) => (
+        <CommentBar
+          key={comment._id}
+          name={comment.creator.name}
+          profileUrl={comment.creator.profileUrl}
+          content={comment.content}
+        >
+          <span>
+            {(user.id === comment.creator._id) && <Button
               text={EDIT}
-              onClick={() => onClickEdit({ id, content })}
+              onClick={() => onClickEdit({
+                commentId: comment._id, content: comment.content,
+              })}
               width={BUTTON_WIDTH}
               height={BUTTON_HEIGHT}
-            />
-            <Button
+            />}
+            {(user.id === comment.creator._id || isCreator) && <Button
               text={DELETE}
-              onClick={() => onClickDelete(id)}
+              onClick={() => onClickDelete(comment._id)}
               width={BUTTON_WIDTH}
               height={BUTTON_HEIGHT}
-            />
-          </CommentBar>
-        ) : (
-          <CommentBar
-            key={id}
-            id={id}
-            profileUrl={creator.profileUrl}
-            content={content}
-          />
-        )
+            />}
+          </span>
+        </CommentBar>
       ))}
     </Wrapper>
   );
 }
 
 CommentViewer.propTypes = {
+  creatorId: PropTypes.string.isRequired,
   comments: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     ratingId: PropTypes.string.isRequired,
-    creator: PropTypes.string.isRequired,
+    creator: PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      profileUrl: PropTypes.string.isRequired,
+    }),
     date: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
   })),

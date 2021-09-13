@@ -36,6 +36,7 @@ function CommentForm({
     }
 
     onSubmit(comment);
+    setComment("");
   };
 
   const handleReset = function () {

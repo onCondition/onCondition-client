@@ -11,14 +11,15 @@ const DetailWrapper = styled.div`
   box-shadow: ${({ theme }) => theme.shadow.main};
 
   .viewer {
+    display: grid;
     width: 680px;
-    text-align: center;
+    justify-items: center;
+    align-items: center;
   }
 
   .comment {
-    margin-right: 20px;
-    flex-basis: 200px;
-    flex-grow: 1;
+    display: flex;
+    margin: auto;
   }
 `;
 
