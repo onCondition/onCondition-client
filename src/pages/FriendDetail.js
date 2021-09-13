@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 
 import Modal from "../components/modalComponent";
@@ -23,12 +22,12 @@ const RecordWrapper = styled.div`
   display: flex;
 `;
 
-function FriendDetail({ isRanker }) {
+function FriendDetail() {
   const history = useHistory();
   const { creatorId, friendId } = useParams();
   const [records, setRecords] = useState(null);
   const [info, setInfo] = useState({
-    name: "", stroke: 0, scores: [], lastAccessDate: "", profileUrl: "",
+    name: "", scores: null, lastAccessDate: "", profileUrl: "", score: 0,
   });
   const [hasModal, setHasModal] = useState(false);
 
@@ -41,12 +40,16 @@ function FriendDetail({ isRanker }) {
       }
 
       const {
-        stroke, scores, lastAccessDate, data: records, name, profileUrl,
+        scores, lastAccessDate, data: records, name, profileUrl,
       } = data;
+
+      const score = scores.length
+        ? Object.values(scores).reduce((sum, el) => sum + el) / scores.length
+        : 0;
 
       setRecords(records);
       setInfo({
-        stroke, scores, lastAccessDate, name, profileUrl,
+        scores, lastAccessDate, name, profileUrl, score,
       });
     }
 
@@ -73,6 +76,13 @@ function FriendDetail({ isRanker }) {
     setHasModal(true);
   };
 
+  const deleteButton = (
+    <Button
+      onClick={handleDeletePreConfirm}
+      text={"block"}
+    />
+  );
+
   if (!records) {
     return <p>Loading...</p>;
   }
@@ -96,27 +106,15 @@ function FriendDetail({ isRanker }) {
             lastAccessDate={info.lastAccessDate}
             score={info.score}
           />
-          <Button
-            type="button"
-            text={"block"}
-            onClick={handleDeletePreConfirm}
-          />
+          {deleteButton}
         </CardWrapper>
         <RecordWrapper>
-          <div>{isRanker}</div>
+          <div>Record</div>
         </RecordWrapper>
 
       </DetailWrapper>
     </ModalWrapper>
   );
 }
-
-FriendDetail.propTypes = {
-  isRanker: PropTypes.bool,
-};
-
-FriendDetail.defaultProps = {
-  isRanker: false,
-};
 
 export default FriendDetail;
