@@ -24,11 +24,13 @@ function Friend() {
   const history = useHistory();
 
   async function loadFriends() {
-    const {
-      friends,
-      sendingRequest,
-      receivingRequest,
-    } = await getFriends(creatorId);
+    const data = await getFriends(creatorId);
+
+    if (!data) {
+      return;
+    }
+
+    const { friends, sendingRequest, receivingRequest } = data;
 
     setFriends(friends);
     setSendingRequest(sendingRequest);
@@ -78,16 +80,16 @@ function Friend() {
     _id,
     profileUrl,
     name,
-    score,
-    lastAccessData,
+    scores,
+    lastAccessDate,
   }) => (
     <FriendCard
       key={_id}
       id={_id}
       profileUrl={profileUrl}
       name={name}
-      lastAccessDate={lastAccessData}
-      score={score}
+      lastAccessDate={lastAccessDate}
+      scores={scores}
       onClick={handleFriendClick}
     />
   ));

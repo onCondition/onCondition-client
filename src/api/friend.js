@@ -7,8 +7,14 @@ const numbers = 16;
 const mockUser = {
   profileUrl: "https://lh3.googleusercontent.com/a/AATXAJyVWL-UkAOLeLY75qUbVwQWvUt1RDWk60KkzICi=s96-c0",
   name: "user mock",
-  score: 9,
-  lastAccessData: "2021-09-12",
+  scores: {
+    activity: 0,
+    meal: 4.25,
+    sleep: 0,
+    사진첩: 1.8333333333333333,
+    grid: 3,
+  },
+  lastAccessDate: "2021-09-12",
 };
 
 const mockUsers = [...Array(numbers)].map((_, i) => {
