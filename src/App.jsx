@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Route, Switch, Redirect, useHistory,
-} from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "./theme";
@@ -15,25 +13,21 @@ import Activity from "./pages/Activity";
 import CustomAlbum from "./pages/CustomAlbum";
 import Detail from "./pages/Detail";
 import Login from "./components/Login";
-import Logout from "./components/Logout";
 import PrivateRoute from "./components/PrivateRoute";
 import { setUserInfos, logout } from "./features/userSlice";
 import { getUserInfos } from "./helpers/userInfo";
+import MenuBar from "./components/MenuBar";
 
 const AppWrapper = styled.div`
-  text-align: center;
+  display: flex;
+  height: 100vh;
 `;
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const { hasError, ...error } = useSelector((state) => state.error);
-  const history = useHistory();
   const dispatch = useDispatch();
   const { userId, customCategories } = getUserInfos();
-
-  const handleLogout = function () {
-    history.push("/login");
-  };
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -53,9 +47,7 @@ function App() {
       <AppWrapper>
         {isLoaded ? (
           <>
-            <header>
-              <Logout onLogout={handleLogout} />
-            </header>
+            <MenuBar />
             <Switch>
               <Route exact path="/">
                 <Redirect to={`/${userId}/condition`} />
