@@ -14,6 +14,8 @@ import Meal from "./pages/Meal";
 import Activity from "./pages/Activity";
 import CustomAlbum from "./pages/CustomAlbum";
 import Detail from "./pages/Detail";
+import FriendDetail from "./pages/FriendDetail";
+
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import PrivateRoute from "./components/PrivateRoute";
@@ -66,6 +68,9 @@ function App() {
               <PrivateRoute path="/:creatorId/condition">
                 <Condition />
               </PrivateRoute>
+              <PrivateRoute path="/:creatorId/friends/:friendId">
+                <FriendDetail />
+              </PrivateRoute>
               <PrivateRoute path="/:creatorId/friends">
                 <p>Friends</p>
               </PrivateRoute>
@@ -81,16 +86,13 @@ function App() {
               <PrivateRoute path="/:creatorId/:category">
                 <CustomAlbum />
               </PrivateRoute>
-              <PrivateRoute path="/:creatorId/friends/:friendId">
-                <p>Friend Detail</p>
-              </PrivateRoute>
+              <Route path="/:creatorId/:category/:ratingId">
+                <Detail />
+              </Route>
               <Route path="*">
                 <p>Not Found</p>
               </Route>
             </Switch>
-            <Route path="/:creatorId/:category/:ratingId">
-              <Detail />
-            </Route>
           </>
         ) : (
           <p>waiting...</p>
