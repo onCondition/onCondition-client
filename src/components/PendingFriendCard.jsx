@@ -35,12 +35,21 @@ const PendingFilter = styled.div`
 `;
 
 function PendingCard({
+  id,
   profileUrl,
   name,
   onAcceptButtonClick,
   onDenyButtonClick,
-  isSender,
+  isSent,
 }) {
+  const handleAcceptButtonClick = function () {
+    onAcceptButtonClick(id);
+  };
+
+  const handleDenyButtonClick = function () {
+    onDenyButtonClick(id);
+  };
+
   return (
     <CardContainer color={theme.background.main}>
       <ProfileImageWrapper>
@@ -48,11 +57,11 @@ function PendingCard({
       </ProfileImageWrapper>
       <p>{name}</p>
       <PendingFilter>
-        <p>{isSender ? "친구 요청" : "친구 요청 중"}</p>
-        {isSender
+        <p>{isSent ? "친구 요청 중" : "친구 요청 "}</p>
+        {!isSent
           && <div>
-            <Button onClick={onAcceptButtonClick}>수락</Button>
-            <Button onClick={onDenyButtonClick}>거절</Button>
+            <Button onClick={handleAcceptButtonClick}>수락</Button>
+            <Button onClick={handleDenyButtonClick}>거절</Button>
           </div>
         }
       </PendingFilter>
@@ -61,11 +70,12 @@ function PendingCard({
 }
 
 PendingCard.propTypes = {
+  id: PropTypes.string.isRequired,
   profileUrl: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onAcceptButtonClick: PropTypes.func,
   onDenyButtonClick: PropTypes.func,
-  isSender: PropTypes.bool,
+  isSent: PropTypes.bool,
 };
 
 export default PendingCard;

@@ -97,6 +97,8 @@ function Activity() {
       />
     )) : [];
 
+  const heading = <div>Daily Walking</div>;
+
   return (
     <div>
       <h1>운동</h1>
@@ -106,9 +108,8 @@ function Activity() {
             text={`${stepCount} STEPS`}
             width={CONTENT_BOARD_PIXEL_WIDTH}
             height={CONTENT_BOARD_PIXEL_HEIGHT}
-          >
-            <span>Daily Walking</span>
-          </ContentBoard>
+            heading={heading}
+          />
           {selectedActivity ? (
             <RateForm
               defaultValues={selectedActivity}

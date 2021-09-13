@@ -7,13 +7,23 @@ import HeartCounter from "./HeartCounter";
 import ProfileImageWrapper from "./ProfileImageWrapper";
 
 function FriendCard({
+  id,
   profileUrl,
   name,
   lastAccessDate,
-  score,
+  scores,
+  onClick,
 }) {
+  const handleCardClick = function () {
+    onClick(id);
+  };
+
+  const scoresArray = Object.values(scores);
+  const score = scoresArray.reduce((sum, score) => sum + score)
+    / scoresArray.length;
+
   return (
-    <CardContainer color={theme.background.main}>
+    <CardContainer color={theme.background.main} onClick={handleCardClick}>
       <ProfileImageWrapper>
         <img src={profileUrl} alt="profile" />
       </ProfileImageWrapper>
@@ -25,10 +35,12 @@ function FriendCard({
 }
 
 FriendCard.propTypes = {
+  id: PropTypes.string.isRequired,
   profileUrl: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  score: PropTypes.number,
+  scores: PropTypes.objectOf(PropTypes.number),
   lastAccessDate: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 };
 
 FriendCard.defaultProps = {

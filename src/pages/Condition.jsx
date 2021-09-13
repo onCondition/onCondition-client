@@ -49,34 +49,24 @@ function Condition() {
   const [isRadarGraph, setIsRadarGraph] = useState(true);
   const [categories, setCategories] = useState([]);
   const [dataPerDate, setDataPerDate] = useState(null);
-  const [status, setStatus] = useState([]);
+  const [status, setStatus] = useState(null);
   const [heartCount, setHeartCount] = useState(0);
   const { creatorId } = useParams();
 
   useEffect(() => {
     async function loadCondition(creatorId) {
-      const conditionData = await getCondition(creatorId);
+      const {
+        status: loadedStatus,
+        data: conditionData,
+      } = await getCondition(creatorId);
 
       if (!conditionData) {
         return;
       }
 
-      const {
-        activityData,
-        mealData,
-        sleepData,
-        albumData,
-        gridData,
-      } = conditionData;
-
-      const loadedCategories = ["운동", "식사", "수면"];
-      const loadedDataPerCategory = [activityData, mealData, sleepData];
+      const loadedCategories = Object.keys(conditionData);
+      const loadedDataPerCategory = Object.values(conditionData);
       const loadedDataPerDate = {};
-
-      [...albumData, ...gridData].forEach(({ _id: category, data }) => {
-        loadedCategories.push(category);
-        loadedDataPerCategory.push(data);
-      });
 
       loadedDataPerCategory.forEach((data, i) => {
         data.forEach(({ _id: date, average }) => {
@@ -85,24 +75,6 @@ function Condition() {
           }
           loadedDataPerDate[date][i] = average;
         });
-      });
-
-      const loadedStatus = loadedDataPerCategory.map((data, i) => {
-        let total = data.length;
-        const sum = data.reduce((sum, { average }) => {
-          if (!average) {
-            total--;
-
-            return sum;
-          } else {
-            return sum + average;
-          }
-        }, 0);
-
-        return {
-          category: loadedCategories[i],
-          heartCount: sum ? sum / total : 0,
-        };
       });
 
       let total = loadedStatus.length;
@@ -129,12 +101,12 @@ function Condition() {
     setIsRadarGraph(!isRadarGraph);
   };
 
-  const statusInfos = status.map(({ category, heartCount }) => (
+  const statusInfos = status ? Object.keys(status).map((category) => (
     <>
       <span key={category}>{category}</span>
-      <HeartCounter key={category + "status"} count={heartCount} />
+      <HeartCounter key={category + "status"} count={status[category]} />
     </>
-  ));
+  )) : [];
 
   return (
     <div>

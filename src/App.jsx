@@ -13,6 +13,7 @@ import Condition from "./pages/Condition";
 import Meal from "./pages/Meal";
 import Activity from "./pages/Activity";
 import CustomAlbum from "./pages/CustomAlbum";
+import Friend from "./pages/Friend";
 import Detail from "./pages/Detail";
 import FriendDetail from "./pages/FriendDetail";
 
@@ -72,7 +73,7 @@ function App() {
                 <FriendDetail />
               </PrivateRoute>
               <PrivateRoute path="/:creatorId/friends">
-                <p>Friends</p>
+                <Friend />
               </PrivateRoute>
               <Route path="/:creatorId/:category/:ratingId">
                 <Detail />
