@@ -49,13 +49,16 @@ function Condition() {
   const [isRadarGraph, setIsRadarGraph] = useState(true);
   const [categories, setCategories] = useState([]);
   const [dataPerDate, setDataPerDate] = useState(null);
-  const [status, setStatus] = useState([]);
+  const [status, setStatus] = useState(null);
   const [heartCount, setHeartCount] = useState(0);
   const { creatorId } = useParams();
 
   useEffect(() => {
     async function loadCondition(creatorId) {
-      const conditionData = await getCondition(creatorId);
+      const {
+        status: loadedStatus,
+        data: conditionData,
+      } = await getCondition(creatorId);
 
       if (!conditionData) {
         return;
@@ -72,24 +75,6 @@ function Condition() {
           }
           loadedDataPerDate[date][i] = average;
         });
-      });
-
-      const loadedStatus = loadedDataPerCategory.map((data, i) => {
-        let total = data.length;
-        const sum = data.reduce((sum, { average }) => {
-          if (!average) {
-            total--;
-
-            return sum;
-          } else {
-            return sum + average;
-          }
-        }, 0);
-
-        return {
-          category: loadedCategories[i],
-          heartCount: sum ? sum / total : 0,
-        };
       });
 
       let total = loadedStatus.length;
@@ -116,12 +101,12 @@ function Condition() {
     setIsRadarGraph(!isRadarGraph);
   };
 
-  const statusInfos = status.map(({ category, heartCount }) => (
+  const statusInfos = status ? Object.keys(status).map((category) => (
     <>
       <span key={category}>{category}</span>
-      <HeartCounter key={category + "status"} count={heartCount} />
+      <HeartCounter key={category + "status"} count={status[category]} />
     </>
-  ));
+  )) : [];
 
   return (
     <div>
