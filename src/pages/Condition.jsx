@@ -55,14 +55,13 @@ function Condition() {
 
   useEffect(() => {
     async function loadCondition(creatorId) {
-      const {
-        status: loadedStatus,
-        data: conditionData,
-      } = await getCondition(creatorId);
+      const condition = await getCondition(creatorId);
 
-      if (!conditionData) {
+      if (!condition) {
         return;
       }
+
+      const { status: loadedStatus, data: conditionData } = condition;
 
       const loadedCategories = Object.keys(conditionData);
       const loadedDataPerCategory = Object.values(conditionData);
@@ -77,16 +76,9 @@ function Condition() {
         });
       });
 
-      let total = loadedStatus.length;
-      const loadedHeartCount = loadedStatus.reduce((sum, { heartCount }) => {
-        if (!heartCount) {
-          total--;
-
-          return sum;
-        } else {
-          return sum + heartCount;
-        }
-      }, 0) / total;
+      const counts = Object.values(loadedStatus);
+      const loadedHeartCount = counts.reduce((sum, count) => sum + count, 0)
+        / counts.length;
 
       setCategories(loadedCategories);
       setDataPerDate(loadedDataPerDate);

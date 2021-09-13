@@ -34,7 +34,7 @@ function getUserInfos() {
     refreshToken: Cookie.get(REFRESH_TOKEN),
     accessToken: localStorage.getItem(ACCESS_TOKEN),
     userId: localStorage.getItem(USER_ID),
-    customCategories: JSON.stringify(localStorage.getItem(CATEGORIES)),
+    customCategories: JSON.parse(localStorage.getItem(CATEGORIES)),
   };
 }
 
