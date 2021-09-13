@@ -33,29 +33,29 @@ function Detail() {
   const [hasModal, setHasModal] = useState(false);
   const [hasPicture, setHasPicture] = useState(false);
 
-  useEffect(() => {
-    async function loadById() {
-      const loadedData = await getById(creatorId, ratingId);
+  async function loadById() {
+    const loadedData = await getById(creatorId, ratingId);
 
-      if (!loadedData) {
-        return;
-      }
-
-      setData({
-        category: loadedData.category,
-        date: loadedData.date,
-        heartCount: loadedData.rating?.heartCount || 0,
-        text: loadedData.rating?.text || "",
-        url: loadedData.url,
-        type: loadedData.type,
-        duration: loadedData.duration,
-      });
-      setHasPicture(!!loadedData.url);
-      setComments(loadedData.comments);
+    if (!loadedData) {
+      return;
     }
 
-    loadById(ratingId);
-  }, [ratingId]);
+    setData({
+      category: loadedData.category,
+      date: loadedData.date,
+      heartCount: loadedData.rating?.heartCount || 0,
+      text: loadedData.rating?.text || "",
+      url: loadedData.url,
+      type: loadedData.type,
+      duration: loadedData.duration,
+    });
+    setHasPicture(!!loadedData.url);
+    setComments(loadedData.comments);
+  }
+
+  useEffect(() => {
+    loadById();
+  }, [creatorId, ratingId]);
 
   const handleFormSubmit = async function (values) {
     const { date, heartCount, text } = values;
@@ -91,6 +91,10 @@ function Detail() {
 
   const handleDeletePreConfirm = function () {
     setHasModal(true);
+  };
+
+  const handleCommentUpdate = function () {
+    loadById();
   };
 
   const cancelButton = (
@@ -185,6 +189,7 @@ function Detail() {
             comments={comments}
             category={category}
             ratingId={ratingId}
+            onUpdate={handleCommentUpdate}
           />
         </div>
       </DetailWrapper>
