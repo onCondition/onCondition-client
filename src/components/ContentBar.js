@@ -38,7 +38,7 @@ function ContentBar({
   return (
     <Link to={`/${creatorId}/${category}/${ratingId}`} key={ratingId} onClick={handleClickBar}>
       <List color={color} key={ratingId}>
-        <div>{url ? <image scr={url} alt="image" /> : type}</div>
+        <div>{url ? <img scr={url} alt="image" /> : type}</div>
         <div>{getKoreanTimeString(date)}</div>
         {duration && <div>{duration} min</div>}
         <span>{heartCount}</span>
@@ -66,7 +66,7 @@ ContentBar.propTypes = {
   color: PropTypes.oneOf([theme.background.main, theme.background.sub]),
 };
 
-ContentBar.propTypes = {
+ContentBar.defaultProps = {
   color: theme.background.main,
 };
 
