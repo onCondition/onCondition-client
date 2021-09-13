@@ -15,6 +15,7 @@ import MealDetail from "./pages/MealDetail";
 import Activity from "./pages/Activity";
 import ActivityDetail from "./pages/ActivityDetail";
 import CustomAlbum from "./pages/CustomAlbum";
+import Preference from "./pages/preference";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import PrivateRoute from "./components/PrivateRoute";
@@ -70,6 +71,9 @@ function App() {
               </PrivateRoute>
               <PrivateRoute exact path="/activity">
                 <Activity />
+              </PrivateRoute>
+              <PrivateRoute exact path="/preference">
+                <Preference />
               </PrivateRoute>
               <PrivateRoute exact path="/customAlbum/:category">
                 <CustomAlbum />
