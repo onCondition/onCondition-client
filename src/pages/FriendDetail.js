@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
+import { Radar } from "react-chartjs-2";
 import styled from "styled-components";
 
 import Modal from "../components/modalComponent";
@@ -7,8 +8,10 @@ import ModalWrapper from "../components/ModalWrapper";
 import DetailWrapper from "../components/DetailWrapper";
 
 import FriendCard from "../components/FriendCard";
+import CardContainer from "../components/CardContainer";
 import ContentBar from "../components/ContentBar";
 
+import HeartCounter from "../components/HeartCounter";
 import Button from "../components/Button";
 import CircleButton from "../components/CircleButton";
 import theme from "../theme";
@@ -21,11 +24,12 @@ const Layout = styled.div`
   width: 90vw;
   grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
   margin: auto;
-`;
 
-const CardWrapper = styled.div`
-  display: grid;
-  margin: auto;
+  .card-area {
+    display: grid;
+    margin: auto;
+    cursor: pointer;
+  }
 `;
 
 const RecentRecordContainer = styled.div`
@@ -44,8 +48,15 @@ function FriendDetail() {
   const { creatorId, friendId } = useParams();
   const [records, setRecords] = useState([]);
   const [info, setInfo] = useState({
-    name: "", scores: null, lastAccessDate: "", profileUrl: "", score: 0,
+    name: "",
+    scores: null,
+    lastAccessDate: "",
+    profileUrl: "",
+    score: 0,
+    scoreCategories: [],
+    scoreValues: [],
   });
+  const [isBackSide, setIsBackSide] = useState(false);
   const [hasModal, setHasModal] = useState(false);
 
   useEffect(() => {
@@ -57,16 +68,24 @@ function FriendDetail() {
       }
 
       const {
-        scores, lastAccessDate, data: records, name, profileUrl,
+        data: records, scores, lastAccessDate, name, profileUrl,
       } = data;
 
-      const score = scores.length
-        ? Object.values(scores).reduce((sum, el) => sum + el) / scores.length
+      const scoreCategories = Object.keys(records);
+      const scoreValues = scoreCategories.map((key) => scoreCategories[key]);
+      const score = scoreValues.length
+        ? scoreValues.reduce((sum, el) => sum + el) / scoreValues.length
         : 0;
 
       setRecords(records);
       setInfo({
-        scores, lastAccessDate, name, profileUrl, score,
+        scores,
+        lastAccessDate,
+        name,
+        profileUrl,
+        score,
+        scoreCategories,
+        scoreValues,
       });
     }
 
@@ -91,6 +110,10 @@ function FriendDetail() {
 
   const handleDeletePreConfirm = function () {
     setHasModal(true);
+  };
+
+  const handleCardClick = function () {
+    setIsBackSide((prevState) => !prevState);
   };
 
   const deleteButton = (
@@ -125,15 +148,26 @@ function FriendDetail() {
       >x</CircleButton>
       <DetailWrapper>
         <Layout>
-          <CardWrapper>
-            <FriendCard
-              profileUrl={info.profileUrl}
-              name={info.name}
-              lastAccessDate={info.lastAccessDate}
-              score={info.score}
-            />
+          <div className="card-area">
+            <div className="card" onClick={handleCardClick}>
+              {isBackSide ? <CardContainer color={theme.background.sub}>
+                <Radar
+                  data={info.scoreValues}
+                  options={info.scoreCategories}
+                />
+                <p>{info.name}</p>
+                <p>{info.lastAccessDate}</p>
+                <HeartCounter count={info.score} />
+              </CardContainer>
+                : <FriendCard
+                  profileUrl={info.profileUrl}
+                  name={info.name}
+                  lastAccessDate={info.lastAccessDate}
+                  score={info.score}
+                />}
+            </div>
             {deleteButton}
-          </CardWrapper>
+          </div>
           <RecentRecordContainer>
             <h5>최근 활동</h5>
             <RecordsWrapper>
