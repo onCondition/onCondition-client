@@ -27,9 +27,9 @@ const ContentWrapper = styled.div`
   }
 `;
 
-function CardContainer({ color, children }) {
+function CardContainer({ color, onClick, children }) {
   return (
-    <CardWrapper color={color}>
+    <CardWrapper color={color} onClick={onClick}>
       <ContentWrapper>
         {children}
       </ContentWrapper>
@@ -40,6 +40,7 @@ function CardContainer({ color, children }) {
 CardContainer.propTypes = {
   color: PropTypes.oneOf([theme.background.main, theme.background.sub]),
   children: PropTypes.arrayOf(PropTypes.element),
+  onClick: PropTypes.func,
 };
 
 export default CardContainer;

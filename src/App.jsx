@@ -13,6 +13,7 @@ import Condition from "./pages/Condition";
 import Meal from "./pages/Meal";
 import Activity from "./pages/Activity";
 import CustomAlbum from "./pages/CustomAlbum";
+import Friend from "./pages/Friend";
 import Detail from "./pages/Detail";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
@@ -67,7 +68,7 @@ function App() {
                 <Condition />
               </PrivateRoute>
               <PrivateRoute path="/:creatorId/friends">
-                <p>Friends</p>
+                <Friend />
               </PrivateRoute>
               <PrivateRoute path="/:creatorId/meal">
                 <Meal />
