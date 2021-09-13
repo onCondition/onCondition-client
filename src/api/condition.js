@@ -1,10 +1,12 @@
 import axios from "./axiosInstance";
 
-async function getCondition() {
-  const res = await axios.get("/api/condition");
+async function getCondition(creatorId) {
+  const res = await axios.get(`/api/${creatorId}`);
 
   if (res) {
-    return res;
+    const { data, status } = res;
+
+    return { data, status };
   }
 }
 

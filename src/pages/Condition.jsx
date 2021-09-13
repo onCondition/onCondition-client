@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import styled from "styled-components";
 
 import ContentViewer from "../components/ContentViewer";
@@ -48,33 +49,23 @@ function Condition() {
   const [isRadarGraph, setIsRadarGraph] = useState(true);
   const [categories, setCategories] = useState([]);
   const [dataPerDate, setDataPerDate] = useState(null);
-  const [status, setStatus] = useState([]);
+  const [status, setStatus] = useState(null);
   const [heartCount, setHeartCount] = useState(0);
+  const { creatorId } = useParams();
 
   useEffect(() => {
-    async function loadCondition() {
-      const conditionData = await getCondition();
+    async function loadCondition(creatorId) {
+      const condition = await getCondition(creatorId);
 
-      if (!conditionData) {
+      if (!condition) {
         return;
       }
 
-      const {
-        activityData,
-        mealData,
-        sleepData,
-        albumData,
-        gridData,
-      } = conditionData;
+      const { status: loadedStatus, data: conditionData } = condition;
 
-      const loadedCategories = ["운동", "식사", "수면"];
-      const loadedDataPerCategory = [activityData, mealData, sleepData];
+      const loadedCategories = Object.keys(conditionData);
+      const loadedDataPerCategory = Object.values(conditionData);
       const loadedDataPerDate = {};
-
-      [...albumData, ...gridData].forEach(({ _id: category, data }) => {
-        loadedCategories.push(category);
-        loadedDataPerCategory.push(data);
-      });
 
       loadedDataPerCategory.forEach((data, i) => {
         data.forEach(({ _id: date, average }) => {
@@ -85,34 +76,9 @@ function Condition() {
         });
       });
 
-      const loadedStatus = loadedDataPerCategory.map((data, i) => {
-        let total = data.length;
-        const sum = data.reduce((sum, { average }) => {
-          if (!average) {
-            total--;
-
-            return sum;
-          } else {
-            return sum + average;
-          }
-        }, 0);
-
-        return {
-          category: loadedCategories[i],
-          heartCount: sum ? sum / total : 0,
-        };
-      });
-
-      let total = loadedStatus.length;
-      const loadedHeartCount = loadedStatus.reduce((sum, { heartCount }) => {
-        if (!heartCount) {
-          total--;
-
-          return sum;
-        } else {
-          return sum + heartCount;
-        }
-      }, 0) / total;
+      const counts = Object.values(loadedStatus);
+      const loadedHeartCount = counts.reduce((sum, count) => sum + count, 0)
+        / counts.length;
 
       setCategories(loadedCategories);
       setDataPerDate(loadedDataPerDate);
@@ -120,19 +86,19 @@ function Condition() {
       setHeartCount(loadedHeartCount);
     }
 
-    loadCondition();
+    loadCondition(creatorId);
   }, []);
 
   const handleConvertButtonClick = function () {
     setIsRadarGraph(!isRadarGraph);
   };
 
-  const statusInfos = status.map(({ category, heartCount }) => (
+  const statusInfos = status ? Object.keys(status).map((category) => (
     <>
       <span key={category}>{category}</span>
-      <HeartCounter key={category + "status"} count={heartCount} />
+      <HeartCounter key={category + "status"} count={status[category]} />
     </>
-  ));
+  )) : [];
 
   return (
     <div>

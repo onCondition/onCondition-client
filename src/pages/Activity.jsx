@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import styled from "styled-components";
 
 import { PrevButton, NextButton } from "../components/PageButton";
 import RateForm from "../components/RateForm";
 import ContentBoard from "../components/ContentBoard";
 import ActivityBar from "../components/ActivityBar";
-import { getActivities, editActivityById } from "../api/activity";
+import getApi from "../api/category";
 
 const CONTENT_BOARD_PIXEL_WIDTH = 400;
 const CONTENT_BOARD_PIXEL_HEIGHT = 150;
@@ -33,21 +34,25 @@ const Container = styled.div`
 `;
 
 function Activity() {
+  const { creatorId } = useParams();
   const [activities, setActivities] = useState([]);
   const [stepCount, setStepCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [prevPage, setPrevPage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
   const [selectedActivity, setSelectedActivity] = useState(null);
+  const { get, editById } = getApi("activity");
 
   async function loadActivities(page = currentPage) {
-    const result = await getActivities(page);
+    const result = await get(creatorId, page);
 
     if (result) {
-      setActivities(result.activities);
-      setStepCount(result.stepCount);
-      setPrevPage(result.prevPage);
-      setNextPage(result.nextPage);
+      const { data, prevPage, nextPage } = result;
+
+      setActivities(data.activities);
+      setStepCount(data.stepCount);
+      setPrevPage(prevPage);
+      setNextPage(nextPage);
       setSelectedActivity(null);
     }
   }
@@ -63,7 +68,7 @@ function Activity() {
   const handleSubmitForm = async function ({
     date, heartCount, type, text,
   }) {
-    const res = await editActivityById(selectedActivity.id, {
+    const res = await editById(creatorId, selectedActivity.ratingId, {
       date, type, heartCount, text,
     });
 
@@ -90,6 +95,8 @@ function Activity() {
       />
     )) : [];
 
+  const heading = <div>Daily Walking</div>;
+
   return (
     <div>
       <h1>운동</h1>
@@ -99,9 +106,8 @@ function Activity() {
             text={`${stepCount} STEPS`}
             width={CONTENT_BOARD_PIXEL_WIDTH}
             height={CONTENT_BOARD_PIXEL_HEIGHT}
-          >
-            <span>Daily Walking</span>
-          </ContentBoard>
+            heading={heading}
+          />
           {selectedActivity ? (
             <RateForm
               defaultValues={selectedActivity}

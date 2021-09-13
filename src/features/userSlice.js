@@ -1,57 +1,78 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postLogin, postGoogleToken } from "../api/auth";
-import { storeTokens, removeTokens } from "../utils/tokens";
+import { storeUserInfos, removeUserInfos } from "../helpers/userInfo";
 
 const initialState = {
-  hasLoggedIn: false,
+  id: "",
+  customCategories: [],
+  isLoading: false,
 };
 
 const login = createAsyncThunk("user/login",
   async function ({ idToken, googleToken }) {
     try {
-      const { accessToken, refreshToken } = await postLogin(idToken);
+      const {
+        accessToken,
+        refreshToken,
+        userId,
+        customCategories,
+      } = await postLogin(idToken);
 
-      storeTokens({ accessToken, refreshToken });
+      storeUserInfos({
+        accessToken,
+        refreshToken,
+        userId,
+        customCategories,
+      });
 
-      const res = await postGoogleToken(googleToken);
+      const res = await postGoogleToken(userId, googleToken);
 
       if (res.status) {
         return Promise.reject(res.message);
       }
+
+      return { userId, customCategories };
     } catch (err) {
       return Promise.reject(err);
     }
   });
 
-const logout = createAsyncThunk("user/logout", removeTokens);
+const logout = createAsyncThunk("user/logout", removeUserInfos);
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setLogin(state) {
-      state.hasLoggedIn = true;
+    setUserInfos(state, { payload }) {
+      const { userId, customCategories } = payload;
+
+      if (userId && customCategories) {
+        state.id = userId;
+        state.customCategories = customCategories;
+      } else {
+        state.id = null;
+        state.customCategories = [];
+      }
     },
   },
   extraReducers: {
-    [login.fulfilled]: (state) => {
-      state.hasLoggedIn = true;
-    },
-    [login.pending]: (state) => {
-      state.hasLoggedIn = false;
+    [login.fulfilled]: (state, { payload }) => {
+      const { userId, customCategories } = payload;
+
+      state.id = userId;
+      state.customCategories = customCategories;
     },
     [login.rejected]: (state) => {
-      state.hasLoggedIn = false;
+      state.id = "";
+      state.customCategories = [];
     },
     [logout.fulfilled]: (state) => {
-      state.hasLoggedIn = false;
-    },
-    [logout.rejected]: (state) => {
-      state.hasLoggedIn = true;
+      state.id = null;
+      state.customCategories = [];
     },
   },
 });
 
-export const { setLogin } = userSlice.actions;
+export const { setUserInfos } = userSlice.actions;
 export { login, logout };
 export default userSlice.reducer;

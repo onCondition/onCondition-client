@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
@@ -15,24 +16,25 @@ const RatingOpener = styled.span`
 `;
 
 function ActivityBar({ activity, onClickRating }) {
+  const { creatorId } = useParams();
   const {
-    _id: id, type, startTime, duration, rating,
+    _id: ratingId, type, date, duration, rating,
   } = activity;
 
   const handleClickBar = function (ev) {
     if (ev.target.textContent === PLUS) {
       ev.preventDefault();
       onClickRating({
-        id, type, startTime, duration, rating,
+        ratingId, type, date, duration, rating,
       });
     }
   };
 
   return (
-    <Link to={`/activity/${id}`} key={id} onClick={handleClickBar}>
-      <List color={theme.background.main} key={id}>
+    <Link to={`/${creatorId}/activity/${ratingId}`} key={ratingId} onClick={handleClickBar}>
+      <List color={theme.background.main} key={ratingId}>
         <div>{type}</div>
-        <div>{getKoreanTimeString(startTime)}</div>
+        <div>{getKoreanTimeString(date)}</div>
         <div>{duration} min</div>
         <span>
           {rating?.heartCount ? (
@@ -52,7 +54,7 @@ ActivityBar.propTypes = {
   activity: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    startTime: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
     duration: PropTypes.number.isRequired,
     rating: PropTypes.shape({
       date: PropTypes.string,
