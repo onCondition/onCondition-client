@@ -31,8 +31,8 @@ async function getFriends(creatorId) {
   if (useMock) {
     return {
       friends: mockUsers,
-      sendingRequest: mockUsers,
-      receivingRequest: mockUsers,
+      receivedRequests: mockUsers,
+      sentRequests: mockUsers,
     };
   }
 

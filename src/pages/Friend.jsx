@@ -18,8 +18,8 @@ const FriendWrapper = styled.div`
 function Friend() {
   const { creatorId } = useParams();
   const [friends, setFriends] = useState([]);
-  const [sendingRequest, setSendingRequest] = useState([]);
-  const [receivingRequest, setReceivingRequest] = useState([]);
+  const [sentRequests, setSentRequest] = useState([]);
+  const [receivedRequests, setReceivedRequests] = useState([]);
 
   const history = useHistory();
 
@@ -30,11 +30,11 @@ function Friend() {
       return;
     }
 
-    const { friends, sendingRequest, receivingRequest } = data;
+    const { friends, receivedRequests, sentRequests } = data;
 
     setFriends(friends);
-    setSendingRequest(sendingRequest);
-    setReceivingRequest(receivingRequest);
+    setSentRequest(sentRequests);
+    setReceivedRequests(receivedRequests);
   }
 
   useEffect(() => {
@@ -61,7 +61,7 @@ function Friend() {
     history.push(`${friendId}`);
   };
 
-  const pendingCardsReceiving = receivingRequest.map(({
+  const pendingCardsReceiving = receivedRequests.map(({
     _id,
     profileUrl,
     name,
@@ -94,7 +94,7 @@ function Friend() {
     />
   ));
 
-  const pendingCardsSending = sendingRequest.map(({
+  const pendingCardsSending = sentRequests.map(({
     _id,
     profileUrl,
     name,
