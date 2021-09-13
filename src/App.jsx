@@ -74,6 +74,9 @@ function App() {
               <PrivateRoute path="/:creatorId/friends">
                 <p>Friends</p>
               </PrivateRoute>
+              <Route path="/:creatorId/:category/:ratingId">
+                <Detail />
+              </Route>
               <PrivateRoute path="/:creatorId/meal">
                 <Meal />
               </PrivateRoute>
@@ -86,9 +89,6 @@ function App() {
               <PrivateRoute path="/:creatorId/:category">
                 <CustomAlbum />
               </PrivateRoute>
-              <Route path="/:creatorId/:category/:ratingId">
-                <Detail />
-              </Route>
               <Route path="*">
                 <p>Not Found</p>
               </Route>
