@@ -17,9 +17,9 @@ function CustomCategory() {
 
   if (!categoryInfo) {
     const statusCode = STATUS_CODES.NOT_FOUND;
-    const meesage = ERROR.NOT_FOUND;
+    const message = ERROR.NOT_FOUND;
 
-    setError({ statusCode, meesage });
+    setError({ statusCode, message });
   }
 
   const { categoryType } = categoryInfo;
