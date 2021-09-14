@@ -173,7 +173,7 @@ function CustomGrid() {
       key="add"
       onClick={handleAddButtonClick}
     >{isClicked ? "X" : "+"}</Grid>
-    : <ButtonContainer>
+    : <ButtonContainer onClick={handleAddButtonClick}>
       <p>다음 챌린지를 시작하려면</p>
       <p>이곳을 클릭하세요!</p>
     </ButtonContainer>;
