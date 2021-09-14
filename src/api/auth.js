@@ -32,15 +32,11 @@ async function postRefresh(refreshToken) {
   }
 }
 
-async function postGoogleToken(userId, googleToken) {
-  try {
-    const res = await axiosInstance.post(`/api/${userId}/googleFit`, googleToken);
+async function postGoogleToken(userId) {
+  const res = await axiosInstance.post(`/api/${userId}/googleFit`);
 
-    if (res) {
-      return res;
-    }
-  } catch (err) {
-    throw new Error(ERROR.GOOGLE_TOKEN_NOT_AVAILABLE);
+  if (res) {
+    return res;
   }
 }
 
