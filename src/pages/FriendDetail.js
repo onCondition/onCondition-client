@@ -13,6 +13,7 @@ import ContentBar from "../components/ContentBar";
 import Button from "../components/Button";
 import CircleButton from "../components/CircleButton";
 import theme from "../theme";
+import { radarDefaultOptions } from "../config/graphOption";
 
 import { getById, deleteById } from "../api/friend";
 
@@ -119,33 +120,15 @@ function FriendDetail() {
   />);
 
   const radarOptions = {
-    datasets: {
-      radar: {
-        borderColor: theme.background.sub,
-        backgroundColor: theme.background.graphData,
-      },
-    },
+    ...radarDefaultOptions,
     scales: {
       r: {
-        min: 0,
-        max: 10,
-        grid: {
-          color: theme.background.main,
-        },
+        ...radarDefaultOptions.scales.r,
         ticks: {
           display: false,
           stepSize: 2,
         },
-        pointLabels: {
-          color: theme.text.sub,
-          font: {
-            size: theme.fontSizes.graph,
-          },
-        },
       },
-    },
-    animation: {
-      duration: 0,
     },
     plugins: {
       legend: { display: false },

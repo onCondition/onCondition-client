@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Radar } from "react-chartjs-2";
 
 import GraphWrapper from "./GraphWrapper";
-import theme from "../../theme";
+import { radarDefaultOptions } from "../../config/graphOption";
 import PropTypes from "prop-types";
 
 const DragBar = styled.input.attrs({
@@ -48,41 +48,6 @@ function RadarGraph({ categories, dataPerDate }) {
     return { labels: categories, datasets };
   });
 
-  const radarOptions = {
-    datasets: {
-      radar: {
-        borderColor: theme.background.sub,
-        backgroundColor: theme.background.graphData,
-      },
-    },
-    scales: {
-      r: {
-        min: 0,
-        max: 10,
-        grid: {
-          color: theme.background.main,
-        },
-        ticks: {
-          backdropColor: "transparent",
-          stepSize: 2,
-          color: theme.text.sub,
-          font: {
-            size: theme.fontSizes.graph,
-          },
-        },
-        pointLabels: {
-          color: theme.text.sub,
-          font: {
-            size: theme.fontSizes.graph,
-          },
-        },
-      },
-    },
-    animation: {
-      duration: 0,
-    },
-  };
-
   const handleRangeInput = function ({ target }) {
     setDateBackwardIndex(Number(target.value));
   };
@@ -91,7 +56,7 @@ function RadarGraph({ categories, dataPerDate }) {
     <GraphWrapper>
       <Radar
         data={data[data.length + dateBackwardIndex]}
-        options={radarOptions}
+        options={radarDefaultOptions}
       />
       <DragBar
         min={0 - data.length} max={latestDayIndex}
