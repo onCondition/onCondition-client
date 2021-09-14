@@ -38,33 +38,9 @@ function getUserInfos() {
   };
 }
 
-function formatCategory(categoryName) {
-  if (["sleep", "meal", "activity"].includes(categoryName)) {
-    return categoryName;
-  }
-
-  const customCategories = JSON.parse(localStorage.getItem(CATEGORIES));
-  const target = customCategories.find(
-    ({ category }) => category === categoryName,
-  );
-
-  if (!target) {
-    return null;
-  }
-
-  if (target.categoryType === "album") {
-    return `customAlbum/${categoryName}`;
-  }
-
-  if (target.categoryType === "grid") {
-    return `customGrid/${categoryName}`;
-  }
-}
-
 export {
   updateAccessToken,
   storeUserInfos,
   removeUserInfos,
   getUserInfos,
-  formatCategory,
 };
