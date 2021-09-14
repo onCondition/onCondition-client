@@ -45,7 +45,7 @@ function MenuBar() {
   const customCategoryNames = user
     ? customCategories.map(({ category }) => category)
     : [];
-  const categories = defaultCategories.concat(customCategoryNames, ["friend"]);
+  const categories = defaultCategories.concat(customCategoryNames, ["friend", "preference"]);
   const name = user ? user.displayName : "guest";
 
   const handleMenuClick = function (clickedMenu) {

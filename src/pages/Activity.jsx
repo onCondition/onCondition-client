@@ -62,23 +62,7 @@ function Activity() {
   }, [currentPage]);
 
   const handleEnableRating = function (activity) {
-    const {
-      date,
-      duration,
-      type,
-      heartCount,
-      text,
-    } = activity;
-
-    const snippet = `${duration}분`;
-
-    setSelectedActivity({
-      date,
-      snippet,
-      type,
-      heartCount,
-      text,
-    });
+    setSelectedActivity(activity);
   };
 
   const handleSubmitForm = async function ({
