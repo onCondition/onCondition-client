@@ -52,12 +52,14 @@ function RateForm({
     });
   };
 
+  const snippetBrackets = snippet ? `(${snippet})` : "";
+
   return (
     <form>
       <Wrapper color={color} isShrink>
         <div>
           <p>{date}</p>
-          <span>{`${type} (${snippet})`}</span>
+          <span>{`${type || ""} ${snippetBrackets}`}</span>
           {disabled
             ? <HeartCounter />
             : <HeartInput count={heartCount} onChange={handleCountChange} />}
