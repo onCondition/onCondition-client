@@ -135,12 +135,13 @@ function FriendDetail() {
     },
   };
 
-  const data = { labels: Object.keys(info.scores),
-    datasets: [{ data: Object.values(info.scores) }] };
+  const labels = Object.keys(info.scores);
+  const values = labels.map((label) => info.scores[label]);
+  const graphData = { labels, datasets: [{ data: values }] };
 
   const graph = <div className="graph">
     <Radar
-      data={data}
+      data={graphData}
       options={radarOptions}
     />
   </div>;
@@ -160,22 +161,26 @@ function FriendDetail() {
         <Layout>
           <div className="card-area">
             <div className="card">
-              {isBackSide ? <FriendCard
-                profileUrl={info.profileUrl}
-                color={theme.background.sub}
-                graph={graph}
-                name={info.name}
-                lastAccessDate={info.lastAccessDate}
-                scores={info.scores}
-                onClick={handleCardClick}
-              />
-                : <FriendCard
-                  profileUrl={info.profileUrl}
-                  name={info.name}
-                  lastAccessDate={info.lastAccessDate}
-                  scores={info.scores}
-                  onClick={handleCardClick}
-                />}
+              {isBackSide
+                ? (
+                  <FriendCard
+                    profileUrl={info.profileUrl}
+                    color={theme.background.sub}
+                    graph={graph}
+                    name={info.name}
+                    lastAccessDate={info.lastAccessDate}
+                    scores={info.scores}
+                    onClick={handleCardClick}
+                  />
+                ) : (
+                  <FriendCard
+                    profileUrl={info.profileUrl}
+                    name={info.name}
+                    lastAccessDate={info.lastAccessDate}
+                    scores={info.scores}
+                    onClick={handleCardClick}
+                  />
+                )}
             </div>
             {deleteButton}
           </div>
