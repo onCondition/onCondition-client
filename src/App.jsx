@@ -17,6 +17,7 @@ import FriendDetail from "./pages/FriendDetail";
 
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
+import Loading from "./components/Loading";
 import { setUserInfos, logout } from "./features/userSlice";
 import { getUserInfos } from "./helpers/userInfo";
 import MenuBar from "./components/MenuBar";
@@ -94,7 +95,7 @@ function App() {
             </PageWrapper>
           </>
         ) : (
-          <p>waiting...</p>
+          <Loading />
         )}
       </AppWrapper>
       <GlobalStyle />
