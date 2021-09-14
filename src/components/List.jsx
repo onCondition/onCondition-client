@@ -30,13 +30,11 @@ const Li = styled.li`
 function List({
   color,
   children,
-  key,
   onClick,
 }) {
   return (
     <Li
       color={color}
-      key={key}
       onClick={onClick}
     >
       {children}
@@ -51,7 +49,6 @@ List.propTypes = {
     PropTypes.element,
     PropTypes.string,
   ]),
-  key: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };
 

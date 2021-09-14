@@ -13,6 +13,8 @@ import Activity from "./pages/Activity";
 import CustomAlbum from "./pages/CustomAlbum";
 import Friend from "./pages/Friend";
 import Detail from "./pages/Detail";
+import FriendDetail from "./pages/FriendDetail";
+
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import { setUserInfos, logout } from "./features/userSlice";
@@ -79,7 +81,7 @@ function App() {
                   <CustomAlbum />
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/friend/:friendId">
-                  <p>Friend Detail</p>
+                  <FriendDetail />
                 </PrivateRoute>
                 <Route path="*">
                   <p>Not Found</p>

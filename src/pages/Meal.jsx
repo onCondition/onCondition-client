@@ -79,7 +79,7 @@ function Meal() {
   const mealBars = (meals.length) ? meals.map((meal) => {
     return (
       <Link to={`/${creatorId}/meal/${meal._id}`} key={meal._id}>
-        <List color={theme.background.main} key={meal.id}>
+        <List color={theme.background.main}>
           {meal.url
             ? <img src={meal.url} />
             : <img src="/img/add-picture.png" />}
