@@ -6,7 +6,7 @@ async function postLogin(idToken) {
   try {
     const res = await axios.post("/api/login",
       null,
-      { headers: { token: idToken } });
+      { headers: { authorization: `Bearer ${idToken}` } });
 
     const {
       accessToken, refreshToken, userId, customCategories,
@@ -24,7 +24,7 @@ async function postRefresh(refreshToken) {
   try {
     const res = await axios.post("/api/refresh",
       null,
-      { headers: { token: refreshToken } });
+      { headers: { authorization: `Bearer ${refreshToken}` } });
 
     return res.data.accessToken;
   } catch (err) {
