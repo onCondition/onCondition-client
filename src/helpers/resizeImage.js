@@ -23,8 +23,6 @@ function resizeImage(imageUrl) {
 
   const resizedimageUrl = canvas.toDataURL(image.type);
 
-  console.log(image, resizedimageUrl);
-
   return resizedimageUrl;
 }
 
