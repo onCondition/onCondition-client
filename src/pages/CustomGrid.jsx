@@ -37,6 +37,10 @@ const Container = styled.div`
     width: 400px;
     justify-content: center
   }
+
+  .content {
+    position: relative;
+  }
 `;
 
 const Grid = styled.div`
@@ -47,17 +51,36 @@ const Grid = styled.div`
   color: ${({ theme }) => theme.text.sub};
 `;
 
-const NextChallengeButton = styled.div`
+const MessageContainer = styled.div`
   position: absolute;
-  display: flex;
-  flex-direction: column;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
+  width: calc(100% - 40px);
+  height: calc(100% - 45px);
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.background.input};
+  color: ${({ theme }) => theme.text.sub};
+  font-size: ${({ theme }) => theme.fontSizes.small};
+
+  p {
+    line-height: 3rem;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
   background-color: ${({ theme }) => theme.background.gridMessage};
   color: ${({ theme }) => theme.text.sub};
   font-size: ${({ theme }) => theme.fontSizes.small};
@@ -144,20 +167,22 @@ function CustomGrid() {
     );
   });
 
-  const addGridButton = (grids.length !== numberPerPage)
+  const AddGridButton = !nextPage
     ? <Grid
       className="button"
       key="add"
       onClick={handleAddButtonClick}
     >{isClicked ? "X" : "+"}</Grid>
-    : <NextChallengeButton onClick={handleAddButtonClick}>
+    : <ButtonContainer>
+      <p>다음 챌린지를 시작하려면</p>
+      <p>이곳을 클릭하세요!</p>
+    </ButtonContainer>;
+
+  const GoalAchievedMessage = (
+    <MessageContainer onClick={handleAddButtonClick}>
       <p>{"🎉챌린지 성공!🎉"}</p>
-      {!nextPage
-      && <>
-        <p>다음 챌린지를 시작하려면</p>
-        <p>이곳을 클릭하세요!</p>
-      </>}
-    </NextChallengeButton>;
+    </MessageContainer>
+  );
 
   const blankGrids = (grids.length !== numberPerPage)
     ? [...Array(numberPerPage - grids.length - 1)].map((_, i) => <Grid key={`blank${i}`} />)
@@ -178,12 +203,15 @@ function CustomGrid() {
       <Container>
         <div className="viewer">
           {!!prevPage && <PrevButton onClick={handlePrevPageButton} />}
-          <ContentBoard
-            text={`${grids.length} / 30`}
-            width={CONTENT_BOARD_PIXEL_WIDTH}
-            height={CONTENT_BOARD_PIXEL_HEIGHT}
-            heading={heading}
-          />
+          <div className="content">
+            {grids.length === numberPerPage && GoalAchievedMessage}
+            <ContentBoard
+              text={`${grids.length} / 30`}
+              width={CONTENT_BOARD_PIXEL_WIDTH}
+              height={CONTENT_BOARD_PIXEL_HEIGHT}
+              heading={heading}
+            />
+          </div>
           {!!nextPage && <NextButton onClick={handleNextPageButton} />}
           {isClicked
             && <RateForm
@@ -194,7 +222,7 @@ function CustomGrid() {
         </div>
         <div className="grid">
           {gridElements}
-          {addGridButton}
+          {grids.length !== numberPerPage && AddGridButton}
           {blankGrids}
         </div>
       </Container>
