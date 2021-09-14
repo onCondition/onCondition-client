@@ -164,9 +164,11 @@ function CustomGrid() {
     : [];
 
   const heading = <div>You Achieved</div>;
+  const newAchievedCount = grids.length === numberPerPage
+    ? 1 : grids.length + 1;
   const defaultValues = {
     date: new Date().toDateString(),
-    duration: grids.length + 1,
+    snippet: `${newAchievedCount}/30`,
     type: category,
   };
 
