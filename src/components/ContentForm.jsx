@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -8,7 +7,7 @@ import ImageWrapper from "./ImageWrapper";
 import ButtonsWrapper from "./ButtonsWrapper";
 import HeartInput from "./HeartInput";
 import Button from "./Button";
-import getImageUrl from "../api/getImageUrl";
+import resizeImage from "../helpers/resizeImage";
 import theme from "../theme";
 
 const Input = styled.input`
@@ -50,7 +49,6 @@ function ContentForm({
   additionalButton,
   defaultValues,
 }) {
-  const user = useSelector((state) => state.user);
   const imageInput = useRef(null);
   const [date, setDate] = useState(defaultValues.date || "");
   const [heartCount, setHeartCount] = useState(defaultValues.heartCount);
@@ -79,15 +77,14 @@ function ContentForm({
   };
 
   const handleSubmitButton = async function () {
-    let url = "";
+    let resizedImage = "";
 
     if (image) {
-      url = await getImageUrl(user.id, image);
-      setImageUrl(url);
+      resizedImage = resizeImage(imageUrl);
     }
 
     const result = await onSubmit({
-      date, heartCount, text, url,
+      date, heartCount, text, image: resizedImage,
     });
 
     if (result) {
