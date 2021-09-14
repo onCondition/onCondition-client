@@ -56,10 +56,10 @@ function Meal() {
   }, [isReloadRequired]);
 
   const handleSubmitForm = async function ({
-    date, heartCount, url, text,
+    date, heartCount, image, text,
   }) {
     const newMeal = await post(creatorId, {
-      date, url, heartCount, text,
+      date, image, heartCount, text,
     });
 
     if (newMeal) {
