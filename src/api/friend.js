@@ -36,7 +36,7 @@ async function getFriends(creatorId) {
     };
   }
 
-  const res = await axios.get(joinUrl(BASE, creatorId, "friends"));
+  const res = await axios.get(joinUrl(BASE, creatorId, "friend"));
 
   if (res) {
     return res.data;
@@ -50,7 +50,7 @@ async function updateFriendRequest(creatorId, friendId, isAccepted) {
     return { result: "ok" };
   }
 
-  const res = await axios.patch(joinUrl(BASE, creatorId, "friends"), { friendId, isAccepted });
+  const res = await axios.patch(joinUrl(BASE, creatorId, "friend"), { friendId, isAccepted });
 
   if (res) {
     return res;
@@ -58,7 +58,7 @@ async function updateFriendRequest(creatorId, friendId, isAccepted) {
 }
 
 async function getById(creatorId, friendId) {
-  const res = await axios.get(joinUrl(BASE, creatorId, "friends", friendId));
+  const res = await axios.get(joinUrl(BASE, creatorId, "friend", friendId));
 
   if (res) {
     return res;
@@ -66,7 +66,7 @@ async function getById(creatorId, friendId) {
 }
 
 async function deleteById(creatorId, friendId) {
-  const res = await axios.delete(joinUrl(BASE, creatorId, "friends", friendId));
+  const res = await axios.delete(joinUrl(BASE, creatorId, "friend", friendId));
 
   if (res) {
     return res;
