@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { PrevButton, NextButton } from "../components/PageButton";
 import RateForm from "../components/RateForm";
 import ContentBoard from "../components/ContentBoard";
-import ActivityBar from "../components/ActivityBar";
+import ContentBar from "../components/ContentBar";
 import getApi from "../api/category";
 
 const CONTENT_BOARD_PIXEL_WIDTH = 400;
@@ -62,7 +62,23 @@ function Activity() {
   }, [currentPage]);
 
   const handleEnableRating = function (activity) {
-    setSelectedActivity(activity);
+    const {
+      date,
+      duration,
+      type,
+      heartCount,
+      text,
+    } = activity;
+
+    const snippet = `${duration}분`;
+
+    setSelectedActivity({
+      date,
+      snippet,
+      type,
+      heartCount,
+      text,
+    });
   };
 
   const handleSubmitForm = async function ({
@@ -88,9 +104,11 @@ function Activity() {
 
   const activityBars = (activities.length)
     ? activities.map((activity) => (
-      <ActivityBar
+      <ContentBar
         key={activity._id}
-        activity={activity}
+        category="activity"
+        creatorId={creatorId}
+        content={activity}
         onClickRating={handleEnableRating}
       />
     )) : [];

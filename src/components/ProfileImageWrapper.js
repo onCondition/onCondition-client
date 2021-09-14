@@ -7,7 +7,7 @@ const ProfileImageWrapper = styled.div`
   padding-top: 100%;
   margin-bottom: 10%;
 
-  img {
+  img, .graph {
     position: absolute;
     top: 50%;
     left: 50%;

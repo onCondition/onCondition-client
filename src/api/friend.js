@@ -57,4 +57,22 @@ async function updateFriendRequest(creatorId, friendId, isAccepted) {
   }
 }
 
-export { getFriends, updateFriendRequest };
+async function getById(creatorId, friendId) {
+  const res = await axios.get(joinUrl(BASE, creatorId, "friends", friendId));
+
+  if (res) {
+    return res;
+  }
+}
+
+async function deleteById(creatorId, friendId) {
+  const res = await axios.delete(joinUrl(BASE, creatorId, "friends", friendId));
+
+  if (res) {
+    return res;
+  }
+}
+
+export {
+  getFriends, updateFriendRequest, getById, deleteById,
+};
