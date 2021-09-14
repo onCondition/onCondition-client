@@ -58,7 +58,7 @@ function Friend() {
   };
 
   const handleFriendClick = function (friendId) {
-    history.push(`${friendId}`);
+    history.push(`/${creatorId}/friend/${friendId}`);
   };
 
   const pendingCardsReceiving = receivedRequests.map(({
@@ -109,7 +109,7 @@ function Friend() {
   ));
 
   const handleAddFriend = function () {
-    history.push("new");
+    history.push(`/${creatorId}/friend/new`);
   };
 
   return (

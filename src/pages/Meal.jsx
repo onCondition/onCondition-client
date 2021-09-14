@@ -23,7 +23,6 @@ const Container = styled.div`
 
   .viewer {
     width: 680px;
-    text-align: center;
   }
 `;
 

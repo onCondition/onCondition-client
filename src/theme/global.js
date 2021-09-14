@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h1 {
-    margin: 10px 0px 10px 30px;
+    margin: 10px 30px 50px 50px;
     color: #539A92;
     text-align: left;
     font-size: 3rem;

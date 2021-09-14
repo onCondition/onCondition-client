@@ -36,7 +36,7 @@ function RateForm({
 }) {
   const [heartCount, setHeartCount] = useState(defaultValues.heartCount || 0);
   const [text, setText] = useState(defaultValues.text || "");
-  const { date, duration, type } = defaultValues;
+  const { date, snippet, type } = defaultValues;
 
   const handleCountChange = function (value) {
     setHeartCount(value);
@@ -48,7 +48,7 @@ function RateForm({
 
   const handleSubmitButton = function () {
     onSubmit({
-      heartCount, text, date, duration, type,
+      heartCount, text, date, snippet, type,
     });
   };
 
@@ -57,7 +57,7 @@ function RateForm({
       <Wrapper color={color} isShrink>
         <div>
           <p>{date}</p>
-          <span>{`${type} (${duration})`}</span>
+          <span>{`${type} (${snippet})`}</span>
           {disabled
             ? <HeartCounter />
             : <HeartInput count={heartCount} onChange={handleCountChange} />}
@@ -85,7 +85,7 @@ RateForm.propTypes = {
   additionalButton: PropTypes.element,
   defaultValues: PropTypes.shape({
     date: PropTypes.string.isRequired,
-    duration: PropTypes.number.isRequired,
+    snippet: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     heartCount: PropTypes.number,
     text: PropTypes.string,

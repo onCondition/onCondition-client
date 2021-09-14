@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 
 import firebase from "../config/firebase";
 import Logout from "./Logout";
@@ -37,7 +37,9 @@ function MenuBar() {
   const history = useHistory();
   const user = firebase.auth().currentUser;
   const defaultCategories = ["condition", "activity", "meal", "sleep"];
-  const [ clickedMenu, setClickedMenu ] = useState("condition");
+  const { pathname } = useLocation();
+  const currentCategory = pathname.split("/").pop();
+  const [ clickedMenu, setClickedMenu ] = useState(currentCategory);
   const { id: userId, customCategories } = useSelector((state) => state.user);
 
   const customCategoryNames = user
