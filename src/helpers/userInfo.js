@@ -1,6 +1,7 @@
 import Cookie from "js-cookie";
 import { postRefresh } from "../api/auth";
 
+const GOOGLE_ACCESS_TOKEN = "googleAccessToken";
 const REFRESH_TOKEN = "refreshToken";
 const ACCESS_TOKEN = "accessToken";
 const USER_ID = "userId";
@@ -14,9 +15,10 @@ async function updateAccessToken() {
 }
 
 function storeUserInfos({
-  accessToken, refreshToken, userId, customCategories,
+  accessToken, refreshToken, userId, customCategories, googleAccessToken,
 }) {
   Cookie.set(REFRESH_TOKEN, refreshToken);
+  Cookie.set(GOOGLE_ACCESS_TOKEN, googleAccessToken);
   localStorage.setItem(ACCESS_TOKEN, accessToken);
   localStorage.setItem(USER_ID, userId);
   localStorage.setItem(CATEGORIES, JSON.stringify(customCategories));
@@ -38,33 +40,9 @@ function getUserInfos() {
   };
 }
 
-function formatCategory(categoryName) {
-  if (["sleep", "meal", "activity"].includes(categoryName)) {
-    return categoryName;
-  }
-
-  const customCategories = JSON.parse(localStorage.getItem(CATEGORIES));
-  const target = customCategories.find(
-    ({ category }) => category === categoryName,
-  );
-
-  if (!target) {
-    return null;
-  }
-
-  if (target.categoryType === "album") {
-    return `customAlbum/${categoryName}`;
-  }
-
-  if (target.categoryType === "grid") {
-    return `customGrid/${categoryName}`;
-  }
-}
-
 export {
   updateAccessToken,
   storeUserInfos,
   removeUserInfos,
   getUserInfos,
-  formatCategory,
 };
