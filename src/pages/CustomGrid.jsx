@@ -68,7 +68,7 @@ const NextChallengeButton = styled.div`
   }
 `;
 
-function caculateLevel(count) {
+function calculateLevel(count) {
   const countPerHeart = 2;
   const level = ["tooBad", "bad", "soso", "good", "veryGood"];
   const index = Math.floor(count / countPerHeart);
@@ -138,13 +138,13 @@ function CustomGrid() {
     return (
       <Grid
         key={_id}
-        level={caculateLevel(rating.heartCount)}
+        level={calculateLevel(rating.heartCount)}
         onClick={handleGridClick.bind(null, _id)}
       >{i + 1}</Grid>
     );
   });
 
-  const addGridButton = grids.length !== numberPerPage
+  const addGridButton = (grids.length !== numberPerPage)
     ? <Grid
       className="button"
       key="add"
@@ -159,12 +159,12 @@ function CustomGrid() {
       </>}
     </NextChallengeButton>;
 
-  const blankGrids = grids.length !== numberPerPage
+  const blankGrids = (grids.length !== numberPerPage)
     ? [...Array(numberPerPage - grids.length - 1)].map((_, i) => <Grid key={`blank${i}`} />)
     : [];
 
   const heading = <div>You Achieved</div>;
-  const newAchievedCount = grids.length === numberPerPage
+  const newAchievedCount = (grids.length === numberPerPage)
     ? 1 : grids.length + 1;
   const defaultValues = {
     date: new Date().toDateString(),
