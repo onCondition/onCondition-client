@@ -119,7 +119,7 @@ function Detail() {
   );
 
   if (!data) {
-    return <p>Loading...</p>;
+    return null;
   }
 
   const type = data.category ? data.category : data.type;
@@ -128,7 +128,7 @@ function Detail() {
   const heading = !hasPicture
     ? <>
       <p>{data.date}</p>
-      <span>{`${type} ${snippet} `}</span>
+      <span>{`${type || "meal"} ${snippet} `}</span>
       <HeartCounter count={data?.heartCount || 0} />
     </> : null;
 
