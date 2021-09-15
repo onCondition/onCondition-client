@@ -1,150 +1,125 @@
 import React, { useState } from "react";
-import PreferenceInput from "../components/PreferenceInput";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { COPY, RESET, DELETE } from "../constants/buttons";
-import albumImage from "../img/album.png";
-import PreferenceOptionCheck from "../components/PreferenceOptionCheck";
-import PreferenceOptionForm from "../components/PreferenceOptionForm";
-import theme from "../theme/index";
-import Button from "../components/Button";
+
+import Modal from "../components/ModalComponent";
+import PreferenceBar from "../components/PreferenceBar";
+import CustomCategoryStatus from "../components/CustomCategoryStatus";
+import CreateCategoryForm from "../components/CreateCategoryForm";
+import { postGoogleToken } from "../api/auth";
+import { addCustomCategory, deleteCustomCategory } from "../api/customCategory";
+import { setError } from "../features/errorSlice";
+import { COPY } from "../constants/buttons";
+import { setCustomCategories } from "../features/userSlice";
 
 const PreferenceWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 0.3fr 0.7fr;
+  grid-template-areas:
+    "my-user-code refresh"
+    "create-category category-status";
+  grid-gap: 3%;
   justify-content: center;
-  margin: auto;
-`;
-
-const CustomControlWrapper = styled.div`
-  height: 600px;
-  width: 800px;
-  grid-template-rows: repeat(4, 1fr);
-  justify-content: center;
-  display: grid;
-  margin: auto;
-  padding: 5px;
-  border-radius: 30px;
-  background-color: ${({ theme }) => theme.background.comment};
-  box-shadow: ${({ theme }) => theme.shadow.main};
-`;
-
-const CommentContainerWrapper = styled.div`
-  height: 600px;
-  width: 800px;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 0.2fr 1fr 0.3fr;
-  display: grid;
-  margin: auto;
-  padding: 5px;
-  border-radius: 30px;
-  background-color: ${({ theme }) => theme.background.comment};
-  box-shadow: ${({ theme }) => theme.shadow.main};
-
-  .button {
-    grid-column: 2 / span 2;
-  }
-
 `;
 
 function Preference() {
-  const [input, setInput] = useState("");
+  const { creatorId } = useParams();
+  const { id, customCategories } = useSelector((state) => state.user);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [hasModal, setHasModal] = useState(false);
+  const [deletedCategory, setDeletedCategory] = useState("");
 
-  const handleClickRadioButton = (ev) => {
-    setInput(ev.current.value);
-  };
+  const dispatch = useDispatch();
 
   const handleCopy = function ( ) {
-    navigator.clipboard.writeText("Copy this text to clipboard");
+    navigator.clipboard.writeText(id);
   };
 
-  const getGoogleFitData = function () {
-    console.log("hi");
+  const getGoogleFitData = async function () {
+    setIsUpdating(true);
+
+    const res = await postGoogleToken(id);
+
+    if (!res) {
+      dispatch(setError("google data update failed"));
+    }
+
+    setIsUpdating(false);
   };
 
-  const handleSubmit = function () {
-  //
+  const handleDeleteButtonClick = async function () {
+    const modifiedCategories = await deleteCustomCategory(
+      { creatorId, deletedCategory },
+    );
+
+    if (modifiedCategories) {
+      dispatch(setCustomCategories(modifiedCategories));
+    }
+
+    setHasModal(false);
+    setDeletedCategory("");
+  };
+
+  const handleDeletePreConfirm = function (category) {
+    setHasModal(true);
+    setDeletedCategory(category);
+  };
+
+  const customCategoryStatuses = customCategories.map(({ category }) => (
+    <CustomCategoryStatus
+      key={category}
+      category={category}
+      onDeleteButtonClick={handleDeletePreConfirm}
+    />
+  ));
+
+  const handleCreateCategory = async function ({ categoryType, category }) {
+    const modifiedCategories = await addCustomCategory(
+      { creatorId, category, categoryType },
+    );
+
+    if (modifiedCategories) {
+      dispatch(setCustomCategories(modifiedCategories));
+    }
   };
 
   return (
-    <>
+    <div>
+      {hasModal && <Modal
+        innerText="정말로 삭제하시겠어요?"
+        onConfirm={handleDeleteButtonClick}
+        onCancel={() => setHasModal(false)}
+      />}
+      <h1>설정</h1>
       <PreferenceWrapper>
-        <PreferenceInput
-          inputWidth={400}
-          inputHeight={100}
-          buttonWidth={100}
-          buttonHeight={100}
-          h1Text={"나의 유저 코드"}
-          buttonText={COPY}
-          name={"userCode"}
-          onClick={handleCopy}
-        />
-        <PreferenceInput
-          inputWidth={400}
-          inputHeight={100}
-          buttonWidth={100}
-          buttonHeight={100}
-          h1Text={"Google Fit 수동동기화"}
-          buttonText={RESET}
-          name={"getGoogleFitData"}
-          onClick={getGoogleFitData}
-        />
-        <CommentContainerWrapper>
-          <PreferenceOptionCheck
-            id={"grid"}
-            value={"grid"}
-            color={theme.background.main}
-            imageSrc={albumImage}
-            onChange={handleClickRadioButton}
-            checked={(input === "grid")}
+        <div className="my-user-code">
+          <h2>나의 유저 코드</h2>
+          <PreferenceBar
+            value={"userCode"}
+            buttonText={COPY}
+            onButtonClick={handleCopy}
           />
-          <PreferenceOptionCheck
-            id={"album"}
-            value={"album"}
-            color={theme.background.main}
-            imageSrc={albumImage}
-            onChange={handleClickRadioButton}
-            checked={(input === "album")}
+        </div>
+        <div className="refresh">
+          <h2>Google Fit 수동 동기화</h2>
+          <PreferenceBar
+            value={isUpdating ? "동기화중입니다" : "동기화 완료"}
+            buttonText={"동기화"}
+            onButtonClick={getGoogleFitData}
           />
-          <Button
-            text={"Submit"}
-            onClick={handleSubmit}
-          />
-        </CommentContainerWrapper>
-        <CustomControlWrapper>
-          <PreferenceOptionForm
-            inputName={"custom1"}
-            inputLineColor={theme.background.sub}
-            height={100}
-            inputWidth={500}
-            onClick={handleSubmit}
-            text={DELETE}
-            buttonColor={theme.background.main}
-            buttonWidth={100}
-          />
-          <PreferenceOptionForm
-            inputName={"custom2"}
-            inputLineColor={theme.background.sub}
-            height={100}
-            inputWidth={500}
-            onClick={handleSubmit}
-            text={DELETE}
-            buttonColor={theme.background.main}
-            buttonWidth={100}
-          />
-          <PreferenceOptionForm
-            inputName={"custom3"}
-            inputLineColor={theme.background.sub}
-            height={100}
-            inputWidth={500}
-            onClick={handleSubmit}
-            text={DELETE}
-            buttonColor={theme.background.main}
-            buttonWidth={100}
-          />
-        </CustomControlWrapper>
+        </div>
+        <div className="create-category">
+          <h2>커스텀 카테고리 추가</h2>
+          <CreateCategoryForm onSubmit={handleCreateCategory}/>
+        </div>
+        <div className="category-status">
+          <h2>내 커스텀 카테고리</h2>
+          {customCategoryStatuses}
+        </div>
       </PreferenceWrapper>
-    </>
+    </div>
   );
 }
 

@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router";
 import { Radar } from "react-chartjs-2";
 import styled from "styled-components";
 
-import Modal from "../components/modalComponent";
+import Modal from "../components/ModalComponent";
 import ModalWrapper from "../components/ModalWrapper";
 import DetailWrapper from "../components/DetailWrapper";
 

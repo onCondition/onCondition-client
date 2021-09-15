@@ -1,52 +1,40 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import RadioComponent from "./Radiobutton";
+import RadioComponent from "./Radio";
+import theme from "../theme";
 
 const PreferenceOptionCheckWrapper = styled.div`
-  height: 100%;
-`;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 
-const ImageWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  place-self: start end;
-
-  img {
-    height: 70%;
-    object-fit: contain;
+  p {
+    margin: auto 2%;
+    color: ${({ theme }) => theme.text.sub};
+    font-size: ${({ theme }) => theme.fontSizes.small};
   }
 `;
 
+const RADIO_COLOR = theme.background.main;
+
 function PreferenceOptionCheck({
-  className,
-  imageSrc,
-  id,
   value,
-  color,
 }) {
   return (
     <PreferenceOptionCheckWrapper>
-      <ImageWrapper>
-        <RadioComponent
-          className={className}
-          value={value}
-          color={color}
-          id={id}
-        />
-        <img src={imageSrc} />
-      </ImageWrapper>
+      <RadioComponent
+        color={RADIO_COLOR}
+        value={value}
+      />
+      <p>{value}</p>
     </PreferenceOptionCheckWrapper>
   );
 }
 
 PreferenceOptionCheck.propTypes = {
-  className: PropTypes.string,
   imageSrc: PropTypes.string,
-  id: PropTypes.string,
   value: PropTypes.string,
-  color: PropTypes.string,
 };
 
 export default PreferenceOptionCheck;

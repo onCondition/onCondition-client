@@ -6,6 +6,7 @@ const CANCEL = "CANCEL";
 const SAVE = "SAVE";
 const COPY = "COPY";
 const RESET = "RESET";
+const REFRESH = "REFRESH";
 
 export {
   COMMENT,
@@ -16,4 +17,5 @@ export {
   COPY,
   RESET,
   SAVE,
+  REFRESH,
 };
