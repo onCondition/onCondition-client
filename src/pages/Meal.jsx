@@ -8,6 +8,7 @@ import { PrevButton, NextButton } from "../components/PageButton";
 import ContentForm from "../components/ContentForm";
 import HeartCounter from "../components/HeartCounter";
 import getApi from "../api/category";
+import { getKoreanTimeString } from "../utils/time";
 import theme from "../theme";
 
 const Container = styled.div`
@@ -75,6 +76,10 @@ function Meal() {
     loadMeals(nextPage);
   };
 
+  if (!meals) {
+    return null;
+  }
+
   const mealBars = (meals.length) ? meals.map((meal) => {
     return (
       <Link to={`/${creatorId}/meal/${meal._id}`} key={meal._id}>
@@ -82,7 +87,7 @@ function Meal() {
           {meal.url
             ? <img src={meal.url} />
             : <img src="/img/add-picture.png" />}
-          <div>{meal.date}</div>
+          <div>{getKoreanTimeString(meal.date)}</div>
           <HeartCounter count={meal.rating.heartCount} />
         </List>
       </Link>
