@@ -32,10 +32,10 @@ function CustomAlbum() {
   });
 
   const handleSubmitForm = async function ({
-    date, heartCount, url, text,
+    date, heartCount, image, text,
   }) {
     await post(creatorId, {
-      date, url, heartCount, text,
+      date, image, heartCount, text,
     });
   };
 

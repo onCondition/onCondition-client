@@ -1,15 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { postLogin, postGoogleToken } from "../api/auth";
+import { postLogin } from "../api/auth";
 import { storeUserInfos, removeUserInfos } from "../helpers/userInfo";
 
 const initialState = {
   id: "",
   customCategories: [],
-  isLoading: false,
 };
 
 const login = createAsyncThunk("user/login",
-  async function ({ idToken, googleToken }) {
+  async function ({ idToken, googleAccessToken }) {
     try {
       const {
         accessToken,
@@ -23,13 +22,8 @@ const login = createAsyncThunk("user/login",
         refreshToken,
         userId,
         customCategories,
+        googleAccessToken,
       });
-
-      const res = await postGoogleToken(userId, googleToken);
-
-      if (res.status) {
-        return Promise.reject(res.message);
-      }
 
       return { userId, customCategories };
     } catch (err) {

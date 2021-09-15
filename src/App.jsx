@@ -10,13 +10,14 @@ import Error from "./pages/Error";
 import Condition from "./pages/Condition";
 import Meal from "./pages/Meal";
 import Activity from "./pages/Activity";
-import CustomAlbum from "./pages/CustomAlbum";
+import CustomCategory from "./pages/CustomCategory";
 import Friend from "./pages/Friend";
 import Detail from "./pages/Detail";
 import FriendDetail from "./pages/FriendDetail";
 
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
+import Loading from "./components/Loading";
 import { setUserInfos, logout } from "./features/userSlice";
 import { getUserInfos } from "./helpers/userInfo";
 import MenuBar from "./components/MenuBar";
@@ -27,6 +28,7 @@ const AppWrapper = styled.div`
 
 const PageWrapper = styled.div`
   margin-left: 300px;
+  text-align: center;
 `;
 
 function App() {
@@ -78,7 +80,7 @@ function App() {
                   <p>Sleep</p>
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/:category">
-                  <CustomAlbum />
+                  <CustomCategory />
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/friend/:friendId">
                   <FriendDetail />
@@ -93,7 +95,7 @@ function App() {
             </PageWrapper>
           </>
         ) : (
-          <p>waiting...</p>
+          <Loading />
         )}
       </AppWrapper>
       <GlobalStyle />

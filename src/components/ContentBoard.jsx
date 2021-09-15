@@ -50,7 +50,7 @@ function ContentBoard({
         heightSize={height}
         backgroundColor={backgroundColor}
       >
-        <Heading>{heading}</Heading>
+        {heading && <Heading>{heading}</Heading>}
         <Inner>
           {text}
         </Inner>
@@ -71,7 +71,6 @@ ContentBoard.propTypes = {
 
 ContentBoard.defaultProps = {
   backgroundColor: theme.background.main,
-  heading: "",
   width: 480,
   height: 360,
 };

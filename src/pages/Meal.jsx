@@ -8,6 +8,7 @@ import { PrevButton, NextButton } from "../components/PageButton";
 import ContentForm from "../components/ContentForm";
 import HeartCounter from "../components/HeartCounter";
 import getApi from "../api/category";
+import { getKoreanTimeString } from "../utils/time";
 import theme from "../theme";
 
 const Container = styled.div`
@@ -23,7 +24,6 @@ const Container = styled.div`
 
   .viewer {
     width: 680px;
-    text-align: center;
   }
 `;
 
@@ -57,10 +57,10 @@ function Meal() {
   }, [isReloadRequired]);
 
   const handleSubmitForm = async function ({
-    date, heartCount, url, text,
+    date, heartCount, image, text,
   }) {
     const newMeal = await post(creatorId, {
-      date, url, heartCount, text,
+      date, image, heartCount, text,
     });
 
     if (newMeal) {
@@ -83,7 +83,7 @@ function Meal() {
           {meal.url
             ? <img src={meal.url} />
             : <img src="/img/add-picture.png" />}
-          <div>{meal.date}</div>
+          <div>{getKoreanTimeString(meal.date)}</div>
           <HeartCounter count={meal.rating.heartCount} />
         </List>
       </Link>

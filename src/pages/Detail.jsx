@@ -122,13 +122,15 @@ function Detail() {
     return <p>Loading...</p>;
   }
 
-  const heading = !hasPicture ? (
-    <>
+  const type = data.category ? data.category : data.type;
+  const snippet = data.duration ? `(${data.duration})` : "";
+
+  const heading = !hasPicture
+    ? <>
       <p>{data.date}</p>
-      <span>{`${data.type} (${data.duration})`}</span>
+      <span>{`${type || "meal"} ${snippet} `}</span>
       <HeartCounter count={data?.heartCount || 0} />
-    </>
-  ) : null;
+    </> : null;
 
   return (
     <ModalWrapper>

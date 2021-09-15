@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
+import firebase from "../config/firebase";
 import ContentViewer from "../components/ContentViewer";
 import HeartCounter from "../components/HeartCounter";
 import Button from "../components/Button";
 import LineGraph from "../components/graphs/LineGraph";
 import RadarGraph from "../components/graphs/RadarGraph";
 import { getCondition } from "../api/condition";
+import { postGoogleToken } from "../api/auth";
+import { setError } from "../features/errorSlice";
 
 const ConditionWrapper = styled.div`
   display: flex;
@@ -51,7 +55,9 @@ function Condition() {
   const [dataPerDate, setDataPerDate] = useState(null);
   const [status, setStatus] = useState(null);
   const [heartCount, setHeartCount] = useState(0);
+  const [isUpdating, setIsUpdating] = useState(true);
   const { creatorId } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadCondition(creatorId) {
@@ -89,6 +95,24 @@ function Condition() {
     loadCondition(creatorId);
   }, []);
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (!user) {
+        setIsUpdating(false);
+
+        return;
+      }
+
+      const res = await postGoogleToken(creatorId);
+
+      if (!res) {
+        dispatch(setError("google data update failed"));
+      }
+
+      setIsUpdating(false);
+    });
+  }, []);
+
   const handleConvertButtonClick = function () {
     setIsRadarGraph(!isRadarGraph);
   };
@@ -103,6 +127,7 @@ function Condition() {
   return (
     <div>
       <h1>내 컨디션</h1>
+      {isUpdating && <p>구글 데이터를 불러오고 있습니다</p>}
       {!!dataPerDate && <ConditionWrapper>
         <div className="graph">
           <Button
