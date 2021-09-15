@@ -8,6 +8,7 @@ import ButtonsWrapper from "./ButtonsWrapper";
 import HeartInput from "./HeartInput";
 import Button from "./Button";
 import resizeImage from "../helpers/resizeImage";
+import { getKoreanTimeString } from "../utils/time";
 import theme from "../theme";
 
 const Input = styled.input`
@@ -118,11 +119,11 @@ function ContentForm({
     <form>
       <Wrapper color={color}>
         <div>
-          <Input
+          {!date ? <Input
             type="datetime-local"
             value={date}
             onChange={handleDateChange}
-          />
+          /> : <span>{getKoreanTimeString(date)}</span>}
           <HeartInput count={heartCount} onChange={handleCountChange}/>
         </div>
         <HiddenInput ref={imageInput} type="file"
@@ -136,7 +137,8 @@ function ContentForm({
         <Textarea
           placeholder="내용을 입력해주세요"
           value={text}
-          onChange={handleTextChange} />
+          onChange={handleTextChange}
+        />
       </Wrapper>
       <ButtonsWrapper>
         <Button text={submitButtonText} onClick={handleSubmitButton} />
