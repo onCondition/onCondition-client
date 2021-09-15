@@ -108,7 +108,7 @@ function FriendDetail() {
   );
 
   if (!records) {
-    return <p>Loading...</p>;
+    return null;
   }
 
   const recordBars = records.map((record) => <ContentBar

@@ -119,7 +119,7 @@ function Detail() {
   );
 
   if (!data) {
-    return <p>Loading...</p>;
+    return null;
   }
 
   const type = data.category ? data.category : data.type;
