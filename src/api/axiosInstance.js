@@ -14,11 +14,11 @@ async function setAccessToken(config) {
   const oneSecondInMill = 1000;
   const isExpired = accessToken.exp < (Date.now() / oneSecondInMill);
 
-let token = accessToken.token;
+  let token = accessToken.token;
 
   if (isExpired) {
     await updateAccessToken();
-    token = getToken().accessToken.token;
+    token = getTokens().accessToken.token;
   }
 
   config.headers.authorization = `Bearer ${token}`;
