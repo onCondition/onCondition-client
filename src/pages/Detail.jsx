@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
+import { useSelector } from "react-redux";
 
 import Modal from "../components/modalComponent";
 import ModalWrapper from "../components/ModalWrapper";
@@ -25,6 +26,7 @@ import {
 
 function Detail() {
   const history = useHistory();
+  const user = useSelector((state) => state.user);
   const { creatorId, category, ratingId } = useParams();
   const { getById, editById, deleteById } = getApi(category);
   const [data, setData] = useState(null);
@@ -147,14 +149,15 @@ function Detail() {
         <div className="viewer">
           {hasPicture ? (
             isEditing
-              ? <ContentForm
-                isEditForm
-                onSubmit={handleFormSubmit}
-                submitButtonText={SAVE}
-                additionalButton={cancelButton}
-                defaultValues={data}
-              />
-              : <>
+              ? (
+                <ContentForm
+                  isEditForm
+                  onSubmit={handleFormSubmit}
+                  submitButtonText={SAVE}
+                  additionalButton={cancelButton}
+                  defaultValues={data}
+                />)
+              : (<>
                 <ContentViewer
                   {...data}
                 />
@@ -162,7 +165,7 @@ function Detail() {
                   {editButton}
                   {deleteButton}
                 </ButtonsWrapper>
-              </>
+              </>)
           ) : (
             isEditing
               ? <RateForm
@@ -178,10 +181,12 @@ function Detail() {
                   width={400}
                   height={260}
                 />
-                <ButtonsWrapper isShrink>
-                  {editButton}
-                  {deleteButton}
-                </ButtonsWrapper>
+                {creatorId === user.id && (
+                  <ButtonsWrapper isShrink>
+                    {editButton}
+                    {deleteButton}
+                  </ButtonsWrapper>
+                )}
               </div>
           )}
         </div>
