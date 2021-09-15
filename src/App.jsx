@@ -12,6 +12,7 @@ import Meal from "./pages/Meal";
 import Activity from "./pages/Activity";
 import CustomCategory from "./pages/CustomCategory";
 import Friend from "./pages/Friend";
+import Preference from "./pages/Preference";
 import Detail from "./pages/Detail";
 import FriendDetail from "./pages/FriendDetail";
 
@@ -75,6 +76,9 @@ function App() {
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/activity">
                   <Activity />
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/preference">
+                  <Preference />
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/sleep">
                   <p>Sleep</p>

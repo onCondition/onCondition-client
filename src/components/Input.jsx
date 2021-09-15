@@ -8,9 +8,9 @@ const InputSt = styled.input`
   border: 3px solid ${(props) => props.lineColor
     ? props.lineColor : props.theme.background.main};
   width: ${(props) => props.width
-    ? props.width : "150px"};
+    ? (props.width + "px") : "150px"};
   height: ${(props) => props.height
-    ? props.height : "50px"};
+    ? (props.height + "px") : "50px"};
   margin: 0 auto;
   margin-top: 15px;
   outline: none;
