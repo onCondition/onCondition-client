@@ -73,6 +73,14 @@ async function deleteById(creatorId, friendId) {
   }
 }
 
+async function sendById(creatorId, friendId) {
+  const res = await axios.post(joinUrl(BASE, creatorId, "friend/new"), { friendId });
+
+  if (res) {
+    return res;
+  }
+}
+
 export {
-  getFriends, updateFriendRequest, getById, deleteById,
+  getFriends, updateFriendRequest, getById, sendById, deleteById,
 };
