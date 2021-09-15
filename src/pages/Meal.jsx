@@ -76,6 +76,10 @@ function Meal() {
     loadMeals(nextPage);
   };
 
+  if (!meals) {
+    return null;
+  }
+
   const mealBars = (meals.length) ? meals.map((meal) => {
     return (
       <Link to={`/${creatorId}/meal/${meal._id}`} key={meal._id}>
