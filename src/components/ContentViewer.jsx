@@ -5,6 +5,7 @@ import Wrapper from "./Wrapper";
 import ImgWrapper from "./ImageWrapper";
 import TextContainer from "./TextContainer";
 import HeartCounter from "./HeartCounter";
+import { getKoreanTimeString } from "../utils/time";
 import theme from "../theme";
 
 function ContentViewer({
@@ -19,7 +20,7 @@ function ContentViewer({
   return (
     <Wrapper color={color} isShrink={!hasText}>
       <div>
-        {date + " "}
+        {getKoreanTimeString(date) + " "}
         <HeartCounter count={heartCount} />
       </div>
       {!isDescription && <ImgWrapper>
