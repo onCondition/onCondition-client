@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import Loading from "../components/Loading";
 import firebase from "../config/firebase";
-import { postLogin } from "../api/auth";
-import { storeUserInfos } from "../helpers/userInfo";
+import { login } from "../features/userSlice";
 import { ERROR } from "../constants/messages";
 import USER_INFO_SCOPE from "../constants/userInfoScope";
 
@@ -20,6 +19,7 @@ function Login() {
   const [status, setStatus] = useState("");
   const user = useSelector((state) => state.user);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   function loginWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -48,10 +48,9 @@ function Login() {
 
         const idToken = await user.getIdToken(true);
         const googleAccessToken = credential.accessToken;
-        const { accessToken, refreshToken } = await postLogin(idToken);
 
-        storeUserInfos({ accessToken, refreshToken, googleAccessToken });
-      } catch {
+        dispatch(login({ idToken, googleAccessToken }));
+      } catch (err) {
         setStatus(ERROR.LOGIN_FAIL);
       }
     }
