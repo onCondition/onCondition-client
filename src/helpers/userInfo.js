@@ -30,6 +30,10 @@ function getTokens() {
   };
 }
 
+function checkTokenExist() {
+  return !!localStorage.getItem(ACCESS_TOKEN);
+}
+
 async function updateAccessToken() {
   const refreshToken = localStorage.getItem(REFRESH_TOKEN);
   const accessToken = await postRefresh(refreshToken);
@@ -42,5 +46,6 @@ export {
   storeUserInfos,
   removeUserInfos,
   getTokens,
+  checkTokenExist,
   updateAccessToken,
 };
