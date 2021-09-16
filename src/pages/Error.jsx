@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 
-import Modal from "../components/modalComponent";
+import Modal from "../components/ModalComponent";
 import { removeError } from "../features/errorSlice";
 
 function Error({ statusCode, message }) {
