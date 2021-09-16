@@ -13,6 +13,7 @@ import Activity from "./pages/Activity";
 import CustomCategory from "./pages/CustomCategory";
 import Friend from "./pages/Friend";
 import FriendNew from "./pages/FriendNew";
+import Preference from "./pages/Preference";
 import Detail from "./pages/Detail";
 import FriendDetail from "./pages/FriendDetail";
 
@@ -83,6 +84,9 @@ function App() {
                 <PrivateRoute exact path="/:creatorId/sleep">
                   <p>Sleep</p>
                 </PrivateRoute>
+                <PrivateRoute path="/:creatorId/preference">
+                  <Preference />
+                </PrivateRoute>
                 <PrivateRoute exact path="/:creatorId/:category">
                   <CustomCategory />
                 </PrivateRoute>
@@ -96,7 +100,6 @@ function App() {
                   <p>Not Found</p>
                 </Route>
               </Switch>
-
             </PageWrapper>
           </>
         ) : (

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
 import { useSelector } from "react-redux";
 
-import Modal from "../components/modalComponent";
+import Modal from "../components/ModalComponent";
 import ModalWrapper from "../components/ModalWrapper";
 import DetailWrapper from "../components/DetailWrapper";
 import ButtonsWrapper from "../components/ButtonsWrapper";
