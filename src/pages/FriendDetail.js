@@ -103,7 +103,7 @@ function FriendDetail() {
   const deleteButton = (
     <Button
       onClick={handleDeletePreConfirm}
-      text={"block"}
+      text="block"
     />
   );
 

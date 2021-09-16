@@ -56,8 +56,8 @@ function CreateCategoryForm({ onSubmit }) {
     <Form>
       <div>
         <Radio
-          id={"customType1"}
-          value={"grid"}
+          id="customType1"
+          value="grid"
           checked={selectedType === "grid"}
           onChange={handleSelectType}
         />
@@ -65,8 +65,8 @@ function CreateCategoryForm({ onSubmit }) {
       </div>
       <div>
         <Radio
-          id={"customType2"}
-          value={"album"}
+          id="customType2"
+          value="album"
           checked={selectedType === "album"}
           onChange={handleSelectType}
         />
@@ -76,7 +76,7 @@ function CreateCategoryForm({ onSubmit }) {
         <label htmlFor="categoryName"><p>새로운 카테고리 이름</p></label>
         <Input type="text" value={category} onChange={handleNameChange} />
         <Button
-          text={"추가"}
+          text="추가"
           onClick={handleSubmit}
         />
       </div>

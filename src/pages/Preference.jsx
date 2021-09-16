@@ -97,7 +97,7 @@ function Preference() {
         <div className="my-user-code">
           <h2>나의 유저 코드</h2>
           <PreferenceBar
-            value={"userCode"}
+            value="userCode"
             buttonText={COPY}
             onButtonClick={handleCopy}
           />
@@ -106,7 +106,7 @@ function Preference() {
           <h2>Google Fit 수동 동기화</h2>
           <PreferenceBar
             value={isUpdating ? "동기화중입니다" : "동기화 완료"}
-            buttonText={"동기화"}
+            buttonText="동기화"
             onButtonClick={getGoogleFitData}
           />
         </div>
