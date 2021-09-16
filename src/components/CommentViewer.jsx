@@ -20,6 +20,10 @@ function CommentViewer({
   const user = useSelector((state) => state.user);
   const isCreator = user.id === creatorId;
 
+  if (!comments) {
+    return null;
+  }
+
   return (
     <Wrapper>
       {comments.map((comment) => (

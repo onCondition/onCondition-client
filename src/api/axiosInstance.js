@@ -3,15 +3,25 @@ import { store } from "../app/store";
 import { ERROR } from "../constants/messages";
 import STATUS_CODES from "../constants/statusCodes";
 import { setError } from "../features/errorSlice";
+import { getTokens, updateAccessToken } from "../helpers/userInfo";
 
-function setAccessToken(config) {
-  const accessToken = localStorage.getItem("accessToken");
+async function setAccessToken(config) {
+  const { accessToken } = getTokens();
 
   if (!accessToken) {
     throw new axios.Cancel(ERROR.ACCESS_TOKEN_NOT_EXIST);
   }
+  const oneSecondInMill = 1000;
+  const isExpired = accessToken.exp < (Date.now() / oneSecondInMill);
 
-  config.headers.token = accessToken;
+  let token = accessToken.token;
+
+  if (isExpired) {
+    await updateAccessToken();
+    token = getTokens().accessToken.token;
+  }
+
+  config.headers.authorization = `Bearer ${token}`;
 
   return config;
 }
