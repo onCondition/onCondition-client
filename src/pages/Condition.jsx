@@ -10,6 +10,7 @@ import LineGraph from "../components/graphs/LineGraph";
 import RadarGraph from "../components/graphs/RadarGraph";
 import { getCondition } from "../api/condition";
 import { postGoogleToken } from "../api/auth";
+import { getTokens } from "../helpers/userInfo";
 
 const ConditionWrapper = styled.div`
   display: flex;
@@ -100,7 +101,8 @@ function Condition() {
         return;
       }
 
-      const res = await postGoogleToken(creatorId);
+      const { googleAccessToken } = getTokens();
+      const res = await postGoogleToken(creatorId, googleAccessToken);
 
       if (!res) {
         return;

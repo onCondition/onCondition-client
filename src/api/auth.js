@@ -30,8 +30,10 @@ async function postRefresh(refreshToken) {
   }
 }
 
-async function postGoogleToken(userId) {
-  const res = await axiosInstance.post(`/${userId}/googleFit`);
+async function postGoogleToken(userId, googleAccessToken) {
+  const res = await axiosInstance.post(`/${userId}/googleFit`, {
+    googleAccessToken,
+  });
 
   if (res) {
     return res;
