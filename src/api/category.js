@@ -1,13 +1,11 @@
 import axios from "./axiosInstance";
 
-const BASE = "/api";
-
 function joinUrl(...args) {
   return args.join("/");
 }
 
 async function get(category, creatorId, page) {
-  const res = await axios.get(joinUrl(BASE, creatorId, category), {
+  const res = await axios.get(joinUrl(creatorId, category), {
     headers: {
       page,
     },
@@ -21,7 +19,7 @@ async function get(category, creatorId, page) {
 }
 
 async function post(category, creatorId, data) {
-  const res = await axios.post(joinUrl(BASE, creatorId, category), data);
+  const res = await axios.post(joinUrl(creatorId, category), data);
 
   if (res) {
     return res.data;
@@ -29,7 +27,7 @@ async function post(category, creatorId, data) {
 }
 
 async function getById(category, creatorId, ratingId) {
-  const res = await axios.get(joinUrl(BASE, creatorId, category, ratingId));
+  const res = await axios.get(joinUrl(creatorId, category, ratingId));
 
   if (res) {
     return res.data;
@@ -38,7 +36,7 @@ async function getById(category, creatorId, ratingId) {
 
 async function editById(category, creatorId, ratingId, data) {
   const res = await axios.patch(
-    joinUrl(BASE, creatorId, category, ratingId),
+    joinUrl(creatorId, category, ratingId),
     data,
   );
 
@@ -46,14 +44,14 @@ async function editById(category, creatorId, ratingId, data) {
 }
 
 async function deleteById(category, creatorId, ratingId) {
-  const res = await axios.delete(joinUrl(BASE, creatorId, category, ratingId));
+  const res = await axios.delete(joinUrl(creatorId, category, ratingId));
 
   return res;
 }
 
 async function postComment(category, creatorId, ratingId, data) {
   const res = await axios.post(
-    joinUrl(BASE, creatorId, category, ratingId, "comment"),
+    joinUrl(creatorId, category, ratingId, "comment"),
     data,
   );
 
@@ -64,7 +62,7 @@ async function postComment(category, creatorId, ratingId, data) {
 
 async function editCommentById(category, creatorId, ratingId, commentId, data) {
   const res = await axios.patch(
-    joinUrl(BASE, creatorId, category, ratingId, "comment", commentId),
+    joinUrl(creatorId, category, ratingId, "comment", commentId),
     data,
   );
 
@@ -75,7 +73,7 @@ async function editCommentById(category, creatorId, ratingId, commentId, data) {
 
 async function deleteCommentById(category, creatorId, ratingId, commentId) {
   const res = await axios.delete(
-    joinUrl(BASE, creatorId, category, ratingId, "comment", commentId),
+    joinUrl(creatorId, category, ratingId, "comment", commentId),
   );
 
   if (res) {

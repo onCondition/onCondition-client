@@ -13,6 +13,7 @@ import Activity from "./pages/Activity";
 import CustomCategory from "./pages/CustomCategory";
 import Friend from "./pages/Friend";
 import FriendNew from "./pages/FriendNew";
+import Preference from "./pages/Preference";
 import Detail from "./pages/Detail";
 import FriendDetail from "./pages/FriendDetail";
 
@@ -65,7 +66,7 @@ function App() {
                 <Route path="/login">
                   <Login />
                 </Route>
-                <PrivateRoute path="/:creatorId/condition">
+                <PrivateRoute exact path="/:creatorId/condition">
                   <Condition />
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/friend/new">
@@ -74,28 +75,31 @@ function App() {
                 <PrivateRoute path="/:creatorId/friend">
                   <Friend />
                 </PrivateRoute>
-                <PrivateRoute path="/:creatorId/meal">
+                <PrivateRoute exact path="/:creatorId/meal">
                   <Meal />
                 </PrivateRoute>
-                <PrivateRoute path="/:creatorId/activity">
+                <PrivateRoute exact path="/:creatorId/activity">
                   <Activity />
                 </PrivateRoute>
-                <PrivateRoute path="/:creatorId/sleep">
+                <PrivateRoute exact path="/:creatorId/sleep">
                   <p>Sleep</p>
                 </PrivateRoute>
-                <PrivateRoute path="/:creatorId/:category">
+                <PrivateRoute path="/:creatorId/preference">
+                  <Preference />
+                </PrivateRoute>
+                <PrivateRoute exact path="/:creatorId/:category">
                   <CustomCategory />
                 </PrivateRoute>
-                <PrivateRoute path="/:creatorId/friend/:friendId">
+                <PrivateRoute exact path="/:creatorId/friend/:friendId">
                   <FriendDetail />
                 </PrivateRoute>
+                <Route path="/:creatorId/:category/:ratingId">
+                  <Detail />
+                </Route>
                 <Route path="*">
                   <p>Not Found</p>
                 </Route>
               </Switch>
-              <Route path="/:creatorId/:category/:ratingId">
-                <Detail />
-              </Route>
             </PageWrapper>
           </>
         ) : (

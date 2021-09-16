@@ -48,6 +48,9 @@ const userSlice = createSlice({
         state.customCategories = [];
       }
     },
+    setCustomCategories(state, { payload }) {
+      state.customCategories = payload;
+    },
   },
   extraReducers: {
     [login.fulfilled]: (state, { payload }) => {
@@ -67,6 +70,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUserInfos } = userSlice.actions;
+export const { setUserInfos, setCustomCategories } = userSlice.actions;
 export { login, logout };
 export default userSlice.reducer;
