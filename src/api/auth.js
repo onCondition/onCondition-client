@@ -2,9 +2,7 @@ import axios from "axios";
 import axiosInstance from "./axiosInstance";
 import { ERROR } from "../constants/messages";
 
-const baseURL = process.env.REACT_APP_NODE_ENV === "development"
-  ? "/api"
-  : process.env.REACT_APP_API_SERVER_URI;
+const baseURL = process.env.REACT_APP_API_SERVER_URI;
 
 async function postLogin(idToken) {
   try {
