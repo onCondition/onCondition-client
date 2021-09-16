@@ -1,72 +1,39 @@
 import axios from "../api/axiosInstance";
 
-const useMock = true;
-
-const numbers = 16;
-
-const mockUser = {
-  profileUrl: "https://lh3.googleusercontent.com/a/AATXAJyVWL-UkAOLeLY75qUbVwQWvUt1RDWk60KkzICi=s96-c0",
-  name: "user mock",
-  scores: {
-    activity: 0,
-    meal: 4.25,
-    sleep: 0,
-    사진첩: 1.8333333333333333,
-    grid: 3,
-  },
-  lastAccessDate: "2021-09-12",
-};
-
-const mockUsers = [...Array(numbers)].map((_, i) => {
-  return { ...mockUser, _id: `id${i}`, stroke: i };
-});
-
 const BASE = "/api";
 
 function joinUrl(...args) {
   return args.join("/");
 }
 
-async function getFriends(creatorId) {
-  if (useMock) {
-    return {
-      friends: mockUsers,
-      receivedRequests: mockUsers,
-      sentRequests: mockUsers,
-    };
-  }
-
-  const res = await axios.get(joinUrl(BASE, creatorId, "friends"));
+async function getSleepData(creatorId) {
+  const res = await axios.get(joinUrl(BASE, creatorId, "sleep"));
 
   if (res) {
-    return res.data;
+    const { data, status } = res;
+
+    return { data, status };
   }
 }
 
-async function updateFriendRequest(creatorId, friendId, isAccepted) {
-  if (useMock) {
-    console.log(friendId + " accepted " + isAccepted);
-
-    return { result: "ok" };
-  }
-
-  const res = await axios.patch(joinUrl(BASE, creatorId, "friends"), { friendId, isAccepted });
+async function getSleepDetail(creatorId, id) {
+  const res = await axios.get(joinUrl(BASE, creatorId, "sleep"), id);
 
   if (res) {
     return res;
   }
 }
 
-async function getById(creatorId, friendId) {
-  const res = await axios.get(joinUrl(BASE, creatorId, "friends", friendId));
+async function patchSleepDetail(creatorId, id) {
+  const res = await axios.patch(joinUrl(BASE, creatorId, "sleep", id));
 
   if (res) {
     return res;
   }
 }
 
-async function deleteById(creatorId, friendId) {
-  const res = await axios.delete(joinUrl(BASE, creatorId, "friends", friendId));
+async function deleteSleepDetail(creatorId, id) {
+  const res = await axios.delete(joinUrl(BASE, creatorId, "sleep", id));
 
   if (res) {
     return res;
@@ -74,5 +41,5 @@ async function deleteById(creatorId, friendId) {
 }
 
 export {
-  getFriends, updateFriendRequest, getById, deleteById,
+  getSleepData, getSleepDetail, patchSleepDetail, deleteSleepDetail,
 };

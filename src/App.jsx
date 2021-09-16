@@ -14,6 +14,7 @@ import CustomCategory from "./pages/CustomCategory";
 import Friend from "./pages/Friend";
 import Preference from "./pages/Preference";
 import Detail from "./pages/Detail";
+import Sleep from "./pages/Sleep";
 import FriendDetail from "./pages/FriendDetail";
 
 import Login from "./components/Login";
@@ -77,8 +78,8 @@ function App() {
                 <PrivateRoute exact path="/:creatorId/activity">
                   <Activity />
                 </PrivateRoute>
-                <PrivateRoute exact path="/:creatorId/sleep">
-                  <p>Sleep</p>
+                <PrivateRoute path="/:creatorId/sleep">
+                  <Sleep />
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/preference">
                   <Preference />
