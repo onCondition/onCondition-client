@@ -12,6 +12,7 @@ import Meal from "./pages/Meal";
 import Activity from "./pages/Activity";
 import CustomCategory from "./pages/CustomCategory";
 import Friend from "./pages/Friend";
+import FriendNew from "./pages/FriendNew";
 import Preference from "./pages/Preference";
 import Detail from "./pages/Detail";
 import FriendDetail from "./pages/FriendDetail";
@@ -68,7 +69,10 @@ function App() {
                 <PrivateRoute exact path="/:creatorId/condition">
                   <Condition />
                 </PrivateRoute>
-                <PrivateRoute exact path="/:creatorId/friend">
+                <PrivateRoute path="/:creatorId/friend/new">
+                  <FriendNew />
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/friend">
                   <Friend />
                 </PrivateRoute>
                 <PrivateRoute exact path="/:creatorId/meal">
