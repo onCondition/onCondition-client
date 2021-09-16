@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import Loading from "../components/Loading";
@@ -47,9 +47,8 @@ function Login() {
         }
 
         const idToken = await user.getIdToken(true);
-        const googleAccessToken = credential.accessToken;
 
-        dispatch(login({ idToken, googleAccessToken }));
+        dispatch(login({ idToken, googleAccessToken: credential.accessToken }));
       } catch {
         setStatus(ERROR.LOGIN_FAIL);
       }
