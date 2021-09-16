@@ -10,8 +10,8 @@ function Logout({ onLogout }) {
 
   function logoutWithGoogle() {
     firebase.auth().signOut();
-    onLogout();
     dispatch(logout());
+    onLogout();
   }
 
   return (
