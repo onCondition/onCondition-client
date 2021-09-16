@@ -13,14 +13,12 @@ import { postGoogleToken } from "../api/auth";
 
 const ConditionWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   color: ${({ theme }) => theme.text.main};
 
   .graph, .status {
-    margin: 5px;
-  }
-
-  .graph {
+    margin: 20px;
     width: 630px;
   }
 
@@ -29,8 +27,13 @@ const ConditionWrapper = styled.div`
   }
 
   .status {
-    flex-basis: 630px;
     align-items: center;
+  }
+
+  @media screen and (max-width: 640px) {
+    .graph, .status {
+      width: calc(100% - 20px);
+    }
   }
 `;
 
@@ -45,6 +48,16 @@ const StatusInfo = styled.div`
   box-shadow: ${({ theme }) => theme.shadow.main};
   background-color: ${({ theme }) => theme.background.main};
   font-size: ${({ theme }) => theme.fontSizes.small};
+
+  @media screen and (max-width: 650px) {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr;
+  }
+
+  @media screen and (max-width: 370px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 function Condition() {

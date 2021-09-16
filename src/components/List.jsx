@@ -11,7 +11,6 @@ const Li = styled.li`
   align-items: center;
   margin: 10px auto;
   line-height: 4rem;
-  min-width: 435px;
   max-width: 630px;
   border-radius: 30px;
   box-shadow: ${({ theme }) => theme.shadow.main};
@@ -24,6 +23,21 @@ const Li = styled.li`
     width: 80px;
     height: 3rem;
     object-fit: cover;
+  }
+
+  @media screen and (max-width: 440px) {
+    flex-direction: column;
+    width: calc(100% - 20px);
+    padding-top: 20px;
+
+    div {
+      height: 1.5rem;
+    }
+
+    img {
+      width: 50%;
+      height: 100px;
+    }
   }
 `;
 

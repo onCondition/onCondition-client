@@ -11,6 +11,11 @@ import resizeImage from "../helpers/resizeImage";
 import { getKoreanTimeString } from "../utils/time";
 import theme from "../theme";
 
+const FromWrapper = styled.div`
+  margin: 0 auto;
+  padding: 0 20px;
+`;
+
 const Input = styled.input`
   width: 205px;
   border-radius: 5px;
@@ -19,10 +24,16 @@ const Input = styled.input`
   :focus {
     outline: none;
   }
+
+  @media screen and (max-width: 400px) {
+    width: 100px;
+  }
+}
 `;
 
 const Textarea = styled.textarea`
   flex-grow: 1;
+  width: calc(100% - 70px);
   margin: 5px 20px 20px 20px;
   padding: 5px 15px;
   line-height: 2rem;
@@ -116,9 +127,9 @@ function ContentForm({
   };
 
   return (
-    <form>
+    <FromWrapper>
       <Wrapper color={color}>
-        <div>
+        <div className="header">
           {!date ? <Input
             type="datetime-local"
             value={date}
@@ -144,7 +155,7 @@ function ContentForm({
         <Button text={submitButtonText} onClick={handleSubmitButton} />
         {additionalButton}
       </ButtonsWrapper>
-    </form>
+    </FromWrapper>
   );
 }
 

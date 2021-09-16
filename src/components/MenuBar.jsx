@@ -8,28 +8,59 @@ import Logout from "./Logout";
 
 const MenuWrapper = styled.div`
   position: fixed;
+  z-index: 1;
   width: 300px;
-  margin-top: -10px;
-  height: 100%;
+  margin-top: -60px;
+  height: calc(100% + 60px);
   background-color: ${({ theme }) => theme.background.sub};
-  font-size: ${({ theme }) => theme.fontSizes.small};
   color: ${({ theme }) => theme.text.main};
+  font-size: ${({ theme }) => theme.fontSizes.small};
+  text-align: center;
 
-    div {
-      padding: 5% 15%;
+    .left {
+      text-align: left;
+
+      .name {
+        margin: 15%;
+        font-weight: bold;
+      }
+
+      .menu {
+        line-height: 3rem;
+        padding: 5% 15%;
+        cursor: pointer;
+      }
+
+      .menu.clicked {
+        background-color: ${({ theme }) => theme.background.main};
+      }
+
+      .button-wrapper {
+        padding-left: 13%;
+      }
     }
 
-    .name {
-      margin: 15%;
-      font-weight: bold;
-    }
-    .menu {
-      line-height: 3rem;
-      cursor: pointer;
+    .top {
+      display: none;
+      position: fixed;
+      top: 0;
     }
 
-    .menu.clicked {
-      background-color: ${({ theme }) => theme.background.main};
+    @media screen and (max-width: 1080px) {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      height: 40px;
+      margin-top: -70px;
+
+      .left {
+        display: none;
+      }
+
+      .top {
+        display: block;
+        margin-right: 3%;
+      }
     }
 `;
 
@@ -69,9 +100,14 @@ function MenuBar() {
 
   return (
     <MenuWrapper>
-      <p className="name">{name}</p>
-      {categoryButtons}
-      <Logout onLogout={handleLogout} />
+      <div className="left">
+        <p className="name">{name}</p>
+        {categoryButtons}
+        <Logout onLogout={handleLogout} />
+      </div>
+      <div className="top">
+        <button>메뉴</button>
+      </div>
     </MenuWrapper>
   );
 }

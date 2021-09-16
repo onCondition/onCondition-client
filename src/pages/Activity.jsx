@@ -14,7 +14,6 @@ const CONTENT_BOARD_PIXEL_HEIGHT = 150;
 const Container = styled.div`
   display: flex;
   flex-flow: row-reverse wrap;
-  height: 200px;
   justify-content: center;
 
   .list {

@@ -5,6 +5,12 @@ import FONTS from "../constants/webFontUrl";
 const GlobalStyle = createGlobalStyle`
   ${reset};
 
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
   a {
     text-decoration: none;
   }

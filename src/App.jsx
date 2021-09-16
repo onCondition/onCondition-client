@@ -29,7 +29,13 @@ const AppWrapper = styled.div`
 
 const PageWrapper = styled.div`
   margin-left: 300px;
+  margin-top: 50px;
   text-align: center;
+
+  @media screen and (max-width: 1080px) {
+    margin: 0;
+    margin-top: 70px;
+  }
 `;
 
 function App() {

@@ -5,12 +5,15 @@ import HeartCounter from "./HeartCounter";
 
 const HeartInputWrapper = styled.div`
   display: inline-flex;
-  width: 90px;
+  width: 120px;
+  margin-left: 10px;
   flex-direction: column;
   align-items: center;
+  font-size: 1.5rem;
 
   input {
-    width: 80px;
+    margin-right: 10px;
+    width: 130px;
     -webkit-appearance: none;
   }
 
