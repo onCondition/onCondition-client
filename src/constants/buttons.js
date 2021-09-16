@@ -4,6 +4,9 @@ const DELETE = "DELETE";
 const PLUS = "+";
 const CANCEL = "CANCEL";
 const SAVE = "SAVE";
+const COPY = "COPY";
+const RESET = "RESET";
+const REFRESH = "REFRESH";
 
 export {
   COMMENT,
@@ -11,5 +14,8 @@ export {
   DELETE,
   PLUS,
   CANCEL,
+  COPY,
+  RESET,
   SAVE,
+  REFRESH,
 };

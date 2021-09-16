@@ -5,18 +5,16 @@ import styled from "styled-components";
 import theme from "../theme";
 
 const ButtonSt = styled.button`
-  display: relative;
   border-radius: 10px;
   border: none;
+  margin: 15px 5px;
+  width: ${(props) => props.width + "px"};
+  height: ${(props) => props.height + "px"};
   background-color: ${(props) => props.backgroundColor};
   box-shadow: ${({ theme }) => theme.shadow.main};
   color: white;
-  cursor: pointer;
   font-size: large;
-  width: ${(props) => props.width + "px"};
-  height: ${(props) => props.height + "px"};
-  margin: 0 auto;
-  margin-top: 15px;
+  cursor: pointer;
 `;
 
 function Button({

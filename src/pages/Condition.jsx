@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import firebase from "../config/firebase";
@@ -11,7 +10,6 @@ import LineGraph from "../components/graphs/LineGraph";
 import RadarGraph from "../components/graphs/RadarGraph";
 import { getCondition } from "../api/condition";
 import { postGoogleToken } from "../api/auth";
-import { setError } from "../features/errorSlice";
 
 const ConditionWrapper = styled.div`
   display: flex;
@@ -57,7 +55,6 @@ function Condition() {
   const [heartCount, setHeartCount] = useState(0);
   const [isUpdating, setIsUpdating] = useState(true);
   const { creatorId } = useParams();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadCondition(creatorId) {
@@ -106,7 +103,7 @@ function Condition() {
       const res = await postGoogleToken(creatorId);
 
       if (!res) {
-        dispatch(setError("google data update failed"));
+        return;
       }
 
       setIsUpdating(false);

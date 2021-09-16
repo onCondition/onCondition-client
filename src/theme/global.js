@@ -30,12 +30,18 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Nanum Gothic", sans-serif;
   }
 
-  h1 {
+  h1, h2 {
     margin: 10px 30px 50px 50px;
     color: #539A92;
     text-align: left;
+  }
+
+  h1 {
     font-size: 3rem;
-    font-weight: bold;
+  }
+
+  h2 {
+    font-size: 2rem;
   }
 
   button {

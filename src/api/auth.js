@@ -2,9 +2,11 @@ import axios from "axios";
 import axiosInstance from "./axiosInstance";
 import { ERROR } from "../constants/messages";
 
+const baseURL = process.env.REACT_APP_API_SERVER_URI;
+
 async function postLogin(idToken) {
   try {
-    const res = await axios.post("/api/login",
+    const res = await axios.post(`${baseURL}/login`,
       null,
       { headers: { authorization: `Bearer ${idToken}` } });
 
@@ -22,7 +24,7 @@ async function postLogin(idToken) {
 
 async function postRefresh(refreshToken) {
   try {
-    const res = await axios.post("/api/refresh",
+    const res = await axios.post(`${baseURL}/refresh`,
       null,
       { headers: { authorization: `Bearer ${refreshToken}` } });
 
@@ -33,7 +35,7 @@ async function postRefresh(refreshToken) {
 }
 
 async function postGoogleToken(userId) {
-  const res = await axiosInstance.post(`/api/${userId}/googleFit`);
+  const res = await axiosInstance.post(`/${userId}/googleFit`);
 
   if (res) {
     return res;
