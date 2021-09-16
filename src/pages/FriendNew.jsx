@@ -32,8 +32,8 @@ const BoardWrapper = styled.div`
   margin: 15px 30px;
   padding: 25px 20px 20px 20px;
   border-radius: 5px;
-  box-shadow: 0 0 0 20px ${({ theme }) => theme.background.main };
-  background-color: ${(({ theme }) => theme.background.board )};
+  box-shadow: 0 0 0 20px ${({ theme }) => theme.background.main};
+  background-color: ${({ theme }) => theme.background.board};
 
   .input-label {
     margin: auto;
@@ -45,7 +45,7 @@ const BoardWrapper = styled.div`
     margin: 20px;
     padding: 1rem;
     text-align: center;
-    border: 3px solid ${({ theme }) => theme.background.main };
+    border: 3px solid ${({ theme }) => theme.background.main};
     border-radius: 1rem;
     font-size: 14px;
     outline: none;
