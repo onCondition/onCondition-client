@@ -147,17 +147,16 @@ function Detail() {
       >x</CircleButton>
       <DetailWrapper>
         <div className="viewer">
-          {hasPicture ? (
-            isEditing
-              ? (
-                <ContentForm
-                  isEditForm
-                  onSubmit={handleFormSubmit}
-                  submitButtonText={SAVE}
-                  additionalButton={cancelButton}
-                  defaultValues={data}
-                />)
-              : (<>
+          {hasPicture
+            ? isEditing
+              ? <ContentForm
+                isEditForm
+                onSubmit={handleFormSubmit}
+                submitButtonText={SAVE}
+                additionalButton={cancelButton}
+                defaultValues={data}
+              />
+              : <div>
                 <ContentViewer
                   {...data}
                 />
@@ -165,9 +164,8 @@ function Detail() {
                   {editButton}
                   {deleteButton}
                 </ButtonsWrapper>
-              </>)
-          ) : (
-            isEditing
+              </div>
+            : isEditing
               ? <RateForm
                 onSubmit={handleFormSubmit}
                 submitButtonText={SAVE}
@@ -188,7 +186,7 @@ function Detail() {
                   </ButtonsWrapper>
                 )}
               </div>
-          )}
+          }
         </div>
         <div className="comment">
           <CommentContainer
