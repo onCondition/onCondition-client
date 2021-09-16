@@ -69,6 +69,7 @@ function FriendContentBoard() {
   const { creatorId } = useParams();
   const [friendId, setFriendId] = useState("");
   const [message, setMessage] = useState("");
+  const [isPending, setIsPending] = useState(false);
   const user = useSelector((state) => state.user);
   const history = useHistory();
 
@@ -90,10 +91,13 @@ function FriendContentBoard() {
       return;
     }
 
+    setIsPending(true);
+
     const res = await sendById(creatorId, friendId);
 
     if (res) {
       setMessage("친구 요청이 전송되었습니다.");
+      setIsPending(false);
     }
   };
 
@@ -136,7 +140,11 @@ function FriendContentBoard() {
                   {friendInput}
                 </label>
               </BoardWrapper>
-              <Button onClick={handleAdd} text="ADD" />
+              <Button
+                onClick={handleAdd}
+                text="ADD"
+                disabled={isPending}
+              />
             </div>
             <BoardWrapper>
               <label className="input-label">

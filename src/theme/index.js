@@ -34,6 +34,7 @@ const background = {
   point: pinkColors.mainPink,
   gridMessage: greyScaleColors.opaqueWhite,
   board: greyScaleColors.fadeWhite,
+  disable: greyScaleColors.fadeGrey,
 };
 
 const text = {
