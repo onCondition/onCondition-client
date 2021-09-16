@@ -10,13 +10,9 @@ async function postLogin(idToken) {
       null,
       { headers: { authorization: `Bearer ${idToken}` } });
 
-    const {
-      accessToken, refreshToken, userId, customCategories,
-    } = res.data;
+    const { accessToken, refreshToken } = res.data;
 
-    return {
-      accessToken, refreshToken, userId, customCategories,
-    };
+    return { accessToken, refreshToken };
   } catch (err) {
     throw new Error(ERROR.LOGIN_FAIL);
   }
@@ -42,4 +38,14 @@ async function postGoogleToken(userId) {
   }
 }
 
-export { postLogin, postRefresh, postGoogleToken };
+async function getUserInfos() {
+  const res = await axiosInstance.get("/");
+
+  if (res) {
+    return res;
+  }
+}
+
+export {
+  postLogin, postRefresh, postGoogleToken, getUserInfos,
+};
