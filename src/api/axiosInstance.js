@@ -48,10 +48,7 @@ function handleResponseError(err) {
   store.dispatch(setError(error));
 }
 
-const baseURL = process.env.REACT_APP_NODE_ENV === "development"
-  ? "/api"
-  : process.env.REACT_APP_API_SERVER_URI;
-const instance = axios.create({ baseURL });
+const instance = axios.create();
 
 instance.interceptors.request.use(setAccessToken, handleRequestError);
 instance.interceptors.response.use(parseResponseData, handleResponseError);

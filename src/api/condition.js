@@ -1,7 +1,7 @@
 import axios from "./axiosInstance";
 
 async function getCondition(creatorId) {
-  const res = await axios.get(`/${creatorId}`);
+  const res = await axios.get(`/api/${creatorId}`);
 
   if (res) {
     const { data, status } = res;
