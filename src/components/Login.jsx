@@ -50,7 +50,7 @@ function Login() {
         const googleAccessToken = credential.accessToken;
 
         dispatch(login({ idToken, googleAccessToken }));
-      } catch (err) {
+      } catch {
         setStatus(ERROR.LOGIN_FAIL);
       }
     }
