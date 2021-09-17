@@ -175,7 +175,7 @@ function CustomGrid() {
     );
   });
 
-  const AddGridButton = !nextPage
+  const AddGridButton = grids.length !== numberPerPage
     ? <Grid
       className="button"
       key="add"
@@ -230,7 +230,7 @@ function CustomGrid() {
         </div>
         <div className="grid">
           {gridElements}
-          {grids.length !== numberPerPage && AddGridButton}
+          {!nextPage && AddGridButton}
           {blankGrids}
         </div>
       </Container>
