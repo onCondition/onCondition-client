@@ -81,7 +81,7 @@ function MenuBar() {
   const defaultCategories = ["condition", "activity", "meal", "sleep"];
   const { pathname } = useLocation();
   const currentCategory = pathname.split("/").pop();
-  const [clickedMenu, setClickedMenu] = useState(currentCategory);
+  const [clickedCategory, setClickedCategory] = useState(currentCategory);
   const [isShowingMenu, setIsShowingMenu] = useState(false);
   const { id: userId, customCategories } = useSelector((state) => state.user);
 
@@ -91,9 +91,9 @@ function MenuBar() {
   const categories = defaultCategories.concat(customCategoryNames, ["friend", "preference"]);
   const name = user ? user.displayName : "guest";
 
-  const handleMenuClick = function (clickedMenu) {
-    history.push(`/${userId}/${clickedMenu}`);
-    setClickedMenu(clickedMenu);
+  const handleMenuClick = function (clickedCategory) {
+    history.push(`/${userId}/${clickedCategory}`);
+    setClickedCategory(clickedCategory);
   };
 
   const handleShowMenuButton = function () {
@@ -102,7 +102,7 @@ function MenuBar() {
 
   const categoryButtons = categories.map((category) => (
     <div
-      className={category === clickedMenu ? "menu clicked" : "menu"}
+      className={category === clickedCategory ? "menu clicked" : "menu"}
       key={category}
       onClick={handleMenuClick.bind(null, category)}
     >
