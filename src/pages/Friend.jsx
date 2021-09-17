@@ -13,6 +13,12 @@ const FriendWrapper = styled.div`
   gap: ${({ theme }) => theme.gaps.medium};
   justify-content: center;
   padding: 10px;
+
+  @media screen and (max-width: 400px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 function Friend() {

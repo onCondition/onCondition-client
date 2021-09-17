@@ -17,6 +17,11 @@ const Outer = styled.div`
   height: ${(props) => String(props.heightSize) + SIZE_UNIT};
   border-radius: 10px;
   padding: 25px 20px 20px 20px;
+
+  @media screen and (max-width: 400px) {
+    width: calc(100% - 40px);
+    margin: 0 auto;
+  }
 `;
 
 const Inner = styled.div`

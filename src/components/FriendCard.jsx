@@ -5,6 +5,7 @@ import theme from "../theme";
 import CardContainer from "./CardContainer";
 import HeartCounter from "./HeartCounter";
 import ProfileImageWrapper from "./ProfileImageWrapper";
+import { getKoreanDateString } from "../utils/time";
 
 function FriendCard({
   id,
@@ -31,7 +32,7 @@ function FriendCard({
         {graph ? graph : <img src={profileUrl} alt="profile" />}
       </ProfileImageWrapper>
       <p>{name}</p>
-      <p>{lastAccessDate}</p>
+      <p>{getKoreanDateString(lastAccessDate)}</p>
       <HeartCounter count={score} />
     </CardContainer>
   );

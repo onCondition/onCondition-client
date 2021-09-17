@@ -157,7 +157,7 @@ function Detail() {
                 additionalButton={cancelButton}
                 defaultValues={data}
               />
-              : <div>
+              : <>
                 <ContentViewer
                   {...data}
                 />
@@ -165,7 +165,7 @@ function Detail() {
                   {editButton}
                   {deleteButton}
                 </ButtonsWrapper>
-              </div>
+              </>
             : isEditing
               ? <RateForm
                 onSubmit={handleFormSubmit}

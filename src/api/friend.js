@@ -1,6 +1,6 @@
 import axios from "../api/axiosInstance";
 
-const useMock = process.env === "development";
+const useMock = false;
 
 const numbers = 16;
 

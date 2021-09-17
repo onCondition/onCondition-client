@@ -1,5 +1,11 @@
 function getKoreanTimeString(date) {
-  return new Date(date).toLocaleString("ko-KR", { timeZone: "asia/Seoul" });
+  const lengthOfSecond = 3;
+
+  return new Date(date).toLocaleString("ko-KR", { timeZone: "asia/Seoul" }).slice(0, -lengthOfSecond);
+}
+
+function getKoreanDateString(date) {
+  return new Date(date).toLocaleDateString("ko-KR", { timeZone: "asia/Seoul" });
 }
 
 function getISOTime(today) {
@@ -13,4 +19,4 @@ function getISOTime(today) {
   return { pastMidnight };
 }
 
-export { getISOTime, getKoreanTimeString };
+export { getKoreanTimeString, getKoreanDateString, getISOTime };

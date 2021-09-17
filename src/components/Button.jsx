@@ -15,6 +15,10 @@ const ButtonSt = styled.button`
   color: white;
   font-size: large;
   cursor: pointer;
+
+  @media screen and (max-width: 400px) {
+    width: 100px;
+  }
 `;
 
 function Button({

@@ -36,6 +36,15 @@ const DragBar = styled.input.attrs({
     box-shadow: ${({ theme }) => theme.shadow.range};
     background: ${({ theme }) => theme.background.graph};
   }
+
+  @media screen and (max-width: 500px) {
+    height: 10px;
+    padding: 15px;
+
+    &&::-webkit-slider-thumb {
+      margin-top: -10px;
+    }
+  }
 `;
 
 function RadarGraph({ categories, dataPerDate }) {

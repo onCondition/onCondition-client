@@ -34,12 +34,20 @@ const Container = styled.div`
   .viewer {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 400px;
-    justify-content: center
+    padding: 10px;
   }
 
   .content {
     position: relative;
+  }
+
+  @media screen and (max-width: 550px) {
+    .grid {
+      grid-template-columns: repeat(5, 20%);
+      grid-template-rows: repeat(6, 13%);
+    }
   }
 `;
 
@@ -167,7 +175,7 @@ function CustomGrid() {
     );
   });
 
-  const AddGridButton = !nextPage
+  const AddGridButton = grids.length !== numberPerPage
     ? <Grid
       className="button"
       key="add"
@@ -222,7 +230,7 @@ function CustomGrid() {
         </div>
         <div className="grid">
           {gridElements}
-          {grids.length !== numberPerPage && AddGridButton}
+          {!nextPage && AddGridButton}
           {blankGrids}
         </div>
       </Container>

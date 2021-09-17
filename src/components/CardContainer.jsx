@@ -13,6 +13,12 @@ const CardWrapper = styled.div`
   border-radius: 30px;
   color: ${({ theme }) => theme.text.sub};
   font-size: ${({ theme }) => theme.fontSizes.small};
+
+  @media screen and (max-width: 400px) {
+    width: 220px;
+    height: 300px;
+    font-size: 1.5rem;
+  }
 `;
 
 const ContentWrapper = styled.div`

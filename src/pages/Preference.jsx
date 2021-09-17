@@ -22,6 +22,16 @@ const PreferenceWrapper = styled.div`
     "create-category category-status";
   grid-gap: 3%;
   justify-content: center;
+
+  @media screen and (max-width: 1800px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "my-user-code"
+      "refresh"
+      "create-category"
+      "category-status";
+    width: 100%;
+  }
 `;
 
 function Preference() {

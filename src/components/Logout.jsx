@@ -15,7 +15,7 @@ function Logout({ onLogout }) {
   }
 
   return (
-    <div>
+    <div className="button-wrapper">
       <Button
         onClick={logoutWithGoogle}
         text="logout"

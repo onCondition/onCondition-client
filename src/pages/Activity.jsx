@@ -14,7 +14,6 @@ const CONTENT_BOARD_PIXEL_HEIGHT = 150;
 const Container = styled.div`
   display: flex;
   flex-flow: row-reverse wrap;
-  height: 200px;
   justify-content: center;
 
   .list {
@@ -28,6 +27,7 @@ const Container = styled.div`
     flex-direction: column;
     width: 400px;
     height: 500px;
+    padding: 0 10px;
     text-align: center;
     justify-content: space-around;
   }

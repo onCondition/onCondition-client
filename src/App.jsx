@@ -32,7 +32,13 @@ const AppWrapper = styled.div`
 
 const PageWrapper = styled.div`
   margin-left: 300px;
+  margin-top: 50px;
   text-align: center;
+
+  @media screen and (max-width: 1080px) {
+    margin: 0;
+    margin-top: 70px;
+  }
 `;
 
 function App() {
@@ -85,6 +91,9 @@ function App() {
                 <PrivateRoute path="/:creatorId/friend/new">
                   <FriendNew />
                 </PrivateRoute>
+                <PrivateRoute path="/:creatorId/friend/:friendId">
+                  <FriendDetail />
+                </PrivateRoute>
                 <PrivateRoute path="/:creatorId/friend">
                   <Friend />
                 </PrivateRoute>
@@ -102,9 +111,6 @@ function App() {
                 </PrivateRoute>
                 <PrivateRoute exact path="/:creatorId/:category">
                   <CustomCategory />
-                </PrivateRoute>
-                <PrivateRoute exact path="/:creatorId/friend/:friendId">
-                  <FriendDetail />
                 </PrivateRoute>
                 <Route path="/:creatorId/:category/:ratingId">
                   <Detail />

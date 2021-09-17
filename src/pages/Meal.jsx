@@ -17,6 +17,7 @@ const Container = styled.div`
   justify-content: center;
 
   .list {
+    padding: 15px;
     flex-grow: 1;
     justify-items: center;
     max-width: 680px;
