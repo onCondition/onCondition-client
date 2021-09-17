@@ -32,7 +32,7 @@ function Friend() {
 
     const { friends, receivedRequests, sentRequests } = data;
 
-    setFriends(friends);
+    setFriends(friends || []);
     setSentRequest(sentRequests);
     setReceivedRequests(receivedRequests);
   }
