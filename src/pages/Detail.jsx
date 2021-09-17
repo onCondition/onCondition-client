@@ -19,6 +19,7 @@ import CircleButton from "../components/CircleButton";
 import theme from "../theme";
 
 import getApi from "../api/category";
+import { getKoreanTimeString } from "../utils/time";
 import { ERROR } from "../constants/messages";
 import {
   CANCEL, EDIT, DELETE, SAVE,
@@ -124,13 +125,13 @@ function Detail() {
     return null;
   }
 
-  const type = data.category ? data.category : data.type;
+  const type = data.category ? data.category : data.type || "";
   const snippet = data.duration ? `(${data.duration})` : "";
 
   const heading = !hasPicture
     ? <>
-      <p>{data.date}</p>
-      <span>{`${type || "meal"} ${snippet} `}</span>
+      <p>{getKoreanTimeString(data.date)}</p>
+      <span>{`${type} ${snippet} `}</span>
       <HeartCounter count={data?.heartCount || 0} />
     </> : null;
 
