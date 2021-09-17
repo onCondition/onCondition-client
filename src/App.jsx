@@ -15,6 +15,7 @@ import Friend from "./pages/Friend";
 import FriendNew from "./pages/FriendNew";
 import Preference from "./pages/Preference";
 import Detail from "./pages/Detail";
+import Sleep from "./pages/Sleep";
 import FriendDetail from "./pages/FriendDetail";
 
 import Login from "./components/Login";
@@ -103,7 +104,7 @@ function App() {
                   <Activity />
                 </PrivateRoute>
                 <PrivateRoute exact path="/:creatorId/sleep">
-                  <p>Sleep</p>
+                  <Sleep />
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/preference">
                   <Preference />

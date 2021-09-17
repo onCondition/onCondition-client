@@ -43,8 +43,6 @@ async function getFriends(creatorId) {
 
 async function updateFriendRequest(creatorId, friendId, isAccepted) {
   if (useMock) {
-    console.log(friendId + " accepted " + isAccepted);
-
     return { result: "ok" };
   }
 
