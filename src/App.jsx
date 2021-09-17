@@ -20,8 +20,9 @@ import FriendDetail from "./pages/FriendDetail";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Loading from "./components/Loading";
-import { setUserInfos, logout } from "./features/userSlice";
-import { getUserInfos } from "./helpers/userInfo";
+import { setUserInfos } from "./features/userSlice";
+import { getUserInfos } from "./api/auth";
+import { checkTokenExist } from "./helpers/userInfo";
 import MenuBar from "./components/MenuBar";
 
 const AppWrapper = styled.div`
@@ -35,21 +36,32 @@ const PageWrapper = styled.div`
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const user = useSelector((state) => state.user);
   const { hasError, ...error } = useSelector((state) => state.error);
   const dispatch = useDispatch();
-  const { userId, customCategories } = getUserInfos();
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        dispatch(logout());
+    async function dispatchUserInfos() {
+      const res = await getUserInfos();
+
+      if (!res) {
+        return;
       }
 
+      const { userId, customCategories, lastAccessDate } = res;
+
+      dispatch(setUserInfos({ userId, customCategories, lastAccessDate }));
       setIsLoaded(true);
+    }
+
+    firebase.auth().onAuthStateChanged(() => {
+      if (checkTokenExist()) {
+        dispatchUserInfos();
+      } else {
+        setIsLoaded(true);
+      }
     });
   }, []);
-
-  dispatch(setUserInfos({ userId, customCategories }));
 
   return (
     <ThemeProvider theme={theme}>
@@ -61,7 +73,7 @@ function App() {
             <PageWrapper>
               <Switch>
                 <Route exact path="/">
-                  <Redirect to={`/${userId}/condition`} />
+                  <Redirect to={user.id ? `/${user.id}/condition` : "/login"} />
                 </Route>
                 <Route path="/login">
                   <Login />

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import firebase from "../config/firebase";
@@ -11,7 +11,7 @@ import LineGraph from "../components/graphs/LineGraph";
 import RadarGraph from "../components/graphs/RadarGraph";
 import { getCondition } from "../api/condition";
 import { postGoogleToken } from "../api/auth";
-import { setError } from "../features/errorSlice";
+import { getTokens } from "../helpers/userInfo";
 import { getISOTime } from "../utils/time";
 
 const ConditionWrapper = styled.div`
@@ -59,7 +59,6 @@ function Condition() {
   const [isUpdating, setIsUpdating] = useState(true);
   const { creatorId } = useParams();
   const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadCondition(creatorId) {
@@ -107,15 +106,17 @@ function Condition() {
 
       const nowTime = new Date();
       const { pastMidnight } = getISOTime(nowTime);
+      const userAccessDate = new Date(user.lastAccessDate);
 
-      if (user.lastAccessDate >= pastMidnight) {
+      if (userAccessDate >= pastMidnight) {
         return;
       }
 
-      const res = await postGoogleToken(creatorId);
+      const { googleAccessToken } = getTokens();
+      const res = await postGoogleToken(creatorId, googleAccessToken);
 
       if (!res) {
-        dispatch(setError("google data update failed"));
+        return;
       }
 
       setIsUpdating(false);

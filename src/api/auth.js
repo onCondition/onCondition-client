@@ -2,9 +2,7 @@ import axios from "axios";
 import axiosInstance from "./axiosInstance";
 import { ERROR } from "../constants/messages";
 
-const baseURL = process.env.REACT_APP_NODE_ENV === "development"
-  ? "/api"
-  : process.env.REACT_APP_API_SERVER_URI;
+const baseURL = process.env.REACT_APP_API_SERVER_URI;
 
 async function postLogin(idToken) {
   try {
@@ -12,13 +10,9 @@ async function postLogin(idToken) {
       null,
       { headers: { authorization: `Bearer ${idToken}` } });
 
-    const {
-      accessToken, refreshToken, userId, customCategories,
-    } = res.data;
+    const { accessToken, refreshToken } = res.data;
 
-    return {
-      accessToken, refreshToken, userId, customCategories,
-    };
+    return { accessToken, refreshToken };
   } catch (err) {
     throw new Error(ERROR.LOGIN_FAIL);
   }
@@ -36,12 +30,24 @@ async function postRefresh(refreshToken) {
   }
 }
 
-async function postGoogleToken(userId) {
-  const res = await axiosInstance.post(`/${userId}/googleFit`);
+async function postGoogleToken(userId, googleAccessToken) {
+  const res = await axiosInstance.post(`/${userId}/googleFit`, {
+    googleAccessToken,
+  });
 
   if (res) {
     return res;
   }
 }
 
-export { postLogin, postRefresh, postGoogleToken };
+async function getUserInfos() {
+  const res = await axiosInstance.get("/");
+
+  if (res) {
+    return res;
+  }
+}
+
+export {
+  postLogin, postRefresh, postGoogleToken, getUserInfos,
+};

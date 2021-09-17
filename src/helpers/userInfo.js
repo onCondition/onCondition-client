@@ -1,54 +1,51 @@
-import Cookie from "js-cookie";
 import { postRefresh } from "../api/auth";
 
 const GOOGLE_ACCESS_TOKEN = "googleAccessToken";
 const REFRESH_TOKEN = "refreshToken";
+const REFRESH_EXPIRED_AT = "refreshToken-expiredAt";
 const ACCESS_TOKEN = "accessToken";
-const USER_ID = "userId";
-const CATEGORIES = "categories";
+const ACCESS_TOKEN_EXPIRED_AT = "accessToken-expiredAt";
 
 function storeUserInfos({
-  accessToken, refreshToken, userId, customCategories, googleAccessToken,
+  accessToken, refreshToken, googleAccessToken,
 }) {
-  Cookie.set(GOOGLE_ACCESS_TOKEN, googleAccessToken);
-  Cookie.set(REFRESH_TOKEN, JSON.stringify(refreshToken));
-  localStorage.setItem(ACCESS_TOKEN, JSON.stringify(accessToken));
-  localStorage.setItem(USER_ID, userId);
-  localStorage.setItem(CATEGORIES, JSON.stringify(customCategories));
+  localStorage.setItem(GOOGLE_ACCESS_TOKEN, googleAccessToken);
+  localStorage.setItem(ACCESS_TOKEN, accessToken.token);
+  localStorage.setItem(ACCESS_TOKEN_EXPIRED_AT, accessToken.exp);
+  localStorage.setItem(REFRESH_TOKEN, refreshToken.token);
+  localStorage.setItem(REFRESH_EXPIRED_AT, refreshToken.exp);
 }
 
 function removeUserInfos() {
-  Cookie.remove(REFRESH_TOKEN);
-  localStorage.removeItem(ACCESS_TOKEN);
-  localStorage.removeItem(USER_ID);
-  localStorage.removeItem(CATEGORIES);
+  localStorage.clear();
 }
 
 function getTokens() {
   return {
-    refreshToken: Cookie.get(REFRESH_TOKEN),
-    accessToken: JSON.parse(localStorage.getItem(ACCESS_TOKEN)),
+    googleAccessToken: localStorage.getItem(GOOGLE_ACCESS_TOKEN),
+    accessToken: localStorage.getItem(ACCESS_TOKEN),
+    accessTokenExp: localStorage.getItem(ACCESS_TOKEN_EXPIRED_AT),
+    refreshToken: localStorage.getItem(REFRESH_TOKEN),
+    refreshTokenExp: localStorage.getItem(REFRESH_EXPIRED_AT),
   };
 }
 
-function getUserInfos() {
-  return {
-    userId: localStorage.getItem(USER_ID),
-    customCategories: JSON.parse(localStorage.getItem(CATEGORIES)),
-  };
+function checkTokenExist() {
+  return !!localStorage.getItem(ACCESS_TOKEN);
 }
 
 async function updateAccessToken() {
-  const refreshToken = JSON.parse(Cookie.get(REFRESH_TOKEN));
-  const accessToken = await postRefresh(refreshToken.token);
+  const refreshToken = localStorage.getItem(REFRESH_TOKEN);
+  const accessToken = await postRefresh(refreshToken);
 
-  localStorage.setItem(ACCESS_TOKEN, JSON.stringify(accessToken));
+  localStorage.setItem(ACCESS_TOKEN, accessToken.token);
+  localStorage.setItem(ACCESS_TOKEN_EXPIRED_AT, accessToken.exp);
 }
 
 export {
   storeUserInfos,
   removeUserInfos,
-  getUserInfos,
   getTokens,
+  checkTokenExist,
   updateAccessToken,
 };
