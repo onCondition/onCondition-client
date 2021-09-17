@@ -29,6 +29,10 @@ const ConditionWrapper = styled.div`
 
   .status {
     align-items: center;
+
+    div {
+      max-height: 600px;
+    }
   }
 
   @media screen and (max-width: 640px) {
