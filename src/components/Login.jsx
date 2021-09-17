@@ -53,6 +53,7 @@ function Login() {
         setStatus(ERROR.LOGIN_FAIL);
       }
     }
+
     if (user.id) {
       handleLogin();
 

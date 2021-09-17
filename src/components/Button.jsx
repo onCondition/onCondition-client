@@ -27,14 +27,16 @@ function Button({
   backgroundColor,
   width,
   height,
+  disabled,
 }) {
   return (
     <ButtonSt
       type="button"
       onClick={onClick}
-      backgroundColor={backgroundColor}
+      backgroundColor={disabled ? theme.background.disable : backgroundColor}
       width={width}
       height={height}
+      disabled={disabled}
     >
       {text}
     </ButtonSt>
@@ -47,12 +49,14 @@ Button.propTypes = {
   backgroundColor: PropTypes.oneOf(Object.values(theme.background)),
   height: PropTypes.number,
   width: PropTypes.number,
+  disabled: PropTypes.bool,
 };
 
 Button.defaultProps = {
   backgroundColor: theme.background.main,
   width: 100,
   height: 50,
+  disabled: false,
 };
 
 export default Button;
