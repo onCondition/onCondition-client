@@ -17,7 +17,7 @@ async function getSleepData(creatorId) {
 }
 
 async function getSleepDetail(creatorId, id) {
-  const res = await axios.get(joinUrl(BASE, creatorId, "sleep"), id);
+  const res = await axios.get(joinUrl(BASE, creatorId, "sleep", id));
 
   if (res) {
     return res;

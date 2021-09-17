@@ -1,57 +1,47 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-// import { useDispatch } from "react-redux";
-// import styled from "styled-components";
 
 import BarGraph from "../components/graphs/BarGraph";
 import { PrevButton, NextButton } from "../components/PageButton";
-// import Button from "../components/Button";
-import { getSleepData } from "../api/sleep";
-// import { setError } from "../features/errorSlice";
+import getApi from "../api/category";
 
 function Sleep() {
-  // const [sleepData, setSleepData] = useState(null);
-  // const [currentPage, setCurrentPage] = useState(0);
-  // const [prevPage, setPrevPage] = useState(null);
-  // const [nextPage, setNextPage] = useState(null);
+  const [sleepData, setSleepData] = useState(null);
+  const [periods, setPeriods] = useState(null);
+  const { get } = getApi("sleep");
   const { creatorId } = useParams();
 
   async function getSleep(creatorId) {
-    const loadedData = await getSleepData(creatorId);
-    // const organizedData = [];
+    const loadedData = await get(creatorId);
 
     if (!loadedData) {
-      return ("nothing");
+      return;
     }
 
-    const loadedDataPerDate = Object.values(loadedData);
-
-    // setSleepData(loadedDataPerDate);
-
-    // loadedDataPerDate?.map((data) => {
-    //   organizedData.push([data.date, data.duration]);
-
-    return loadedDataPerDate;
+    const { data } = loadedData;
+    setSleepData(data);
   }
 
   useEffect(() => {
     getSleep(creatorId);
   }, []);
 
+  useEffect(() => {
+    if (sleepData) {
+      setPeriods(`${sleepData[0]._id} ~ ${ sleepData[sleepData.length - 1]._id} `);
+    }
+  }, [sleepData]);
+
   return (
     <div>
       <h1>수면</h1>
       <div>
-        <PrevButton
-          // onClick={}
-        />
-        <div>{creatorId}</div>
-        <NextButton
-          // onClick={}
-        />
+        <PrevButton />
+        <div>{periods}</div>
+        <NextButton />
       </div>
       <BarGraph
-        // IncommingData={data}
+        IncomingData={sleepData}
       />
     </div>
   );

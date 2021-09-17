@@ -1,23 +1,18 @@
 import React from "react";
+import { useParams, useHistory } from "react-router";
 import PropTypes from "prop-types";
 import { Bar } from "react-chartjs-2";
 
 import theme from "../../theme";
 import GraphWrapper from "./GraphWrapper";
 
-// const one = 1;
-// const two = 2;
-// const three = 3;
-// const four = 4;
-// const five = 5;
-const seven = 7;
-const max = 100;
-const min = -100;
-// const fif = 50;
-
-const NUMBER = { count: seven, min, max };
+const MAX_RADIUS = 100;
 
 const options = {
+  parsing: {
+    xAxisKey: "_id",
+    yAxisKey: "sum",
+  },
   responsive: true,
   legend: {
     display: false,
@@ -26,7 +21,7 @@ const options = {
   scales: {
     y: {
       min: 0,
-      max: 24,
+      max: 18,
       grid: {
         color: theme.background.main,
       },
@@ -52,18 +47,21 @@ const options = {
 };
 
 function BarGraph({ IncomingData }) {
-  // const [incomingData, setIncomingData] = useState(IncomingData);
+  const { creatorId } = useParams();
+  const history = useHistory();
 
-  // useEffect(() => {
+  options.onClick = ({ chart }) => {
+    const dataOid = chart.tooltip.dataPoints[0].raw.oid[0];
+    history.push(`/${creatorId}/sleep/${dataOid}`);
+  };
 
-  // })
   const data = {
     datasets: [
       {
         backgroundColor: theme.background.sub,
         borderColor: theme.background.sub,
         borderWidth: 2,
-        borderRadius: NUMBER.max,
+        borderRadius: MAX_RADIUS,
         borderSkipped: false,
         hoverBackgroundColor: theme.background.main,
         hoverBorderColor: theme.background.main,
@@ -83,7 +81,7 @@ function BarGraph({ IncomingData }) {
 }
 
 BarGraph.propTypes = {
-  IncomingData: PropTypes.array || PropTypes.object ,
+  IncomingData: PropTypes.array,
 };
 
 export default BarGraph;

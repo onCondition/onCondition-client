@@ -78,7 +78,7 @@ function App() {
                 <PrivateRoute exact path="/:creatorId/activity">
                   <Activity />
                 </PrivateRoute>
-                <PrivateRoute path="/:creatorId/sleep">
+                <PrivateRoute exact path="/:creatorId/sleep">
                   <Sleep />
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/preference">
