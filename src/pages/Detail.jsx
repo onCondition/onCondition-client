@@ -69,10 +69,9 @@ function Detail() {
       text,
     });
 
-    setData(values);
-
     if (result) {
       setIsEditing(false);
+      setData(result.data);
     }
   };
 

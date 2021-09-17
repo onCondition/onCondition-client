@@ -98,16 +98,15 @@ function ContentForm({
       resizedImage = resizeImage(imageUrl);
     }
 
-    const result = await onSubmit({
+    await onSubmit({
       date, heartCount, text, image: resizedImage,
     });
 
-    if (result) {
-      setDate(defaultValues.date);
-      setHeartCount(defaultValues.heartCount);
-      setText(defaultValues.text);
-      setImage(null);
-    }
+    setDate("");
+    setHeartCount(0);
+    setText("");
+    setImageUrl("/img/add-picture.png");
+    setImage(null);
   };
 
   const onImageChange = function ({ target }) {
