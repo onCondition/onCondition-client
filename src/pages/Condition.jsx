@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import firebase from "../config/firebase";
@@ -12,6 +12,7 @@ import RadarGraph from "../components/graphs/RadarGraph";
 import { getCondition } from "../api/condition";
 import { postGoogleToken } from "../api/auth";
 import { setError } from "../features/errorSlice";
+import { getISOTime } from "../utils/time";
 
 const ConditionWrapper = styled.div`
   display: flex;
@@ -57,6 +58,7 @@ function Condition() {
   const [heartCount, setHeartCount] = useState(0);
   const [isUpdating, setIsUpdating] = useState(true);
   const { creatorId } = useParams();
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -96,10 +98,17 @@ function Condition() {
   }, []);
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(async (user) => {
-      if (!user) {
+    firebase.auth().onAuthStateChanged(async (firebaseUser) => {
+      if (!firebaseUser) {
         setIsUpdating(false);
 
+        return;
+      }
+
+      const nowTime = new Date();
+      const { pastMidnight } = getISOTime(nowTime);
+
+      if (user.lastAccessDate >= pastMidnight) {
         return;
       }
 
