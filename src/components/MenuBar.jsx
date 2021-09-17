@@ -94,6 +94,7 @@ function MenuBar() {
   const handleMenuClick = function (clickedCategory) {
     history.push(`/${userId}/${clickedCategory}`);
     setClickedCategory(clickedCategory);
+    setIsShowingMenu(false);
   };
 
   const handleShowMenuButton = function () {
