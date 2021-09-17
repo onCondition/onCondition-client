@@ -5,6 +5,7 @@ import { useHistory, useLocation } from "react-router";
 
 import firebase from "../config/firebase";
 import Logout from "./Logout";
+import Button from "./Button";
 
 const MenuWrapper = styled.div`
   position: fixed;
@@ -17,33 +18,37 @@ const MenuWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.small};
   text-align: center;
 
-    .left {
-      text-align: left;
-
-      .name {
-        margin: 15%;
-        font-weight: bold;
-      }
-
-      .menu {
-        line-height: 3rem;
-        padding: 5% 15%;
-        cursor: pointer;
-      }
-
-      .menu.clicked {
-        background-color: ${({ theme }) => theme.background.main};
-      }
-
-      .button-wrapper {
-        padding-left: 13%;
-      }
+    .button-wrapper {
+      padding-left: 13%;
     }
 
     .top {
       display: none;
       position: fixed;
       top: 0;
+    }
+
+    .hidden-menu {
+      margin-top: 40px;
+      width: 200px;
+      text-align: left;
+    }
+
+    .name {
+        margin: 15%;
+        font-weight: bold;
+      }
+
+    .menu {
+      padding: 5% 15%;
+      background-color: ${({ theme }) => theme.background.sub};
+      line-height: 3rem;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .menu.clicked {
+      background-color: ${({ theme }) => theme.background.main};
     }
 
     @media screen and (max-width: 1080px) {
@@ -60,6 +65,12 @@ const MenuWrapper = styled.div`
       .top {
         display: block;
         margin-right: 3%;
+
+        button {
+          width: 50px;
+          height: 30px;
+          margin: 0;
+        }
       }
     }
 `;
@@ -70,7 +81,8 @@ function MenuBar() {
   const defaultCategories = ["condition", "activity", "meal", "sleep"];
   const { pathname } = useLocation();
   const currentCategory = pathname.split("/").pop();
-  const [ clickedMenu, setClickedMenu ] = useState(currentCategory);
+  const [clickedMenu, setClickedMenu] = useState(currentCategory);
+  const [isShowingMenu, setIsShowingMenu] = useState(false);
   const { id: userId, customCategories } = useSelector((state) => state.user);
 
   const customCategoryNames = user
@@ -82,6 +94,10 @@ function MenuBar() {
   const handleMenuClick = function (clickedMenu) {
     history.push(`/${userId}/${clickedMenu}`);
     setClickedMenu(clickedMenu);
+  };
+
+  const handleShowMenuButton = function () {
+    setIsShowingMenu(!isShowingMenu);
   };
 
   const categoryButtons = categories.map((category) => (
@@ -106,8 +122,14 @@ function MenuBar() {
         <Logout onLogout={handleLogout} />
       </div>
       <div className="top">
-        <button>메뉴</button>
+        <Button
+          text="메뉴"
+          onClick={handleShowMenuButton}
+        />
       </div>
+      {isShowingMenu && <div className="hidden-menu">
+        {categoryButtons}
+      </div>}
     </MenuWrapper>
   );
 }
