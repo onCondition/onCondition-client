@@ -9,7 +9,7 @@ import CustomCategoryStatus from "../components/CustomCategoryStatus";
 import CreateCategoryForm from "../components/CreateCategoryForm";
 import { postGoogleToken } from "../api/auth";
 import { addCustomCategory, deleteCustomCategory } from "../api/customCategory";
-import { setError } from "../features/errorSlice";
+import { getTokens } from "../helpers/userInfo";
 import { COPY } from "../constants/buttons";
 import { setCustomCategories } from "../features/userSlice";
 
@@ -50,12 +50,8 @@ function Preference() {
   const getGoogleFitData = async function () {
     setIsUpdating(true);
 
-    const res = await postGoogleToken(id);
-
-    if (!res) {
-      dispatch(setError("google data update failed"));
-    }
-
+    const { googleAccessToken } = getTokens();
+    await postGoogleToken(id, googleAccessToken);
     setIsUpdating(false);
   };
 
