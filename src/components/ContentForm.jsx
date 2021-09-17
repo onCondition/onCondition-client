@@ -11,7 +11,7 @@ import resizeImage from "../helpers/resizeImage";
 import { getKoreanTimeString } from "../utils/time";
 import theme from "../theme";
 
-const FromWrapper = styled.div`
+const FormWrapper = styled.div`
   margin: 0 auto;
   padding: 0 20px;
 
@@ -130,7 +130,7 @@ function ContentForm({
   };
 
   return (
-    <FromWrapper>
+    <FormWrapper>
       <Wrapper color={color}>
         <div className="header">
           {!date ? <Input
@@ -158,7 +158,7 @@ function ContentForm({
         <Button text={submitButtonText} onClick={handleSubmitButton} />
         {additionalButton}
       </ButtonsWrapper>
-    </FromWrapper>
+    </FormWrapper>
   );
 }
 

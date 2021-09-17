@@ -35,7 +35,6 @@ async function getFriends(creatorId) {
   }
 
   const res = await axios.get(joinUrl(creatorId, "friend"));
-  console.log(res);
 
   if (res) {
     return res.data;

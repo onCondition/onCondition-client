@@ -77,7 +77,6 @@ const GlobalStyle = createGlobalStyle`
   @media screen and (max-width: 640px) {
     h1, h2 {
       margin: 10px 30px 10px 30px;
-
     }
   }
 `;
