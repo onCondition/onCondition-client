@@ -11,7 +11,6 @@ const errorSlice = createSlice({
   initialState,
   reducers: {
     setError(state, action) {
-      console.log(action);
       state.hasError = true;
       state.statusCode = action.payload.statusCode;
       state.message = action.payload.message;

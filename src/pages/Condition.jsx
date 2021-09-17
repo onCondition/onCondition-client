@@ -56,7 +56,7 @@ function Condition() {
   const [dataPerDate, setDataPerDate] = useState(null);
   const [status, setStatus] = useState(null);
   const [heartCount, setHeartCount] = useState(0);
-  const [isUpdating, setIsUpdating] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
   const { creatorId } = useParams();
   const user = useSelector((state) => state.user);
 
@@ -104,11 +104,15 @@ function Condition() {
         return;
       }
 
+      setIsUpdating(true);
+
       const nowTime = new Date();
       const { pastMidnight } = getISOTime(nowTime);
       const userAccessDate = new Date(user.lastAccessDate);
 
       if (userAccessDate >= pastMidnight) {
+        setIsUpdating(false);
+
         return;
       }
 
