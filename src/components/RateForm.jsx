@@ -8,6 +8,7 @@ import HeartCounter from "./HeartCounter";
 import ButtonsWrapper from "./ButtonsWrapper";
 import Button from "./Button";
 import theme from "../theme";
+import { getKoreanTimeString } from "../utils/time";
 
 const Textarea = styled.textarea`
   flex-grow: 1;
@@ -58,7 +59,7 @@ function RateForm({
     <form>
       <Wrapper color={color} isShrink>
         <div>
-          <p>{date}</p>
+          <p>{getKoreanTimeString(date)}</p>
           <span>{`${type || ""} ${snippetBrackets}`}</span>
           {disabled
             ? <HeartCounter />

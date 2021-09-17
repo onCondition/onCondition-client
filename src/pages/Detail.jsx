@@ -125,13 +125,13 @@ function Detail() {
     return null;
   }
 
-  const type = data.category ? data.category : data.type;
+  const type = data.category ? data.category : data.type || "";
   const snippet = data.duration ? `(${data.duration})` : "";
 
   const heading = !hasPicture
     ? <>
       <p>{getKoreanTimeString(data.date)}</p>
-      <span>{`${type || "meal"} ${snippet} `}</span>
+      <span>{`${type} ${snippet} `}</span>
       <HeartCounter count={data?.heartCount || 0} />
     </> : null;
 
