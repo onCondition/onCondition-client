@@ -1,6 +1,6 @@
 import axios from "../api/axiosInstance";
 
-const useMock = process.env === "development";
+const useMock = false;
 
 const numbers = 16;
 
@@ -35,6 +35,7 @@ async function getFriends(creatorId) {
   }
 
   const res = await axios.get(joinUrl(creatorId, "friend"));
+  console.log(res);
 
   if (res) {
     return res.data;
