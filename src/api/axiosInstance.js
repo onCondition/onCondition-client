@@ -6,19 +6,20 @@ import { setError } from "../features/errorSlice";
 import { getTokens, updateAccessToken } from "../helpers/userInfo";
 
 async function setAccessToken(config) {
-  const { accessToken } = getTokens();
+  const { accessToken, accessTokenExp } = getTokens();
 
   if (!accessToken) {
     throw new axios.Cancel(ERROR.ACCESS_TOKEN_NOT_EXIST);
   }
-  const oneSecondInMill = 1000;
-  const isExpired = accessToken.exp < (Date.now() / oneSecondInMill);
 
-  let token = accessToken.token;
+  const oneSecondInMill = 1000;
+  const isExpired = Number(accessTokenExp) < (Date.now() / oneSecondInMill);
+
+  let token = accessToken;
 
   if (isExpired) {
     await updateAccessToken();
-    token = getTokens().accessToken.token;
+    token = getTokens().accessToken;
   }
 
   config.headers.authorization = `Bearer ${token}`;

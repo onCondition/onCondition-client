@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 const DetailWrapper = styled.div`
   display: flex;
+  max-height: 90%;
+  max-width: 90%;
   flex-flow: row wrap;
   margin: 10px;
   padding: 20px 0;

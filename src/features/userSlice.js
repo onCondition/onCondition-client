@@ -1,31 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { postLogin } from "../api/auth";
+import { postLogin, getUserInfos } from "../api/auth";
 import { storeUserInfos, removeUserInfos } from "../helpers/userInfo";
 
 const initialState = {
   id: "",
   customCategories: [],
+  lastAccessDate: "",
 };
 
 const login = createAsyncThunk("user/login",
   async function ({ idToken, googleAccessToken }) {
     try {
-      const {
-        accessToken,
-        refreshToken,
-        userId,
-        customCategories,
-      } = await postLogin(idToken);
+      const { accessToken, refreshToken } = await postLogin(idToken);
 
-      storeUserInfos({
-        accessToken,
-        refreshToken,
-        userId,
-        customCategories,
-        googleAccessToken,
-      });
+      storeUserInfos({ accessToken, refreshToken, googleAccessToken });
 
-      return { userId, customCategories };
+      const { userId, customCategories, lastAccessDate } = await getUserInfos();
+
+      return {
+        userId, customCategories, lastAccessDate,
+      };
     } catch (err) {
       return Promise.reject(err);
     }
@@ -38,14 +32,16 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUserInfos(state, { payload }) {
-      const { userId, customCategories } = payload;
+      const { userId, customCategories, lastAccessDate } = payload;
 
-      if (userId && customCategories) {
+      if (userId && customCategories && lastAccessDate) {
         state.id = userId;
         state.customCategories = customCategories;
+        state.lastAccessDate = lastAccessDate;
       } else {
         state.id = null;
         state.customCategories = [];
+        state.lastAccessDate = null;
       }
     },
     setCustomCategories(state, { payload }) {
@@ -54,18 +50,19 @@ const userSlice = createSlice({
   },
   extraReducers: {
     [login.fulfilled]: (state, { payload }) => {
-      const { userId, customCategories } = payload;
-
-      state.id = userId;
-      state.customCategories = customCategories;
+      state.id = payload.userId;
+      state.customCategories = payload.customCategories;
+      state.lastAccessDate = payload.lastAccessDate;
     },
     [login.rejected]: (state) => {
-      state.id = "";
+      state.id = null;
       state.customCategories = [];
+      state.lastAccessDate = null;
     },
     [logout.fulfilled]: (state) => {
       state.id = null;
       state.customCategories = [];
+      state.lastAccessDate = null;
     },
   },
 });
