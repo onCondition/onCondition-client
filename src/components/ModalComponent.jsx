@@ -23,7 +23,7 @@ const BoardWrapper = styled.div`
 
 const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: space-center;
+  justify-content: center;
 `;
 
 function ModalComponent({

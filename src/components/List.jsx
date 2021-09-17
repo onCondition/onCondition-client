@@ -11,8 +11,8 @@ const Li = styled.li`
   align-items: center;
   margin: 10px auto;
   line-height: 4rem;
-  min-width: 435px;
   max-width: 630px;
+  min-width: 440px;
   border-radius: 30px;
   box-shadow: ${({ theme }) => theme.shadow.main};
   background: ${(props) => props.color};
@@ -25,18 +25,32 @@ const Li = styled.li`
     height: 3rem;
     object-fit: cover;
   }
+
+  @media screen and (max-width: 440px) {
+    flex-direction: column;
+    width: calc(100% - 20px);
+    min-width: 0;
+    padding-top: 20px;
+
+    div {
+      height: 1.5rem;
+    }
+
+    img {
+      width: 50%;
+      height: 100px;
+    }
+  }
 `;
 
 function List({
   color,
   children,
-  key,
   onClick,
 }) {
   return (
     <Li
       color={color}
-      key={key}
       onClick={onClick}
     >
       {children}
@@ -51,7 +65,6 @@ List.propTypes = {
     PropTypes.element,
     PropTypes.string,
   ]),
-  key: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };
 

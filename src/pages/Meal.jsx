@@ -8,6 +8,7 @@ import { PrevButton, NextButton } from "../components/PageButton";
 import ContentForm from "../components/ContentForm";
 import HeartCounter from "../components/HeartCounter";
 import getApi from "../api/category";
+import { getKoreanTimeString } from "../utils/time";
 import theme from "../theme";
 
 const Container = styled.div`
@@ -16,6 +17,7 @@ const Container = styled.div`
   justify-content: center;
 
   .list {
+    padding: 15px;
     flex-grow: 1;
     justify-items: center;
     max-width: 680px;
@@ -23,7 +25,6 @@ const Container = styled.div`
 
   .viewer {
     width: 680px;
-    text-align: center;
   }
 `;
 
@@ -57,10 +58,10 @@ function Meal() {
   }, [isReloadRequired]);
 
   const handleSubmitForm = async function ({
-    date, heartCount, url, text,
+    date, heartCount, image, text,
   }) {
     const newMeal = await post(creatorId, {
-      date, url, heartCount, text,
+      date, image, heartCount, text,
     });
 
     if (newMeal) {
@@ -76,14 +77,18 @@ function Meal() {
     loadMeals(nextPage);
   };
 
+  if (!meals) {
+    return null;
+  }
+
   const mealBars = (meals.length) ? meals.map((meal) => {
     return (
       <Link to={`/${creatorId}/meal/${meal._id}`} key={meal._id}>
-        <List color={theme.background.main} key={meal.id}>
+        <List color={theme.background.main}>
           {meal.url
             ? <img src={meal.url} />
             : <img src="/img/add-picture.png" />}
-          <div>{meal.date}</div>
+          <div>{getKoreanTimeString(meal.date)}</div>
           <HeartCounter count={meal.rating.heartCount} />
         </List>
       </Link>

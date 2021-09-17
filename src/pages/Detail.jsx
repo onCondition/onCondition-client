@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
+import { useSelector } from "react-redux";
 
-import Modal from "../components/modalComponent";
+import Modal from "../components/ModalComponent";
 import ModalWrapper from "../components/ModalWrapper";
 import DetailWrapper from "../components/DetailWrapper";
 import ButtonsWrapper from "../components/ButtonsWrapper";
@@ -18,6 +19,7 @@ import CircleButton from "../components/CircleButton";
 import theme from "../theme";
 
 import getApi from "../api/category";
+import { getKoreanTimeString } from "../utils/time";
 import { ERROR } from "../constants/messages";
 import {
   CANCEL, EDIT, DELETE, SAVE,
@@ -25,6 +27,7 @@ import {
 
 function Detail() {
   const history = useHistory();
+  const user = useSelector((state) => state.user);
   const { creatorId, category, ratingId } = useParams();
   const { getById, editById, deleteById } = getApi(category);
   const [data, setData] = useState(null);
@@ -66,10 +69,9 @@ function Detail() {
       text,
     });
 
-    setData(values);
-
     if (result) {
       setIsEditing(false);
+      setData(result.data);
     }
   };
 
@@ -119,16 +121,18 @@ function Detail() {
   );
 
   if (!data) {
-    return <p>Loading...</p>;
+    return null;
   }
 
-  const heading = !hasPicture ? (
-    <>
-      <p>{data.date}</p>
-      <span>{`${data.type} (${data.duration})`}</span>
+  const type = data.category ? data.category : data.type || "";
+  const snippet = data.duration ? `(${data.duration})` : "";
+
+  const heading = !hasPicture
+    ? <>
+      <p>{getKoreanTimeString(data.date)}</p>
+      <span>{`${type} ${snippet} `}</span>
       <HeartCounter count={data?.heartCount || 0} />
-    </>
-  ) : null;
+    </> : null;
 
   return (
     <ModalWrapper>
@@ -143,8 +147,8 @@ function Detail() {
       >x</CircleButton>
       <DetailWrapper>
         <div className="viewer">
-          {hasPicture ? (
-            isEditing
+          {hasPicture
+            ? isEditing
               ? <ContentForm
                 isEditForm
                 onSubmit={handleFormSubmit}
@@ -161,8 +165,7 @@ function Detail() {
                   {deleteButton}
                 </ButtonsWrapper>
               </>
-          ) : (
-            isEditing
+            : isEditing
               ? <RateForm
                 onSubmit={handleFormSubmit}
                 submitButtonText={SAVE}
@@ -176,12 +179,14 @@ function Detail() {
                   width={400}
                   height={260}
                 />
-                <ButtonsWrapper isShrink>
-                  {editButton}
-                  {deleteButton}
-                </ButtonsWrapper>
+                {creatorId === user.id && (
+                  <ButtonsWrapper isShrink>
+                    {editButton}
+                    {deleteButton}
+                  </ButtonsWrapper>
+                )}
               </div>
-          )}
+          }
         </div>
         <div className="comment">
           <CommentContainer

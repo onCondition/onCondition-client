@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
+import firebase from "../config/firebase";
 import ContentViewer from "../components/ContentViewer";
 import HeartCounter from "../components/HeartCounter";
 import Button from "../components/Button";
 import LineGraph from "../components/graphs/LineGraph";
 import RadarGraph from "../components/graphs/RadarGraph";
 import { getCondition } from "../api/condition";
+import { postGoogleToken } from "../api/auth";
+import { getTokens } from "../helpers/userInfo";
+import { getISOTime } from "../utils/time";
 
 const ConditionWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   color: ${({ theme }) => theme.text.main};
 
   .graph, .status {
-    margin: 5px;
-  }
-
-  .graph {
+    margin: 20px;
     width: 630px;
   }
 
@@ -27,8 +30,17 @@ const ConditionWrapper = styled.div`
   }
 
   .status {
-    flex-basis: 630px;
     align-items: center;
+
+    div {
+      max-height: 600px;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .graph, .status {
+      width: calc(100% - 20px);
+    }
   }
 `;
 
@@ -43,6 +55,16 @@ const StatusInfo = styled.div`
   box-shadow: ${({ theme }) => theme.shadow.main};
   background-color: ${({ theme }) => theme.background.main};
   font-size: ${({ theme }) => theme.fontSizes.small};
+
+  @media screen and (max-width: 650px) {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr;
+  }
+
+  @media screen and (max-width: 370px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 function Condition() {
@@ -51,7 +73,9 @@ function Condition() {
   const [dataPerDate, setDataPerDate] = useState(null);
   const [status, setStatus] = useState(null);
   const [heartCount, setHeartCount] = useState(0);
+  const [isUpdating, setIsUpdating] = useState(false);
   const { creatorId } = useParams();
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     async function loadCondition(creatorId) {
@@ -89,6 +113,37 @@ function Condition() {
     loadCondition(creatorId);
   }, []);
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(async (firebaseUser) => {
+      if (!firebaseUser) {
+        setIsUpdating(false);
+
+        return;
+      }
+
+      setIsUpdating(true);
+
+      const nowTime = new Date();
+      const { pastMidnight } = getISOTime(nowTime);
+      const userAccessDate = new Date(user.lastAccessDate);
+
+      if (userAccessDate >= pastMidnight) {
+        setIsUpdating(false);
+
+        return;
+      }
+
+      const { googleAccessToken } = getTokens();
+      const res = await postGoogleToken(creatorId, googleAccessToken);
+
+      if (!res) {
+        return;
+      }
+
+      setIsUpdating(false);
+    });
+  }, []);
+
   const handleConvertButtonClick = function () {
     setIsRadarGraph(!isRadarGraph);
   };
@@ -103,6 +158,7 @@ function Condition() {
   return (
     <div>
       <h1>내 컨디션</h1>
+      {isUpdating && <p>구글 데이터를 불러오고 있습니다</p>}
       {!!dataPerDate && <ConditionWrapper>
         <div className="graph">
           <Button

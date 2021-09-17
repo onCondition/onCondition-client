@@ -2,19 +2,17 @@ import axios from "axios";
 import axiosInstance from "./axiosInstance";
 import { ERROR } from "../constants/messages";
 
+const baseURL = process.env.REACT_APP_API_SERVER_URI;
+
 async function postLogin(idToken) {
   try {
-    const res = await axios.post("/api/login",
+    const res = await axios.post(`${baseURL}/login`,
       null,
-      { headers: { token: idToken } });
+      { headers: { authorization: `Bearer ${idToken}` } });
 
-    const {
-      accessToken, refreshToken, userId, customCategories,
-    } = res.data;
+    const { accessToken, refreshToken } = res.data;
 
-    return {
-      accessToken, refreshToken, userId, customCategories,
-    };
+    return { accessToken, refreshToken };
   } catch (err) {
     throw new Error(ERROR.LOGIN_FAIL);
   }
@@ -22,9 +20,9 @@ async function postLogin(idToken) {
 
 async function postRefresh(refreshToken) {
   try {
-    const res = await axios.post("/api/refresh",
+    const res = await axios.post(`${baseURL}/refresh`,
       null,
-      { headers: { token: refreshToken } });
+      { headers: { authorization: `Bearer ${refreshToken}` } });
 
     return res.data.accessToken;
   } catch (err) {
@@ -32,16 +30,24 @@ async function postRefresh(refreshToken) {
   }
 }
 
-async function postGoogleToken(userId, googleToken) {
-  try {
-    const res = await axiosInstance.post(`/api/${userId}/googleFit`, googleToken);
+async function postGoogleToken(userId, googleAccessToken) {
+  const res = await axiosInstance.post(`/${userId}/googleFit`, {
+    googleAccessToken,
+  });
 
-    if (res) {
-      return res;
-    }
-  } catch (err) {
-    throw new Error(ERROR.GOOGLE_TOKEN_NOT_AVAILABLE);
+  if (res) {
+    return res;
   }
 }
 
-export { postLogin, postRefresh, postGoogleToken };
+async function getUserInfos() {
+  const res = await axiosInstance.get("/");
+
+  if (res) {
+    return res;
+  }
+}
+
+export {
+  postLogin, postRefresh, postGoogleToken, getUserInfos,
+};

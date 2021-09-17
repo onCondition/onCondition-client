@@ -5,6 +5,7 @@ import theme from "../theme";
 import CardContainer from "./CardContainer";
 import HeartCounter from "./HeartCounter";
 import ProfileImageWrapper from "./ProfileImageWrapper";
+import { getKoreanDateString } from "../utils/time";
 
 function FriendCard({
   id,
@@ -13,22 +14,25 @@ function FriendCard({
   lastAccessDate,
   scores,
   onClick,
+  graph,
+  color,
 }) {
   const handleCardClick = function () {
     onClick(id);
   };
 
   const scoresArray = Object.values(scores);
-  const score = scoresArray.reduce((sum, score) => sum + score)
-    / scoresArray.length;
+  const score = scoresArray.length
+    ? scoresArray.reduce((sum, score) => sum + score) / scoresArray.length
+    : 0;
 
   return (
-    <CardContainer color={theme.background.main} onClick={handleCardClick}>
+    <CardContainer color={color} onClick={handleCardClick}>
       <ProfileImageWrapper>
-        <img src={profileUrl} alt="profile" />
+        {graph ? graph : <img src={profileUrl} alt="profile" />}
       </ProfileImageWrapper>
       <p>{name}</p>
-      <p>{lastAccessDate}</p>
+      <p>{getKoreanDateString(lastAccessDate)}</p>
       <HeartCounter count={score} />
     </CardContainer>
   );
@@ -41,10 +45,13 @@ FriendCard.propTypes = {
   scores: PropTypes.objectOf(PropTypes.number),
   lastAccessDate: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  graph: PropTypes.element,
+  color: PropTypes.oneOf([theme.background.main, theme.background.sub]),
 };
 
 FriendCard.defaultProps = {
   score: 0,
+  color: theme.background.main,
 };
 
 export default FriendCard;

@@ -23,6 +23,10 @@ const ButtonWrapper = styled.div`
   display: flex;
   width: 220px;
   margin: 0 0 0 auto;
+
+  @media screen and (max-width: 400px) {
+    width: 200px;
+  }
 `;
 
 function CommentForm({

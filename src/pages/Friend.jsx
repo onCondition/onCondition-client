@@ -13,6 +13,12 @@ const FriendWrapper = styled.div`
   gap: ${({ theme }) => theme.gaps.medium};
   justify-content: center;
   padding: 10px;
+
+  @media screen and (max-width: 400px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 function Friend() {
@@ -58,7 +64,7 @@ function Friend() {
   };
 
   const handleFriendClick = function (friendId) {
-    history.push(`${friendId}`);
+    history.push(`/${creatorId}/friend/${friendId}`);
   };
 
   const pendingCardsReceiving = receivedRequests.map(({
@@ -109,7 +115,7 @@ function Friend() {
   ));
 
   const handleAddFriend = function () {
-    history.push("new");
+    history.push(`/${creatorId}/friend/new`);
   };
 
   return (

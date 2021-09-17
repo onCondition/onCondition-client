@@ -3,15 +3,26 @@ import { store } from "../app/store";
 import { ERROR } from "../constants/messages";
 import STATUS_CODES from "../constants/statusCodes";
 import { setError } from "../features/errorSlice";
+import { getTokens, updateAccessToken } from "../helpers/userInfo";
 
-function setAccessToken(config) {
-  const accessToken = localStorage.getItem("accessToken");
+async function setAccessToken(config) {
+  const { accessToken, accessTokenExp } = getTokens();
 
   if (!accessToken) {
     throw new axios.Cancel(ERROR.ACCESS_TOKEN_NOT_EXIST);
   }
 
-  config.headers.token = accessToken;
+  const oneSecondInMill = 1000;
+  const isExpired = Number(accessTokenExp) < (Date.now() / oneSecondInMill);
+
+  let token = accessToken;
+
+  if (isExpired) {
+    await updateAccessToken();
+    token = getTokens().accessToken;
+  }
+
+  config.headers.authorization = `Bearer ${token}`;
 
   return config;
 }
@@ -38,7 +49,8 @@ function handleResponseError(err) {
   store.dispatch(setError(error));
 }
 
-const instance = axios.create();
+const baseURL = process.env.REACT_APP_API_SERVER_URI;
+const instance = axios.create({ baseURL });
 
 instance.interceptors.request.use(setAccessToken, handleRequestError);
 instance.interceptors.response.use(parseResponseData, handleResponseError);

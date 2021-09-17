@@ -3,37 +3,20 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
+import Loading from "../components/Loading";
 import firebase from "../config/firebase";
 import { login } from "../features/userSlice";
 import { ERROR } from "../constants/messages";
 import USER_INFO_SCOPE from "../constants/userInfoScope";
 
-const Wrapper = styled.div`
-  display: flex;
-  position: fixed;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  align-items: center;
-  justify-content: center;
-  background-color: ${({ theme }) => theme.background.sub};
-`;
-
-const Logo = styled.img`
-  width: 40%;
-  margin-top: -10em;
-`;
-
 const GoogleLogin = styled.img`
+  display: absolute;
+  height: 3rem;
   cursor: pointer;
 `;
 
 function Login() {
-  const [errorStatus, setErrorStatus] = useState("");
+  const [status, setStatus] = useState("");
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -41,6 +24,7 @@ function Login() {
   function loginWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
 
+    setStatus("Waiting...");
     provider.addScope(USER_INFO_SCOPE);
     firebase.auth().signInWithRedirect(provider);
   }
@@ -51,23 +35,25 @@ function Login() {
 
   useEffect(() => {
     async function dispatchLoginResult() {
+      setStatus("Waiting...");
+
       try {
         const { user, credential } = await firebase.auth().getRedirectResult();
 
         if (!user) {
+          setStatus("");
+
           return;
         }
 
         const idToken = await user.getIdToken(true);
-        const { accessToken } = credential;
-        const refreshToken = user.refreshToken;
-        const googleToken = { accessToken, refreshToken };
 
-        dispatch(login({ idToken, googleToken }));
+        dispatch(login({ idToken, googleAccessToken: credential.accessToken }));
       } catch {
-        setErrorStatus(ERROR.LOGIN_FAIL);
+        setStatus(ERROR.LOGIN_FAIL);
       }
     }
+
     if (user.id) {
       handleLogin();
 
@@ -78,12 +64,15 @@ function Login() {
   }, [user.id]);
 
   return (
-    <Wrapper>
-      {errorStatus && <p>{errorStatus}</p>}
-      <Logo src="/logo.png" />
-      <GoogleLogin src="/google_login.png" onClick={loginWithGoogle} />
-    </Wrapper>
-  );
+    <>
+      {status ? (
+        <Loading message={status} />
+      ) : (
+        <Loading>
+          <GoogleLogin src="/google_login.png" onClick={loginWithGoogle} />
+        </Loading>
+      )}
+    </>);
 }
 
 export default Login;

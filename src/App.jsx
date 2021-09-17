@@ -10,14 +10,20 @@ import Error from "./pages/Error";
 import Condition from "./pages/Condition";
 import Meal from "./pages/Meal";
 import Activity from "./pages/Activity";
-import CustomAlbum from "./pages/CustomAlbum";
-import Preference from "./pages/preference";
+import CustomCategory from "./pages/CustomCategory";
 import Friend from "./pages/Friend";
+import FriendNew from "./pages/FriendNew";
+import Preference from "./pages/Preference";
 import Detail from "./pages/Detail";
+import Sleep from "./pages/Sleep";
+import FriendDetail from "./pages/FriendDetail";
+
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
-import { setUserInfos, logout } from "./features/userSlice";
-import { getUserInfos } from "./helpers/userInfo";
+import Loading from "./components/Loading";
+import { setUserInfos } from "./features/userSlice";
+import { getUserInfos } from "./api/auth";
+import { checkTokenExist } from "./helpers/userInfo";
 import MenuBar from "./components/MenuBar";
 
 const AppWrapper = styled.div`
@@ -26,25 +32,43 @@ const AppWrapper = styled.div`
 
 const PageWrapper = styled.div`
   margin-left: 300px;
+  margin-top: 50px;
+  text-align: center;
+
+  @media screen and (max-width: 1080px) {
+    margin: 0;
+    margin-top: 70px;
+  }
 `;
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const user = useSelector((state) => state.user);
   const { hasError, ...error } = useSelector((state) => state.error);
   const dispatch = useDispatch();
-  const { userId, customCategories } = getUserInfos();
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        dispatch(logout());
+    async function dispatchUserInfos() {
+      const res = await getUserInfos();
+
+      if (!res) {
+        return;
       }
 
+      const { userId, customCategories, lastAccessDate } = res;
+
+      dispatch(setUserInfos({ userId, customCategories, lastAccessDate }));
       setIsLoaded(true);
+    }
+
+    firebase.auth().onAuthStateChanged(() => {
+      if (checkTokenExist()) {
+        dispatchUserInfos();
+      } else {
+        setIsLoaded(true);
+      }
     });
   }, []);
-
-  dispatch(setUserInfos({ userId, customCategories }));
 
   return (
     <ThemeProvider theme={theme}>
@@ -56,46 +80,49 @@ function App() {
             <PageWrapper>
               <Switch>
                 <Route exact path="/">
-                  <Redirect to={`/${userId}/condition`} />
+                  <Redirect to={user.id ? `/${user.id}/condition` : "/login"} />
                 </Route>
                 <Route path="/login">
                   <Login />
                 </Route>
-                <PrivateRoute path="/:creatorId/condition">
+                <PrivateRoute exact path="/:creatorId/condition">
                   <Condition />
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/friend/new">
+                  <FriendNew />
+                </PrivateRoute>
+                <PrivateRoute path="/:creatorId/friend/:friendId">
+                  <FriendDetail />
                 </PrivateRoute>
                 <PrivateRoute path="/:creatorId/friend">
                   <Friend />
                 </PrivateRoute>
-                <PrivateRoute path="/:creatorId/meal">
+                <PrivateRoute exact path="/:creatorId/meal">
                   <Meal />
                 </PrivateRoute>
-                <PrivateRoute path="/:creatorId/activity">
+                <PrivateRoute exact path="/:creatorId/activity">
                   <Activity />
                 </PrivateRoute>
-                <PrivateRoute path="/:creatorId/sleep">
-                  <p>Sleep</p>
+                <PrivateRoute exact path="/:creatorId/sleep">
+                  <Sleep />
                 </PrivateRoute>
-                <PrivateRoute path="/:creatorId/:category">
-                  <CustomAlbum />
-                </PrivateRoute>
-                <PrivateRoute path="/:creatorId/:preference">
+                <PrivateRoute path="/:creatorId/preference">
                   <Preference />
                 </PrivateRoute>
-                <PrivateRoute path="/:creatorId/friend/:friendId">
-                  <p>Friend Detail</p>
+                <PrivateRoute exact path="/:creatorId/:category">
+                  <CustomCategory />
                 </PrivateRoute>
+                <Route path="/:creatorId/:category/:ratingId">
+                  <Detail />
+                </Route>
                 <Route path="*">
                   <p>Not Found</p>
                 </Route>
               </Switch>
-              <Route path="/:creatorId/:category/:ratingId">
-                <Detail />
-              </Route>
             </PageWrapper>
           </>
         ) : (
-          <p>waiting...</p>
+          <Loading />
         )}
       </AppWrapper>
       <GlobalStyle />

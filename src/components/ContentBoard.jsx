@@ -17,6 +17,11 @@ const Outer = styled.div`
   height: ${(props) => String(props.heightSize) + SIZE_UNIT};
   border-radius: 10px;
   padding: 25px 20px 20px 20px;
+
+  @media screen and (max-width: 400px) {
+    width: calc(100% - 40px);
+    margin: 0 auto;
+  }
 `;
 
 const Inner = styled.div`
@@ -50,7 +55,7 @@ function ContentBoard({
         heightSize={height}
         backgroundColor={backgroundColor}
       >
-        <Heading>{heading}</Heading>
+        {heading && <Heading>{heading}</Heading>}
         <Inner>
           {text}
         </Inner>
@@ -71,7 +76,6 @@ ContentBoard.propTypes = {
 
 ContentBoard.defaultProps = {
   backgroundColor: theme.background.main,
-  heading: "",
   width: 480,
   height: 360,
 };

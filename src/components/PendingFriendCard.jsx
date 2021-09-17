@@ -32,6 +32,11 @@ const PendingFilter = styled.div`
   padding: 30px;
   transform: translate(-40px, -40px);
   backdrop-filter: grayscale(100%);
+
+  @media screen and (max-width: 400px) {
+    width: 220px;
+    height: 300px;
+  }
 `;
 
 function PendingCard({

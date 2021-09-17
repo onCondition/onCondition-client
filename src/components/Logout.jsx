@@ -10,12 +10,12 @@ function Logout({ onLogout }) {
 
   function logoutWithGoogle() {
     firebase.auth().signOut();
-    onLogout();
     dispatch(logout());
+    onLogout();
   }
 
   return (
-    <div>
+    <div className="button-wrapper">
       <Button
         onClick={logoutWithGoogle}
         text="logout"

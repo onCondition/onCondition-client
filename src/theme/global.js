@@ -5,6 +5,12 @@ import FONTS from "../constants/webFontUrl";
 const GlobalStyle = createGlobalStyle`
   ${reset};
 
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
   a {
     text-decoration: none;
   }
@@ -30,12 +36,18 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Nanum Gothic", sans-serif;
   }
 
-  h1 {
-    margin: 10px 0px 10px 30px;
+  h1, h2 {
+    margin: 10px 30px 30px 30px;
     color: #539A92;
     text-align: left;
+  }
+
+  h1 {
     font-size: 3rem;
-    font-weight: bold;
+  }
+
+  h2 {
+    font-size: 2rem;
   }
 
   button {
@@ -60,6 +72,12 @@ const GlobalStyle = createGlobalStyle`
 
   ::-webkit-scrollbar-corner {
     display: none;
+  }
+
+  @media screen and (max-width: 640px) {
+    h1, h2 {
+      margin: 10px 30px 10px 30px;
+    }
   }
 `;
 

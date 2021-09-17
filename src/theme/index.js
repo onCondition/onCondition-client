@@ -32,6 +32,9 @@ const background = {
   graphData: pinkColors.fadePink,
   comment: greyScaleColors.lightGrey,
   point: pinkColors.mainPink,
+  gridMessage: greyScaleColors.opaqueWhite,
+  board: greyScaleColors.fadeWhite,
+  disable: greyScaleColors.fadeGrey,
 };
 
 const text = {
@@ -50,6 +53,14 @@ const lineGraph = {
   unclicked: greyScaleColors.fadeGrey,
 };
 
+const grid = {
+  veryGood: "#F09791",
+  good: "#FB9F97",
+  soso: "#F6C6C0",
+  bad: "#F7C6C1",
+  tooBad: "#F8D2CF",
+};
+
 const shadow = {
   main: "0 0.3rem 0.5rem " + greyScaleColors.mediumGrey,
   sub: "0 0.3rem 0.5rem " + greyScaleColors.darkGrey,
@@ -63,6 +74,7 @@ const theme = {
   text,
   point,
   lineGraph,
+  grid,
   shadow,
 };
 

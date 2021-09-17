@@ -6,6 +6,7 @@ const ERROR = {
   COMMENT_UPDATE_FAIL: "코멘트 작성에 실패했습니다.",
   COMMENT_DELETE_FAIL: "코멘트 삭제에 실패했습니다.",
   GOOGLE_TOKEN_NOT_AVAILABLE: "Google 정보 연결에 실패했습니다.",
+  NOT_FOUND: "페이지가 존재하지 않습니다",
 };
 
 const RESPONSE = {

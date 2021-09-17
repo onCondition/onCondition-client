@@ -1,6 +1,6 @@
 import axios from "../api/axiosInstance";
 
-const useMock = true;
+const useMock = false;
 
 const numbers = 16;
 
@@ -21,8 +21,6 @@ const mockUsers = [...Array(numbers)].map((_, i) => {
   return { ...mockUser, _id: `id${i}`, stroke: i };
 });
 
-const BASE = "/api";
-
 function joinUrl(...args) {
   return args.join("/");
 }
@@ -36,7 +34,7 @@ async function getFriends(creatorId) {
     };
   }
 
-  const res = await axios.get(joinUrl(BASE, creatorId, "friends"));
+  const res = await axios.get(joinUrl(creatorId, "friend"));
 
   if (res) {
     return res.data;
@@ -45,16 +43,40 @@ async function getFriends(creatorId) {
 
 async function updateFriendRequest(creatorId, friendId, isAccepted) {
   if (useMock) {
-    console.log(friendId + " accepted " + isAccepted);
-
     return { result: "ok" };
   }
 
-  const res = await axios.patch(joinUrl(BASE, creatorId, "friends"), { friendId, isAccepted });
+  const res = await axios.patch(joinUrl(creatorId, "friend"), { friendId, isAccepted });
 
   if (res) {
     return res;
   }
 }
 
-export { getFriends, updateFriendRequest };
+async function getById(creatorId, friendId) {
+  const res = await axios.get(joinUrl(creatorId, "friend", friendId));
+
+  if (res) {
+    return res;
+  }
+}
+
+async function deleteById(creatorId, friendId) {
+  const res = await axios.delete(joinUrl(creatorId, "friend", friendId));
+
+  if (res) {
+    return res;
+  }
+}
+
+async function sendById(creatorId, friendId) {
+  const res = await axios.post(joinUrl(creatorId, "friend/new"), { friendId });
+
+  if (res) {
+    return res;
+  }
+}
+
+export {
+  getFriends, updateFriendRequest, getById, sendById, deleteById,
+};

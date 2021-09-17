@@ -11,7 +11,7 @@ const BUTTON_WIDTH = 80;
 const BUTTON_HEIGHT = 30;
 
 const Wrapper = styled.div`
-  overflow: scroll;
+  overflow: auto;
 `;
 
 function CommentViewer({
@@ -19,6 +19,10 @@ function CommentViewer({
 }) {
   const user = useSelector((state) => state.user);
   const isCreator = user.id === creatorId;
+
+  if (!comments) {
+    return null;
+  }
 
   return (
     <Wrapper>
@@ -29,22 +33,20 @@ function CommentViewer({
           profileUrl={comment.creator.profileUrl}
           content={comment.content}
         >
-          <span>
-            {(user.id === comment.creator._id) && <Button
-              text={EDIT}
-              onClick={() => onClickEdit({
-                commentId: comment._id, content: comment.content,
-              })}
-              width={BUTTON_WIDTH}
-              height={BUTTON_HEIGHT}
-            />}
-            {(user.id === comment.creator._id || isCreator) && <Button
-              text={DELETE}
-              onClick={() => onClickDelete(comment._id)}
-              width={BUTTON_WIDTH}
-              height={BUTTON_HEIGHT}
-            />}
-          </span>
+          {(user.id === comment.creator._id) && <Button
+            text={EDIT}
+            onClick={() => onClickEdit({
+              commentId: comment._id, content: comment.content,
+            })}
+            width={BUTTON_WIDTH}
+            height={BUTTON_HEIGHT}
+          />}
+          {(user.id === comment.creator._id || isCreator) && <Button
+            text={DELETE}
+            onClick={() => onClickDelete(comment._id)}
+            width={BUTTON_WIDTH}
+            height={BUTTON_HEIGHT}
+          />}
         </CommentBar>
       ))}
     </Wrapper>
