@@ -22,6 +22,10 @@ const TextContainer = styled.div`
   color: ${({ theme }) => theme.text.sub};
   line-height: ${HEIGHT}px;
   font-size: ${({ theme }) => theme.fontSizes.small};
+
+  @media screen and (max-width: 650px) {
+    width: calc(80% - 100px);
+  }
 `;
 
 const BUTTON_WIDTH = 100;

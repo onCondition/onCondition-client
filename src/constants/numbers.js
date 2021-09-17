@@ -1,5 +1,5 @@
 const GAP = {
-  SMALL: 5,
+  SMALL: 1,
   MEDIUM: 10,
   LARGE: 20,
   X_LARGE: 40,

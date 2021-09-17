@@ -27,6 +27,7 @@ const Container = styled.div`
     flex-direction: column;
     width: 400px;
     height: 500px;
+    padding: 0 10px;
     text-align: center;
     justify-content: space-around;
   }

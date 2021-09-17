@@ -12,6 +12,7 @@ const Li = styled.li`
   margin: 10px auto;
   line-height: 4rem;
   max-width: 630px;
+  min-width: 440px;
   border-radius: 30px;
   box-shadow: ${({ theme }) => theme.shadow.main};
   background: ${(props) => props.color};
@@ -28,6 +29,7 @@ const Li = styled.li`
   @media screen and (max-width: 440px) {
     flex-direction: column;
     width: calc(100% - 20px);
+    min-width: 0;
     padding-top: 20px;
 
     div {

@@ -29,7 +29,7 @@ const DetailWrapper = styled.div`
     cursor: pointer;
   }
 
-  @media screen and (max-width: 1270px) {
+  @media screen and (max-width: 1380px) {
     width: 700px;
     height: calc(100% - 120px);
     overflow-y: auto;

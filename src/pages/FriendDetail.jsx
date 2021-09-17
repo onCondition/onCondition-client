@@ -17,29 +17,35 @@ import { radarDefaultOptions } from "../config/graphOption";
 
 import { getById, deleteById } from "../api/friend";
 
-const Layout = styled.div`
-  display: grid;
-  height: 90vh;
-  width: 90vw;
-  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-  margin: auto;
+const CardArea = styled.div`
+  margin: 20px;
+  cursor: pointer;
 
-  .card-area {
-    display: grid;
-    margin: auto;
-    cursor: pointer;
+  @media screen and (max-width: 1380px) {
+    margin: 20px auto;
   }
 `;
 
 const RecentRecordContainer = styled.div`
   display: grid;
-  height: 90vh;
-  margin: 20px;
+  justify-items: center;
+  margin: 0 auto;
+  flex-grow: 1;
 `;
 
 const RecordsWrapper = styled.div`
-  margin: 20px;
-  overflow: scroll;
+  width: 680px;
+  height: 500px;
+  padding: 5px;
+  overflow-y: auto;
+
+  @media screen and (max-width: 1380px) {
+    height: auto;
+  }
+
+  @media screen and (max-width: 730px) {
+    width: calc(100% - 20px);
+  }
 `;
 
 function FriendDetail() {
@@ -77,7 +83,7 @@ function FriendDetail() {
   }, [creatorId, friendId]);
 
   const handleRedirect = function () {
-    history.push(`/${creatorId}/friends`);
+    history.push(`/${creatorId}/friend`);
   };
 
   const handleDeleteButtonClick = async function () {
@@ -158,39 +164,37 @@ function FriendDetail() {
         onClick={handleCloseButtonClick}
       >x</CircleButton>
       <DetailWrapper>
-        <Layout>
-          <div className="card-area">
-            <div className="card">
-              {isBackSide
-                ? (
-                  <FriendCard
-                    profileUrl={info.profileUrl}
-                    color={theme.background.sub}
-                    graph={graph}
-                    name={info.name}
-                    lastAccessDate={info.lastAccessDate}
-                    scores={info.scores}
-                    onClick={handleCardClick}
-                  />
-                ) : (
-                  <FriendCard
-                    profileUrl={info.profileUrl}
-                    name={info.name}
-                    lastAccessDate={info.lastAccessDate}
-                    scores={info.scores}
-                    onClick={handleCardClick}
-                  />
-                )}
-            </div>
-            {deleteButton}
+        <CardArea>
+          <div className="card">
+            {isBackSide
+              ? (
+                <FriendCard
+                  profileUrl={info.profileUrl}
+                  color={theme.background.sub}
+                  graph={graph}
+                  name={info.name}
+                  lastAccessDate={info.lastAccessDate}
+                  scores={info.scores}
+                  onClick={handleCardClick}
+                />
+              ) : (
+                <FriendCard
+                  profileUrl={info.profileUrl}
+                  name={info.name}
+                  lastAccessDate={info.lastAccessDate}
+                  scores={info.scores}
+                  onClick={handleCardClick}
+                />
+              )}
           </div>
-          <RecentRecordContainer>
-            <h5>최근 활동</h5>
-            <RecordsWrapper>
-              {recordBars}
-            </RecordsWrapper>
-          </RecentRecordContainer>
-        </Layout>
+          {deleteButton}
+        </CardArea>
+        <RecentRecordContainer>
+          <h5>최근 활동</h5>
+          <RecordsWrapper>
+            {recordBars}
+          </RecordsWrapper>
+        </RecentRecordContainer>
       </DetailWrapper>
     </ModalWrapper>
   );

@@ -19,6 +19,7 @@ import CircleButton from "../components/CircleButton";
 import theme from "../theme";
 
 import getApi from "../api/category";
+import { getKoreanTimeString } from "../utils/time";
 import { ERROR } from "../constants/messages";
 import {
   CANCEL, EDIT, DELETE, SAVE,
@@ -129,7 +130,7 @@ function Detail() {
 
   const heading = !hasPicture
     ? <>
-      <p>{data.date}</p>
+      <p>{getKoreanTimeString(data.date)}</p>
       <span>{`${type || "meal"} ${snippet} `}</span>
       <HeartCounter count={data?.heartCount || 0} />
     </> : null;
@@ -156,7 +157,7 @@ function Detail() {
                 additionalButton={cancelButton}
                 defaultValues={data}
               />
-              : <div>
+              : <>
                 <ContentViewer
                   {...data}
                 />
@@ -164,7 +165,7 @@ function Detail() {
                   {editButton}
                   {deleteButton}
                 </ButtonsWrapper>
-              </div>
+              </>
             : isEditing
               ? <RateForm
                 onSubmit={handleFormSubmit}

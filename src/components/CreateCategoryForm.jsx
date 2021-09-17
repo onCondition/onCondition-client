@@ -26,12 +26,39 @@ const Form = styled.div`
     label {
       color: ${({ theme }) => theme.text.sub};
       font-size: ${({ theme }) => theme.fontSizes.small};
-      padding-top: 10px;
+      padding: 10px;
+      word-break: keep-all;
     }
 
     input {
       width: 5rem;
       text-align: center;
+    }
+  }
+
+  @media screen and (max-width: 850px) {
+    img {
+      width: 300px;
+    }
+  }
+
+  @media screen and (max-width: 650px) {
+    img {
+      width: 200px;
+    }
+
+    .name label {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media screen and (max-width: 450px) {
+    img {
+      width: 150px;
+    }
+
+    .name label {
+      font-size: 1rem;
     }
   }
 `;

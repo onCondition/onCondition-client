@@ -18,6 +18,10 @@ const CommentContainerWrapper = styled.div`
   background-color: ${({ theme }) => theme.background.comment};
   box-shadow: ${({ theme }) => theme.shadow.main};
 
+  @media screen and (max-width: 640px) {
+    grid-template-rows: 3fr 0 3fr;
+  }
+
   @media screen and (max-width: 550px) {
     width: 400px;
     padding: 0;

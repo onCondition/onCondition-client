@@ -2,14 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const GridColumn = styled.div`
-  display: grid;
+const CommentBarWrapper = styled.div`
+  display: flex;
+  justify-content: start;
   width: calc(100% - 20px);
   margin: 10px auto;
   padding-left: 10px;
-  grid-template-columns: 62px auto 50px;
   align-items: center;
-  justify-items: center;
 `;
 
 const Comment = styled.span`
@@ -18,17 +17,20 @@ const Comment = styled.span`
   padding: 10px 10px;
   color: ${({ theme }) => theme.background.main};
   text-align: left;
+
+  @media screen and (max-width: 400px) {
+    font-size: 0.5rem;
+  }
 `;
 
 const Image = styled.img`
   width: 62px;
   height: 62px;
-  border-radius: 40px;
+  border-radius: 50%;
 
   @media screen and (max-width: 400px) {
     width: 40px;
     height: 40px;
-    padding: 30px;
   }
 `;
 
@@ -36,8 +38,15 @@ const ButtonWrapper = styled.div`
   display: flex;
   width: 140px;
   margin-top: 10px;
-  justify-items: space-evenly;
+  justify-items: end;
   font-size: 0.8rem;
+
+  @media screen and (max-width: 400px) {
+    button {
+      width: 50px;
+      font-size: 0.5rem;
+    }
+  }
 `;
 
 function CommentBar({
@@ -46,17 +55,21 @@ function CommentBar({
   content,
   children,
 }) {
+  function hasValidChildren(children) {
+    return children.some((child) => !!child);
+  }
+
   return (
-    <GridColumn>
+    <CommentBarWrapper>
       <Image
         src={profileUrl}
         alt={name}
       />
       <Comment>{content}</Comment>
-      <ButtonWrapper>
+      {hasValidChildren(children) && <ButtonWrapper>
         {children}
-      </ButtonWrapper>
-    </GridColumn>
+      </ButtonWrapper>}
+    </CommentBarWrapper>
   );
 }
 

@@ -14,6 +14,10 @@ import theme from "../theme";
 const FromWrapper = styled.div`
   margin: 0 auto;
   padding: 0 20px;
+
+  .header {
+    padding: 0 20px;
+  }
 `;
 
 const Input = styled.input`
@@ -28,7 +32,6 @@ const Input = styled.input`
   @media screen and (max-width: 400px) {
     width: 100px;
   }
-}
 `;
 
 const Textarea = styled.textarea`

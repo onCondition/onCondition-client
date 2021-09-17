@@ -15,9 +15,13 @@ const Wrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.small};
   list-style: none;
 
-  @media screen and (max-width: 640px) {
+  @media screen and (max-width: 700px) {
     width: 100%;
     font-size: 90%;
+  }
+
+  @media screen and (max-width: 550px) {
+    height: 400px;
   }
 `;
 
