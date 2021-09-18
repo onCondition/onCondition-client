@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   bottom: 0;
   align-items: center;
   justify-content: center;
+  z-index: 2;
   background-color: ${({ theme }) => theme.background.sub};
 `;
 

@@ -45,6 +45,7 @@ function Preference() {
 
   const handleCopy = function ( ) {
     navigator.clipboard.writeText(id);
+    alert("나의 유저코드가 클립보드에 복사되었습니다!");
   };
 
   const getGoogleFitData = async function () {
