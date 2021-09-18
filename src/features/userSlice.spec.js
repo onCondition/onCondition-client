@@ -7,6 +7,8 @@ import reducer, {
 } from "./userSlice";
 import * as authApi from "../api/auth";
 
+jest.mock("../app/store"); // block store circular dependency
+
 const initialState = {
   id: "",
   customCategories: [],
