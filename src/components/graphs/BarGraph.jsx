@@ -14,9 +14,11 @@ const options = {
     yAxisKey: "sum",
   },
   responsive: true,
-  legend: {
-    display: false,
-    position: "top",
+  plugins: {
+    legend: {
+      display: false,
+      position: "top",
+    },
   },
   scales: {
     y: {
