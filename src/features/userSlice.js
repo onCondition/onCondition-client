@@ -10,11 +10,11 @@ const initialState = {
 };
 
 const login = createAsyncThunk("user/login",
-  async function ({ idToken, googleAccessToken }) {
+  async function ({ idToken }) {
     try {
       const { accessToken, refreshToken } = await postLogin(idToken);
 
-      storeUserInfos({ accessToken, refreshToken, googleAccessToken });
+      storeUserInfos({ accessToken, refreshToken });
 
       const {
         userId, name, customCategories, lastAccessDate,

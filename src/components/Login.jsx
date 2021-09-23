@@ -17,11 +17,9 @@ function Login() {
   }
 
   function onSuccess(user) {
-    const {
-      id_token: idToken,
-      access_token: accessToken,
-    } = user.getAuthResponse();
-    dispatch(login({ idToken, googleAccessToken: accessToken }));
+    const { id_token: idToken } = user.getAuthResponse();
+
+    dispatch(login({ idToken }));
   }
 
   function onFailure() {
