@@ -12,19 +12,19 @@ function Login() {
   const dispatch = useDispatch();
   const [gapi, isLoaded] = useGapi();
 
-  function handleLogin() {
+  const handleLogin = function () {
     history.push(`/${user.id}/condition`);
-  }
+  };
 
-  function onSuccess(user) {
+  const onSuccess = function (user) {
     const { id_token: idToken } = user.getAuthResponse();
 
     dispatch(login({ idToken }));
-  }
+  };
 
-  function onFailure() {
+  const onFailure = function () {
     setStatus("로그인에 실패하였습니다.");
-  }
+  };
 
   useEffect(() => {
     if (user.id) {

@@ -5,7 +5,7 @@ function useGapi() {
   const [gapi, setGapi] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  async function handleGoogleAuth2() {
+  const handleGoogleAuth2 = async function () {
     const params = {
       client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
       scope: USER_INFO_SCOPE,
@@ -13,9 +13,9 @@ function useGapi() {
     };
 
     await window.gapi.auth2.init(params);
-  }
+  };
 
-  async function handleLoad() {
+  const handleLoad = async function () {
     if (!window.gapi) {
       return;
     }
@@ -23,7 +23,7 @@ function useGapi() {
     await window.gapi.load("auth2", handleGoogleAuth2);
     setGapi(window.gapi);
     setIsLoaded(true);
-  }
+  };
 
   useEffect(() => {
     const script = document.createElement("script");
