@@ -9,7 +9,7 @@ import CustomCategoryStatus from "../components/CustomCategoryStatus";
 import CreateCategoryForm from "../components/CreateCategoryForm";
 import { postGoogleToken } from "../api/auth";
 import { addCustomCategory, deleteCustomCategory } from "../api/customCategory";
-import { getTokens } from "../helpers/userInfo";
+import { useGapi } from "../helpers/useGapi";
 import { COPY } from "../constants/buttons";
 import { setCustomCategories } from "../features/userSlice";
 
@@ -40,6 +40,7 @@ function Preference() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [hasModal, setHasModal] = useState(false);
   const [deletedCategory, setDeletedCategory] = useState("");
+  const [gapi, isGapiLoaded] = useGapi();
 
   const dispatch = useDispatch();
 
@@ -50,7 +51,17 @@ function Preference() {
   const getGoogleFitData = async function () {
     setIsUpdating(true);
 
-    const { googleAccessToken } = getTokens();
+    const auth2 = gapi.auth2?.getAuthInstance();
+
+    if (!auth2) {
+      setIsUpdating(false);
+
+      return;
+    }
+
+    const {
+      access_token: googleAccessToken,
+    } = await auth2.currentUser.get().reloadAuthResponse();
     const res = await postGoogleToken(creatorId, googleAccessToken);
 
     if (!res) {
@@ -115,11 +126,11 @@ function Preference() {
         </div>
         <div className="refresh">
           <h2>Google Fit 수동 동기화</h2>
-          <PreferenceBar
+          {isGapiLoaded && <PreferenceBar
             value={isUpdating ? "동기화중입니다" : "동기화 완료"}
             buttonText="동기화"
             onButtonClick={getGoogleFitData}
-          />
+          />}
         </div>
         <div className="create-category">
           <h2>커스텀 카테고리 추가</h2>
