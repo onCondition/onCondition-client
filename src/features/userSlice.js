@@ -4,6 +4,7 @@ import { storeUserInfos, removeUserInfos } from "../helpers/userInfo";
 
 const initialState = {
   id: "",
+  name: "guest",
   customCategories: [],
   lastAccessDate: "",
 };
@@ -15,10 +16,12 @@ const login = createAsyncThunk("user/login",
 
       storeUserInfos({ accessToken, refreshToken, googleAccessToken });
 
-      const { userId, customCategories, lastAccessDate } = await getUserInfos();
+      const {
+        userId, name, customCategories, lastAccessDate,
+      } = await getUserInfos();
 
       return {
-        userId, customCategories, lastAccessDate,
+        userId, name, customCategories, lastAccessDate,
       };
     } catch (err) {
       return Promise.reject(err);
@@ -32,14 +35,18 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUserInfos(state, { payload }) {
-      const { userId, customCategories, lastAccessDate } = payload;
+      const {
+        userId, name, customCategories, lastAccessDate,
+      } = payload;
 
-      if (userId && customCategories && lastAccessDate) {
+      if (userId && name && customCategories && lastAccessDate) {
         state.id = userId;
+        state.name = name;
         state.customCategories = customCategories;
         state.lastAccessDate = lastAccessDate;
       } else {
         state.id = null;
+        state.name = "guest";
         state.customCategories = [];
         state.lastAccessDate = null;
       }
@@ -51,16 +58,19 @@ const userSlice = createSlice({
   extraReducers: {
     [login.fulfilled]: (state, { payload }) => {
       state.id = payload.userId;
+      state.name = payload.name;
       state.customCategories = payload.customCategories;
       state.lastAccessDate = payload.lastAccessDate;
     },
     [login.rejected]: (state) => {
       state.id = null;
+      state.name = "guest";
       state.customCategories = [];
       state.lastAccessDate = null;
     },
     [logout.fulfilled]: (state) => {
       state.id = null;
+      state.name = "guest";
       state.customCategories = [];
       state.lastAccessDate = null;
     },
