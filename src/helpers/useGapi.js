@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import USER_INFO_SCOPE from "../constants/userInfoScope";
 
 function useGapi() {
   const [gapi, setGapi] = useState(null);
@@ -7,7 +8,7 @@ function useGapi() {
   async function handleGoogleAuth2() {
     const params = {
       client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-      scope: "profile email https://www.googleapis.com/auth/fitness.activity.read https://www.googleapis.com/auth/fitness.sleep.read",
+      scope: USER_INFO_SCOPE,
       ux_mode: "redirect",
     };
 
