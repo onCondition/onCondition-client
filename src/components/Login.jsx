@@ -16,13 +16,13 @@ function Login() {
     history.push(`/${user.id}/condition`);
   };
 
-  const onSuccess = function (user) {
+  const handleLoginSuccess = function (user) {
     const { id_token: idToken } = user.getAuthResponse();
 
     dispatch(login({ idToken }));
   };
 
-  const onFailure = function () {
+  const handleLoginFailure = function () {
     setStatus("로그인에 실패하였습니다.");
   };
 
@@ -41,8 +41,8 @@ function Login() {
       width: 240,
       height: 50,
       longtitle: true,
-      onsuccess: onSuccess,
-      onfailure: onFailure,
+      onsuccess: handleLoginSuccess,
+      onfailure: handleLoginFailure,
     });
   }, [isLoaded, user.id]);
 
