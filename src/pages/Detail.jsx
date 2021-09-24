@@ -124,7 +124,7 @@ function Detail() {
     return null;
   }
 
-  const type = data.category ? data.category : data.type || "";
+  const type = data.category !== "Activity" ? data.category : data.type || "";
   const snippet = data.duration ? `(${data.duration})` : "";
 
   const heading = !hasPicture
