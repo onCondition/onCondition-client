@@ -127,6 +127,8 @@ function Detail() {
   const type = data.category !== "Activity" ? data.category : data.type || "";
   const snippet = data.duration ? `(${data.duration})` : "";
 
+  data.snippet = snippet;
+
   const heading = !hasPicture
     ? <>
       <p>{getKoreanTimeString(data.date)}</p>
