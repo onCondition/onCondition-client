@@ -3,7 +3,6 @@ import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import firebase from "../config/firebase";
 import ContentViewer from "../components/ContentViewer";
 import HeartCounter from "../components/HeartCounter";
 import Button from "../components/Button";
@@ -11,7 +10,7 @@ import LineGraph from "../components/graphs/LineGraph";
 import RadarGraph from "../components/graphs/RadarGraph";
 import { getCondition } from "../api/condition";
 import { postGoogleToken } from "../api/auth";
-import { getTokens } from "../helpers/userInfo";
+import { useGapi } from "../helpers/useGapi";
 import { getISOTime } from "../utils/time";
 
 const ConditionWrapper = styled.div`
@@ -76,6 +75,7 @@ function Condition() {
   const [isUpdating, setIsUpdating] = useState(false);
   const { creatorId } = useParams();
   const user = useSelector((state) => state.user);
+  const [gapi, isGapiLoaded] = useGapi();
 
   useEffect(() => {
     async function loadCondition(creatorId) {
@@ -114,18 +114,13 @@ function Condition() {
   }, []);
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(async (firebaseUser) => {
-      if (!firebaseUser) {
-        setIsUpdating(false);
-
-        return;
-      }
-
+    async function updateUserInfo() {
       setIsUpdating(true);
 
       const nowTime = new Date();
       const { pastMidnight } = getISOTime(nowTime);
       const userAccessDate = new Date(user.lastAccessDate);
+      const auth2 = gapi.auth2?.getAuthInstance();
 
       if (userAccessDate >= pastMidnight) {
         setIsUpdating(false);
@@ -133,7 +128,15 @@ function Condition() {
         return;
       }
 
-      const { googleAccessToken } = getTokens();
+      if (!auth2) {
+        setIsUpdating(false);
+
+        return;
+      }
+
+      const {
+        access_token: googleAccessToken,
+      } = await auth2.currentUser.get().reloadAuthResponse();
       const res = await postGoogleToken(creatorId, googleAccessToken);
 
       if (!res) {
@@ -141,8 +144,16 @@ function Condition() {
       }
 
       setIsUpdating(false);
-    });
-  }, []);
+    }
+
+    if (!user.id || !isGapiLoaded) {
+      setIsUpdating(false);
+
+      return;
+    }
+
+    updateUserInfo();
+  }, [isGapiLoaded]);
 
   const handleConvertButtonClick = function () {
     setIsRadarGraph(!isRadarGraph);

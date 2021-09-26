@@ -5,7 +5,6 @@ import styled, { ThemeProvider } from "styled-components";
 import theme from "./theme";
 import GlobalStyle from "./theme/global";
 
-import firebase from "./config/firebase";
 import Error from "./pages/Error";
 import Condition from "./pages/Condition";
 import Meal from "./pages/Meal";
@@ -55,19 +54,21 @@ function App() {
         return;
       }
 
-      const { userId, customCategories, lastAccessDate } = res;
+      const {
+        userId, name, customCategories, lastAccessDate,
+      } = res;
 
-      dispatch(setUserInfos({ userId, customCategories, lastAccessDate }));
+      dispatch(setUserInfos({
+        userId, name, customCategories, lastAccessDate,
+      }));
       setIsLoaded(true);
     }
 
-    firebase.auth().onAuthStateChanged(() => {
-      if (checkTokenExist()) {
-        dispatchUserInfos();
-      } else {
-        setIsLoaded(true);
-      }
-    });
+    if (checkTokenExist()) {
+      dispatchUserInfos();
+    } else {
+      setIsLoaded(true);
+    }
   }, []);
 
   return (

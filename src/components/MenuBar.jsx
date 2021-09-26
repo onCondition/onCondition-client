@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 
-import firebase from "../config/firebase";
 import Logout from "./Logout";
 import Button from "./Button";
 
@@ -77,19 +76,20 @@ const MenuWrapper = styled.div`
 
 function MenuBar() {
   const history = useHistory();
-  const user = firebase.auth().currentUser;
   const defaultCategories = ["condition", "activity", "meal", "sleep"];
   const { pathname } = useLocation();
   const currentCategory = pathname.split("/").pop();
   const [clickedCategory, setClickedCategory] = useState(currentCategory);
   const [isShowingMenu, setIsShowingMenu] = useState(false);
-  const { id: userId, customCategories } = useSelector((state) => state.user);
+  const {
+    id: userId, name: userName, customCategories,
+  } = useSelector((state) => state.user);
 
-  const customCategoryNames = user
+  const customCategoryNames = userId
     ? customCategories.map(({ category }) => category)
     : [];
   const categories = defaultCategories.concat(customCategoryNames, ["friend", "preference"]);
-  const name = user ? user.displayName : "guest";
+  const name = userId ? userName : "guest";
 
   const handleMenuClick = function (clickedCategory) {
     history.push(`/${userId}/${clickedCategory}`);
