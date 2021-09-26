@@ -135,4 +135,8 @@ CommentContainer.propTypes = {
   onUpdate: PropTypes.func.isRequired,
 };
 
+CommentContainer.defaultProps = {
+  comments: [],
+};
+
 export default CommentContainer;
