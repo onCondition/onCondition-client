@@ -55,6 +55,7 @@ function CommentForm({
   return (
     <Form>
       <TextArea
+        placeholder="코멘트를 입력해주세요."
         value={comment}
         onChange={({ target }) => setComment(target.value)}
       />
