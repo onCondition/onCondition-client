@@ -38,7 +38,7 @@ function Sleep() {
   }, []);
 
   useEffect(() => {
-    if (sleepData) {
+    if (sleepData?.length) {
       setPeriods(`${sleepData[0]._id} ~ ${ sleepData[sleepData.length - 1]._id} `);
     }
   }, [sleepData]);
