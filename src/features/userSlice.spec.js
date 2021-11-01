@@ -13,6 +13,7 @@ const initialState = {
   id: "",
   customCategories: [],
   lastAccessDate: "",
+  name: "guest",
 };
 
 test("should return the initial state", () => {
@@ -55,13 +56,16 @@ test("should handle login async thunk", async () => {
 test("should handle login extra reducer", () => {
   const loginDate = new Date().toISOString();
   const loginAction = login.fulfilled(
-    { userId: "id", customCategories: [], lastAccessDate: loginDate },
+    {
+      userId: "id", customCategories: [], lastAccessDate: loginDate, name: "guest",
+    },
   );
 
   expect(reducer(initialState, loginAction)).toEqual({
     id: "id",
     customCategories: [],
     lastAccessDate: loginDate,
+    name: "guest",
   });
 });
 
@@ -72,6 +76,7 @@ test("should handle logout extra reducer", () => {
     id: null,
     customCategories: [],
     lastAccessDate: null,
+    name: "guest",
   });
 });
 
@@ -83,12 +88,14 @@ test("should handle setUserInfos", () => {
     userId: "dummy id",
     customCategories: ["dummy"],
     lastAccessDate: updatedDate,
+    name: "dummy",
   };
 
   expect(reducer(previousState, setUserInfos(updatedInfo))).toEqual({
     id: "dummy id",
     customCategories: ["dummy"],
     lastAccessDate: updatedDate,
+    name: "dummy",
   });
 });
 
@@ -97,11 +104,13 @@ test("should handle setCustomCategories", () => {
     id: "",
     customCategories: [],
     lastAccessDate: "",
+    name: "guest",
   };
 
   expect(reducer(previousState, setCustomCategories(["dummy 2"]))).toEqual({
     id: "",
     customCategories: ["dummy 2"],
     lastAccessDate: "",
+    name: "guest",
   });
 });
