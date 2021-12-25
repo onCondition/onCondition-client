@@ -22,6 +22,7 @@ const Wrapper = styled.div`
   .board-layout {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
   }
 `;
 
