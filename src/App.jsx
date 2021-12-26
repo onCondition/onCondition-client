@@ -20,9 +20,9 @@ import FriendDetail from "./pages/FriendDetail";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Loading from "./components/Loading";
-import { setUserInfos } from "./features/userSlice";
+import { setUserInfos, logout } from "./features/userSlice";
 import { getUserInfos } from "./api/auth";
-import { checkTokenExist } from "./helpers/userInfo";
+import { checkTokenValid } from "./helpers/userInfo";
 import MenuBar from "./components/MenuBar";
 
 const AppWrapper = styled.div`
@@ -64,9 +64,10 @@ function App() {
       setIsLoaded(true);
     }
 
-    if (checkTokenExist()) {
+    if (checkTokenValid()) {
       dispatchUserInfos();
     } else {
+      dispatch(logout());
       setIsLoaded(true);
     }
   }, []);

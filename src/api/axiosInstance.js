@@ -3,7 +3,7 @@ import { store } from "../app/store";
 import { ERROR } from "../constants/messages";
 import STATUS_CODES from "../constants/statusCodes";
 import { setError } from "../features/errorSlice";
-import { getTokens, updateAccessToken } from "../helpers/userInfo";
+import { getTokens, checkExpired, updateAccessToken } from "../helpers/userInfo";
 
 async function setAccessToken(config) {
   const { accessToken, accessTokenExp } = getTokens();
@@ -12,9 +12,7 @@ async function setAccessToken(config) {
     throw new axios.Cancel(ERROR.ACCESS_TOKEN_NOT_EXIST);
   }
 
-  const oneSecondInMill = 1000;
-  const isExpired = Number(accessTokenExp) < (Date.now() / oneSecondInMill);
-
+  const isExpired = checkExpired(accessTokenExp);
   let token = accessToken;
 
   if (isExpired) {
