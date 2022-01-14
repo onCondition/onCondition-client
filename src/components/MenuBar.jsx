@@ -21,16 +21,13 @@ const MenuWrapper = styled.nav`
   font-size: ${({ theme }) => theme.fontSizes.small};
   text-align: center;
 
-    .button-wrapper {
-      padding-left: 13%;
-    }
-
     .top {
-      display: none;
       position: fixed;
+      display: none;
       flex-direction: column;
       align-items: flex-end;
-      margin-right: 3%;
+      margin-right: 1%;
+      width: 100%;
     }
 
     .top button {
@@ -104,6 +101,16 @@ const MenuWrapper = styled.nav`
     .hidden-menu ul :last-child {
       padding-bottom: 10%;
       border-radius: 0 0 20px 20px;
+    }
+
+    .left .button-wrapper {
+      transform: translateX(-20%);
+    }
+
+    .top .button-wrapper {
+      position: absolute;
+      top: 100vh;
+      transform: translateY(-100%);
     }
 
     @keyframes move-icon-wrapper {
@@ -204,6 +211,7 @@ function MenuBar() {
         <Logout onLogout={handleLogout} />
       </div>
       <div className="top">
+        <Logout onLogout={handleLogout} />
         <Button
           text="menu"
           width={100}
