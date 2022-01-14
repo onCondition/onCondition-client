@@ -18,10 +18,11 @@ const PreferenceWrapper = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 0.3fr 0.7fr;
   grid-template-areas:
-    "my-user-code refresh"
-    "create-category category-status";
+  "my-user-code refresh"
+  "create-category category-status";
   grid-gap: 3%;
   justify-content: center;
+  overflow: hidden;
 
   @media screen and (max-width: 1800px) {
     grid-template-columns: 1fr;
