@@ -159,11 +159,11 @@ function Condition() {
     setIsRadarGraph(!isRadarGraph);
   };
 
-  const statusInfos = status ? Object.keys(status).map((category) => (
-    <>
-      <span key={category}>{category}</span>
-      <HeartCounter key={category + "status"} count={status[category]} />
-    </>
+  const statusInfos = status ? Object.keys(status).flatMap((category) => (
+    [
+      <span key={category}>{category}</span>,
+      <HeartCounter key={category + "status"} count={status[category]} />,
+    ]
   )) : [];
 
   return (
